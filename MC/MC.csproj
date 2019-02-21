@@ -154,6 +154,7 @@
     <Compile Include="Comm\MPMenu.cs" />
     <Compile Include="Comm\MPToken.cs" />
     <Compile Include="Comm\TemplateDataForMsg.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +174,10 @@
     <Content Include="images\icon_nav_button.png" />
     <Content Include="images\icon_nav_cell.png" />
     <Content Include="images\icon_nav_msg.png" />
+    <Content Include="images\qrcode.jpg" />
+    <Content Include="images\welcome.jpg" />
+    <Content Include="images\show.png" />
+    <Content Include="images\推荐.png" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
     <Content Include="Scripts\fastclick.js" />
@@ -201,7 +206,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Main.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Customer\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,11 +13,18 @@ namespace MC
     {
         protected void Application_Start()
         {
+            //初始化信息
+            MPBasicSetting.GetBasicSetting();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Senparc.Weixin.Threads.ThreadUtility.Register();
+            Senparc.Weixin.MP.Containers.AccessTokenContainer.Register(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号注册");
+            Senparc.Weixin.MP.Containers.JsApiTicketContainer.Register(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号JSSDK注册");
         }
     }
 }

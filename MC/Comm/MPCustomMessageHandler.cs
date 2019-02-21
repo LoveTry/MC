@@ -9,6 +9,7 @@ using Senparc.Weixin.MP.Entities;
 using System.Data;
 using System.Threading.Tasks;
 using Senparc.Weixin.MP.AdvancedAPIs;
+using MCComm;
 
 namespace MC
 {
@@ -55,7 +56,7 @@ namespace MC
                         responseMessage.Content = MPMenu.CreateMenuDefault() == "" ? "成功创建菜单!" : "创建菜单失败";
                     }
                     break;
-         
+
                 default:
 
                     try
@@ -110,10 +111,9 @@ namespace MC
 
             responseMessage.Articles.Add(new Article
             {
-                //Title = "欢迎关注" + MPBasicSetting.WeChatTitleName + "微信公众平台",
-                Title = "欢迎关注航运通+微信公众平台",
-                Description = "请点击菜单「航运通+」→「下载地址」获取下载地址",
-                PicUrl = "http://" + MPBasicSetting.wxUrl + "/Images/welcome.png"
+                Title = "欢迎关注{0}公众平台".FormatWith(MPBasicSetting.WeChatTitleName),
+                Description = "轻松赚钱 改变生活",
+                PicUrl = "http://" + MPBasicSetting.wxUrl + "/Images/welcome.jpg"
                 //Url = "http://" + MPBasicSetting.wxUrl + "/Account/UserBing?openid=" + responseMessage.ToUserName + "&IsSkip=1"
             });
             //responseMessage.Articles.Add(new Article
@@ -185,12 +185,12 @@ namespace MC
         public override IResponseMessageBase OnLinkRequest(RequestMessageLink requestMessage)
         {
             return null;
-//            var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-//            responseMessage.Content = string.Format(@"您发送了一条连接信息：
-//Title：{0}
-//Description:{1}
-//Url:{2}", requestMessage.Title, requestMessage.Description, requestMessage.Url);
-//            return responseMessage;
+            //            var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            //            responseMessage.Content = string.Format(@"您发送了一条连接信息：
+            //Title：{0}
+            //Description:{1}
+            //Url:{2}", requestMessage.Title, requestMessage.Description, requestMessage.Url);
+            //            return responseMessage;
         }
 
 
