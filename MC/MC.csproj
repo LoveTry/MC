@@ -146,6 +146,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Comm\CenterController.cs" />
+    <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
     <Compile Include="Comm\MPBasicSetting.cs" />
     <Compile Include="Comm\MPCustomMessageContext.cs" />
@@ -154,11 +156,14 @@
     <Compile Include="Comm\MPMenu.cs" />
     <Compile Include="Comm\MPToken.cs" />
     <Compile Include="Comm\TemplateDataForMsg.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Const.cs" />
+    <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +179,7 @@
     <Content Include="images\icon_nav_button.png" />
     <Content Include="images\icon_nav_cell.png" />
     <Content Include="images\icon_nav_msg.png" />
+    <Content Include="images\mail.png" />
     <Content Include="images\qrcode.jpg" />
     <Content Include="images\welcome.jpg" />
     <Content Include="images\show.png" />
@@ -206,13 +212,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Main.cshtml" />
+    <Content Include="Views\Center\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Add.cshtml" />
+    <Content Include="Views\Customer\Me.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

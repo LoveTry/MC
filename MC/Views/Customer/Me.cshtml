@@ -1,0 +1,207 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作台</title>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+    <link href="~/Content/weui/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/weui/jquery-weui.min.css" rel="stylesheet" />
+    <style>
+        .page-header {
+            height: 175px;
+            background-color: #01A9DA;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+            z-index: -99;
+        }
+
+        .headImage {
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .big-circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #6CC8E2;
+            border-radius: 50px;
+        }
+
+        .small-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: url("@ViewBag.HeadImageUrl") no-repeat center center;
+            background-size: 100% 100%;
+            border-radius: 45px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .wxname {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            padding-top: 50px;
+            padding-left: 10px;
+        }
+
+        .company {
+            color: white;
+        }
+
+
+        .weui-grid__icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .weui-footer {
+            margin-top: 80px;
+        }
+
+        .mail {
+            float: right;
+            margin-right: 10px;
+            margin-top: 10px;
+            width: 28px;
+            height: 28px;
+            background: url(/Images/mail.png) no-repeat center center;
+            background-size: 100% 100%;
+        }
+
+        .swiper-container {
+            height: 100px;
+        }
+
+        .swiper-container {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+        }
+
+        .swiper-slide img {
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 100% 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $(".mail").on("click", function () {
+                $.toptip("您当前没有消息", 'success');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-header">
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="headImage">
+                    <div class="big-circle"></div>
+                    <div class="small-circle"></div>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="wxname">@ViewBag.UserName</div>
+
+            </div>
+            <div class="weui-flex__item">
+                <div class="mail"></div>
+
+            </div>
+        </div>
+        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">@ViewBag.CompanyName</div>
+    </div>
+    <div class="weui-grids">
+        <a href="../Approve/ApproveList" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/approve.png" alt="我要审批" />
+            </div>
+            <p class="weui-grid__label">
+                我要审批
+            </p>
+        </a>
+        <a href="../BusinessSession/SessionList" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/session1.png" alt="业务交流" />
+            </div>
+            <p class="weui-grid__label">
+                业务交流
+            </p>
+        </a>
+        <a href="../DayReport/DayReportList" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/dayreport.png" alt="我的日报" />
+            </div>
+            <p class="weui-grid__label">
+                我的日报
+            </p>
+        </a>
+        <a href="../DayReport/DayReportListOther" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/deptReport.png" alt="部门日报" />
+            </div>
+            <p class="weui-grid__label">
+                部门日报
+            </p>
+        </a>
+        <a href="../File/FileList" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/file.png" alt="文件管家" />
+            </div>
+            <p class="weui-grid__label">
+                文件管家
+            </p>
+        </a>
+        <a href="../WorkSite/WorkSiteList" class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/work.png" alt="现场管理" />
+            </div>
+            <p class="weui-grid__label">
+                现场管理
+            </p>
+        </a>
+        <a href='http://tools.sunnysoft.com.cn/Tool/ShipCompany' class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/tools.png" alt="查询工具" />
+            </div>
+            <p class="weui-grid__label">
+                常用工具
+            </p>
+        </a>
+        <a href='@Url.Action("UserBing","Account",new {IsSkip=1,openid=ViewBag.OpenId })' class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/userbind.png" alt="用户绑定" />
+            </div>
+            <p class="weui-grid__label">
+                用户绑定
+            </p>
+        </a>
+        <a href='@Url.Action("FeedbackList","Feedback")' class="weui-grid">
+            <div class="weui-grid__icon">
+                <img src="~/Images/feedback.png" alt="用户绑定" />
+            </div>
+            <p class="weui-grid__label">
+                问题反馈
+            </p>
+        </a>
+
+
+    </div>
+    <div class="weui-footer @*weui-footer_fixed-bottom*@">
+        <p class="weui-footer__links"><a class="weui-footer__link" href="http://www.sunnysoft.com.cn">关于我们</a>|<a class="weui-footer__link" href="http://www.sunnysoft.com.cn">商务合作</a></p>
+        <p class="weui-footer__text">
+            Copyright © 2019 盛鸿软件
+        </p>
+    </div>
+</body>
+</html>

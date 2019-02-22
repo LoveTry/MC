@@ -29,6 +29,86 @@
                 line-height: 70px;
                 font-size: 20px;
             }
+
+            .page-header {
+            height: 175px;
+            background-color: #01A9DA;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+            z-index: -99;
+        }
+
+        .headImage {
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .big-circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #6CC8E2;
+            border-radius: 50px;
+        }
+
+        .small-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: url("@ViewBag.HeadImageUrl") no-repeat center center;
+            background-size: 100% 100%;
+            border-radius: 45px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .wxname {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            padding-top: 50px;
+            padding-left: 10px;
+        }
+
+        .company {
+            color: white;
+        }
+
+
+        .weui-grid__icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .weui-footer {
+            margin-top: 80px;
+        }
+
+        .mail {
+            float: right;
+            margin-right: 10px;
+            margin-top: 10px;
+            width: 28px;
+            height: 28px;
+            background: url(/Images/mail.png) no-repeat center center;
+            background-size: 100% 100%;
+        }
+
+        .swiper-container {
+            height: 100px;
+        }
+
+        .swiper-container {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+        }
+
+        .swiper-slide img {
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 100% 100%;
+        }
     </style>
 </head>
 <body>
@@ -99,13 +179,59 @@
                     </div>
                 </div>
                 <div id="tab2" class="weui-tab__bd-item">
-                    <h1>页面二</h1>
                 </div>
                 <div id="tab3" class="weui-tab__bd-item">
-                    <h1>页面三</h1>
+                    <iframe src=""></iframe>
                 </div>
                 <div id="tab4" class="weui-tab__bd-item">
-                    <h1>页面四</h1>
+                    <div class="page-header">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <div class="headImage">
+                                    <div class="big-circle"></div>
+                                    <div class="small-circle"></div>
+                                </div>
+                            </div>
+                            <div class="weui-flex__item">
+                                <div class="wxname">@ViewBag.UserName</div>
+
+                            </div>
+                            <div class="weui-flex__item">
+                                <div class="mail"></div>
+                            </div>
+                        </div>
+                        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">@ViewBag.CompanyName</div>
+                    </div>
+                    <div class="weui-cells">
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__bd">
+                                <p>个人设置</p>
+                            </div>
+                            <div class="weui-cell__ft">个人设置</div>
+                        </a>
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__bd">
+                                <p>我的佣金</p>
+                            </div>
+                            <div class="weui-cell__ft">我的佣金</div>
+                        </a>
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__bd">
+                                <p>我的邀请</p>
+                            </div>
+                            <div class="weui-cell__ft">我的邀请</div>
+                        </a>
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__bd">
+                                <p>我的客户</p>
+                            </div>
+                            <div class="weui-cell__ft">我的客户</div>
+                        </a>
+                    </div>
                 </div>
             </div>
 

@@ -79,10 +79,5 @@ namespace MC.Controllers
             ViewBag.WeChatTitleName = MPBasicSetting.WeChatTitleName;
             return View();
         }
-
-        public ActionResult Main()
-        {
-            return View();
-        }
     }
 }

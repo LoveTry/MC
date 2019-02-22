@@ -26,7 +26,7 @@ namespace MC
             ButtonGroup btnGroup = new ButtonGroup();
             btnGroup.button.Add(new SingleViewButton()
             {
-                url = GetAuthUrl("Home/Main"),
+                url = GetAuthUrl("Center/Index"),
                 name = "分销系统"
             });
             #region 注释
