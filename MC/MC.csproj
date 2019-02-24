@@ -157,6 +157,7 @@
     <Compile Include="Comm\MPToken.cs" />
     <Compile Include="Comm\TemplateDataForMsg.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -175,14 +176,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\avatar2.jpg" />
     <Content Include="images\icon_nav_article.png" />
     <Content Include="images\icon_nav_button.png" />
     <Content Include="images\icon_nav_cell.png" />
     <Content Include="images\icon_nav_msg.png" />
     <Content Include="images\mail.png" />
+    <Content Include="images\plus.png" />
     <Content Include="images\qrcode.jpg" />
     <Content Include="images\welcome.jpg" />
     <Content Include="images\show.png" />
+    <Content Include="images\yuwen1.jpg" />
+    <Content Include="images\yuwen2.jpg" />
     <Content Include="images\推荐.png" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
@@ -216,6 +221,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Add.cshtml" />
     <Content Include="Views\Customer\Me.cshtml" />
+    <Content Include="Views\Course\List.cshtml" />
+    <Content Include="Views\Shared\demo.cshtml" />
+    <Content Include="Views\Course\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

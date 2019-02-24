@@ -6356,7 +6356,7 @@ Device/OS Detection
     cache.push(this)
   }
 
-  Swipeout.prototype.touchStart = function(e) {
+  Swipeout.prototype.touchStart = function (e) {
     var p = $.getTouchPosition(e);
     this.container.addClass(TOUCHING);
     this.start = p;
