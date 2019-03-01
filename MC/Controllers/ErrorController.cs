@@ -6,16 +6,11 @@ using System.Web.Mvc;
 
 namespace MC.Controllers
 {
-    public class CustomerController : Controller
+    public class ErrorController : Controller
     {
-        // GET: Customer
-        public ActionResult Add()
+        public ActionResult ErrorPage(string msg = "请使用微信访问")
         {
-            return View();
-        }
-
-        public ActionResult Detail()
-        {
+            ViewBag.ErrorMsg = msg;
             return View();
         }
     }

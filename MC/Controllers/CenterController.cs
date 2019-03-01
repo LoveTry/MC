@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MC.Comm
+namespace MC.Controllers
 {
     public class CenterController : CommonController
     {
@@ -15,6 +15,12 @@ namespace MC.Comm
             ViewBag.UserName = DBUserInfo.NickName;
             ViewBag.HeadImageUrl = CommFunction.HeadImage(DBUserInfo.openID);
             ViewBag.CompanyName = "佣金0.00元";
+            ViewBag.openid = DBUserInfo.openID;
+            return View();
+        }
+
+        public ActionResult MyCommission(string openid)
+        {
             return View();
         }
     }

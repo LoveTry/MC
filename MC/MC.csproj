@@ -146,7 +146,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Comm\CenterController.cs" />
+    <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
     <Compile Include="Comm\MPBasicSetting.cs" />
@@ -159,6 +159,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,6 +178,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\avatar2.jpg" />
+    <Content Include="images\error.png" />
     <Content Include="images\icon_nav_article.png" />
     <Content Include="images\icon_nav_button.png" />
     <Content Include="images\icon_nav_cell.png" />
@@ -184,6 +186,7 @@
     <Content Include="images\mail.png" />
     <Content Include="images\plus.png" />
     <Content Include="images\qrcode.jpg" />
+    <Content Include="images\rmb.png" />
     <Content Include="images\welcome.jpg" />
     <Content Include="images\show.png" />
     <Content Include="images\yuwen1.jpg" />
@@ -220,10 +223,12 @@
     <Content Include="Views\Center\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Add.cshtml" />
-    <Content Include="Views\Customer\Me.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Shared\demo.cshtml" />
     <Content Include="Views\Course\Detail.cshtml" />
+    <Content Include="Views\Center\MyCommission.cshtml" />
+    <Content Include="Views\Error\ErrorPage.cshtml" />
+    <Content Include="Views\Customer\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

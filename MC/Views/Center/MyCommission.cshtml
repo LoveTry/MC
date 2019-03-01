@@ -1,0 +1,81 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "我的佣金";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+    <link href="~/Content/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <style>
+        .weui-navbar {
+            background-color: #fff;
+        }
+
+        .weui-navbar__item.weui-bar__item--on {
+            background-color: #01A9DA;
+            color: #fff;
+        }
+
+        .weui-navbar__item {
+            color: #01A9DA;
+        }
+
+            .weui-navbar__item:after {
+                border-right: 1px solid #01A9DA;
+            }
+
+        .weui-navbar:after {
+            border-bottom: 1px solid #01A9DA;
+        }
+    </style>
+</head>
+<body>
+    <div class="weui-tab">
+        <div class="weui-navbar">
+            <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
+                待结佣
+            </a>
+            <a class="weui-navbar__item" href="#tab2">
+                部分结佣
+            </a>
+            <a class="weui-navbar__item" href="#tab3">
+                已结佣
+            </a>
+        </div>
+        <div class="weui-tab__bd">
+            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active" style="text-align:center; color:#bfbfbf">
+                <div>
+                    <br />
+                    <img src="~/images/rmb.png" />
+                </div>
+                <p>无可结佣金</p>
+            </div>
+            <div id="tab2" class="weui-tab__bd-item" style="text-align:center;color:#bfbfbf">
+                <div>
+                    <br />
+                    <img src="~/images/rmb.png" />
+                </div>
+                <p>无可结佣金</p>
+            </div>
+            <div id="tab3" class="weui-tab__bd-item" style="text-align:center;color:#bfbfbf">
+                <div>
+                    <br />
+                    <img src="~/images/rmb.png" />
+                </div>
+                <p>无可结佣金</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
