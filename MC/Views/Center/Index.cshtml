@@ -110,7 +110,7 @@
 <body ontouchstart>
     <div class="weui-tab">
         <div class="weui-tab__bd">
-            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+            <div id="tab1" class="weui-tab__bd-item @ViewBag.Actived1">
                 <img src="~/images/show.png" width="100%" height="150" />
                 <div class="weui-flex" style="margin:5px">
                     <div class="weui-flex__item ">
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab2" class="weui-tab__bd-item">
+            <div id="tab2" class="weui-tab__bd-item @ViewBag.Actived2">
                 <div class="weui-search-bar" id="searchBar">
                     <form class="weui-search-bar__form" action="#">
                         <div class="weui-search-bar__box">
@@ -187,7 +187,7 @@
                 </div>
                 <div class="weui-panel weui-panel_access">
                     <div class="weui-panel__bd">
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                        <a href='@Url.Action("Detail", "Customer", new { openid=ViewBag.openid })' class="weui-media-box weui-media-box_appmsg">
                             <div class="weui-media-box__hd">
                                 <img class="weui-media-box__thumb" src="~/images/avatar2.jpg" alt="">
                                 @*<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>*@
@@ -218,7 +218,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab3" class="weui-tab__bd-item">
+            <div id="tab3" class="weui-tab__bd-item @ViewBag.Actived3">
 
                 <div class="weui-search-bar" id="searchBar">
                     <form class="weui-search-bar__form" action="#">
@@ -299,7 +299,7 @@
                     </a>
                 </div>
             </div>
-            <div id="tab4" class="weui-tab__bd-item">
+            <div id="tab4" class="weui-tab__bd-item @ViewBag.Actived4">
                 <div class="page-header">
                     <div class="weui-flex">
                         <div class="weui-flex__item">
@@ -319,7 +319,7 @@
                     <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">@ViewBag.CompanyName</div>
                 </div>
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <a class="weui-cell weui-cell_access" href='@Url.Action("Update","User")'>
                         <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"></div>
                         <div class="weui-cell__bd">
                             <p>个人设置</p>
@@ -352,26 +352,26 @@
         </div>
 
         <div class="weui-tabbar">
-            <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+            <a href="#tab1" class="weui-tabbar__item @ViewBag.TabActived1">
                 @*<span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>*@
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_button.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="#tab2" class="weui-tabbar__item">
+            <a href="#tab2" class="weui-tabbar__item @ViewBag.TabActived2">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_msg.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">客户</p>
             </a>
-            <a href="#tab3" class="weui-tabbar__item">
+            <a href="#tab3" class="weui-tabbar__item @ViewBag.TabActived3">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_article.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">动态</p>
             </a>
-            <a href="#tab4" class="weui-tabbar__item">
+            <a href="#tab4" class="weui-tabbar__item @ViewBag.TabActived4">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_cell.png" alt="">
                 </div>

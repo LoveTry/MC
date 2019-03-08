@@ -19,15 +19,82 @@
     <style>
         hr {
             background-color: #eee;
-            height: 1px;
+            height: 5px;
             border: none;
         }
+
+        .progress {
+            margin: 20px;
+        }
+
+            .progress li {
+                padding: 0px 20px 0 40px;
+                line-height: 40px;
+                background-color: #50abe4;
+                display: inline-block;
+                color: #fff;
+                position: relative;
+            }
+
+                .progress li:after {
+                    content: '';
+                    display: block;
+                    border-top: 20px solid transparent;
+                    border-bottom: 20px solid transparent;
+                    border-left: 20px solid #50abe4;
+                    position: absolute;
+                    right: -20px;
+                    top: 0;
+                    z-index: 10;
+                }
+
+                .progress li:before {
+                    content: '';
+                    display: block;
+                    border-top: 20px solid #50abe4;
+                    border-bottom: 20px solid #50abe4;
+                    border-left: 20px solid #fff;
+                    position: absolute;
+                    left: 0px;
+                    top: 0;
+                }
+
+                .progress li:first-child {
+                    border-radius: 4px 0 0 4px;
+                    padding-left: 25px;
+                }
+
+                .progress li:last-child, .cssNavEnd {
+                    border-radius: 0px 4px 4px 0px;
+                    padding-right: 25px;
+                }
+
+                .progress li:first-child:before {
+                    display: none;
+                }
+
+                .progress li:last-child:after, .cssNavEnd:after {
+                    display: none;
+                }
+
+                .progress li.active {
+                    background-color: #ef72b6;
+                }
+
+                    .progress li.active:after {
+                        border-left-color: #ef72b6;
+                    }
+
+                    .progress li.active:before {
+                        border-top-color: #ef72b6;
+                        border-bottom-color: #ef72b6;
+                    }
     </style>
 </head>
 <body>
-    <div class="weui-tab">
+    <div class="weui-tab" style="background-color:#fff">
         <div class="weui-tab__bd">
-            <div class="weui-flex" style="margin:10px">
+            <div class="weui-flex" style="padding:20px">
                 <div class="weui-flex__item">
                     <p>客户名称：小张</p>
                     <p>客户电话：12366544455</p>
@@ -37,6 +104,18 @@
                 </div>
             </div>
             <hr />
+            <div class="weui-cell__bd weui-cell_primary" style="padding:20px">
+                <p>项目进度：</p>
+                <div>
+                    <ul class="progress">
+                        <li>报备</li>
+                        <li class="active">成交</li>
+                        <li>结佣</li>
+                    </ul>
+                </div>
+                <p>备注信息:</p>
+                <p>成交完成，正在结佣。</p>
+            </div>
         </div>
     </div>
 </body>

@@ -7,6 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC", "MC\MC.csproj", "{D585
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCComm", "MCComm\MCComm.csproj", "{581D61DC-C767-40C7-A798-DE05DB4B5A96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ext", "Ext", "{8DD04171-5829-4ED6-9CE2-A3F227713155}"
+	ProjectSection(SolutionItems) = preProject
+		Ext\Castle.ActiveRecord.dll = Ext\Castle.ActiveRecord.dll
+		Ext\Castle.Components.Validator.dll = Ext\Castle.Components.Validator.dll
+		Ext\Castle.Core.dll = Ext\Castle.Core.dll
+		Ext\DAL.dll = Ext\DAL.dll
+		Ext\Iesi.Collections.dll = Ext\Iesi.Collections.dll
+		Ext\NHibernate.ByteCode.Castle.dll = Ext\NHibernate.ByteCode.Castle.dll
+		Ext\NHibernate.dll = Ext\NHibernate.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

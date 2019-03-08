@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Web;
+using static MC.Models.User;
 
 namespace MC.Models
 {
@@ -41,26 +42,24 @@ namespace MC.Models
         /// <returns></returns>
         public static DBUserInfo GetUserDBInfo(string openid)
         {
-            //DataTable dt = new DataTable();
-            ////dt = NetUsers.GetUserInfoByFWId(wxh);
-            //if (dt.Rows.Count > 0)
-            //{
-            //    DBUserInfo dbUserInfo = new DBUserInfo();
-            //    dbUserInfo.TrueName = dt.Rows[0]["TrueName"].ToString();
-            //    dbUserInfo.UserID = dt.Rows[0]["UserID"].ToString();
-            //    dbUserInfo.NickName = dt.Rows[0]["NickName"].ToString();
-            //    dbUserInfo.openID = wxh;
-
-            //    HttpContext.Current.Session.Add(Const.SESSION_USRE_INFO, dbUserInfo);
-            //    return dbUserInfo;
-            //}
-            //return null;
             var info = Senparc.Weixin.MP.AdvancedAPIs.UserApi.Info(MPBasicSetting.AppID, openid);
+            var user = User.FindByProperty("OpenID", info.openid);
+            if (user == null)
+            {
+                //首次关注自动新建用户
+                user = new User();
+                user.UserID = GuidHelper.GuidNew();
+                user.UserName = info.nickname;
+                user.OpenID = info.openid;
+                user.CrTime = user.LastOnLineTime = DateTime.Now;
+                user.Create();
+            }
+
             DBUserInfo dbUserInfo = new DBUserInfo();
-            dbUserInfo.TrueName = "林春宝";
-            dbUserInfo.UserID = GuidHelper.GuidNew().ToString();
-            dbUserInfo.NickName = info.nickname;
-            dbUserInfo.openID = openid;
+            dbUserInfo.UserID = user.UserID.ToString();
+            dbUserInfo.NickName = user.UserName;
+            dbUserInfo.openID = user.OpenID;
+            HttpContext.Current.Session.Add(Const.SESSION_USRE_INFO, dbUserInfo);
             return dbUserInfo;
 
         }

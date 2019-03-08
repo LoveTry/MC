@@ -15,7 +15,8 @@ namespace MC
         {
             //初始化信息
             MPBasicSetting.GetBasicSetting();
-
+            //MCComm.DBHelper.GetWebSqlConnection();
+            Sunnysoft.DAL.ActiveRecordDBHelper.InitSessionFactory();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

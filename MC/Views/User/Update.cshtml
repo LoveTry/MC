@@ -1,0 +1,96 @@
+﻿@model MC.Models.User
+@{
+    Layout = null;
+    ViewBag.Title = "个人设置";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+    <link href="~/Content/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/mc.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSave").on('click', function () {
+                $.showLoading();
+                $("#form0").submit();
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="weui-tab">
+        <div class="weui-tab__bd">
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnSuccess = "save", OnFailure = "hideLoading" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.UserID)
+                @Html.HiddenFor(model => model.CrTime)
+                @Html.HiddenFor(model => model.LastOnLineTime)
+                @Html.HiddenFor(model => model.OpenID)
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">
+                                昵称
+                            </label>
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "weui-input" })
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">
+                                姓名
+                            </label>
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            @Html.TextBoxFor(model => model.TrueName, new { @class = "weui-input" })
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label select_title">
+                                性别
+                            </label>
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            @Html.DropDownList("Sex", ViewBag.Sex as List<SelectListItem>, new { @class = "weui-select" })
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">
+                                电话
+                            </label>
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "weui-input", type = "number", pattern = "[0-9]*", placeholder = "请输入号码" })
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">
+                                邮箱
+                            </label>
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "weui-input" })
+                        </div>
+                    </div>
+                    <a id="btnSave" href="javascript:void(0);" class="weui-btn weui-btn_primary">保存</a>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
