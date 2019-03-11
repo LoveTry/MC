@@ -254,6 +254,7 @@
     <Content Include="Views\Error\ErrorPage.cshtml" />
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
+    <Content Include="数据库设计文档.xlsm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
