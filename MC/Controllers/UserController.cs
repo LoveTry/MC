@@ -30,6 +30,7 @@ namespace MC.Controllers
             {
                 model.Update();
                 DBUserInfo.CleearUserSession();
+                DBUserInfo.GetUserDBInfo(model.OpenID);
             }
             return RedirectToAction("Index", "Center", new { Actived = 4 });
         }
