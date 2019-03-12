@@ -167,6 +167,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Comm\QrCodeCreater.cs" />
+    <Compile Include="Controllers\ADController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
@@ -255,6 +257,7 @@
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="数据库设计文档.xlsm" />
+    <Content Include="Views\AD\Ad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

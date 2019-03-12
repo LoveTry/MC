@@ -10,6 +10,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using MCComm;
+using MC.Comm;
 
 namespace MC
 {
@@ -107,6 +108,7 @@ namespace MC
             //BLL.BUser Subuser = new BLL.BUser();
             //UserInfoJson uij = Subuser.GetUserInfo(requestMessage.FromUserName);
             #endregion
+            MCComm.FileHelper.WriteLog("OnEvent_SubscribeRequest", requestMessage.EventKey);
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
 
             responseMessage.Articles.Add(new Article
@@ -125,6 +127,31 @@ namespace MC
             //});
 
             return responseMessage;
+        }
+
+
+        public override IResponseMessageBase OnEvent_ScanRequest(RequestMessageEvent_Scan requestMessage)
+        {
+            //已关注扫描带参数的二维码
+            MCComm.FileHelper.WriteLog("OnEvent_ScanRequest", requestMessage.EventKey);
+            if (requestMessage.EventKey.IsNotEmpty())
+            {
+                var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+                switch (requestMessage.EventKey.ToInt())
+                {
+                    case (int)CustomerAgent.YILICHANG:
+                        responseMessage.Content = "亿利昶专供一次性餐饮用品，服务至上。详情请点击<a href='www.dc.cargocargo.cn/ad/1001'>www.dc.cargocargo.cn/ad/ad/1001</a>";
+                        return responseMessage;
+                    case (int)CustomerAgent.LIN:
+                        responseMessage.Content = "艺利广告，专注新媒体。详情请点击<a href='www.dc.cargocargo.cn/ad/1001'>www.dc.cargocargo.cn/ad/ad/1002</a>";
+                        return responseMessage;
+                    case 0:
+                        return base.OnEvent_ScanRequest(requestMessage);
+                    default:
+                        return base.OnEvent_ScanRequest(requestMessage);
+                }
+            }
+            return base.OnEvent_ScanRequest(requestMessage);
         }
 
         /// <summary>
@@ -226,9 +253,9 @@ namespace MC
              * var responseMessage = MessageAgent.RequestResponseMessage(agentUrl, agentToken, RequestDocument.ToString());
              * return responseMessage;
              */
+            MCComm.FileHelper.WriteLog("DefaultResponseMessage", ((int)requestMessage.MsgType).ToString());
 
-            var responseMessage = this.CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "系统尚未处理该消息";
+            var responseMessage = this.CreateResponseMessage<ResponseMessageNoResponse>();
             return responseMessage;
         }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.Helpers;
 using Senparc.Weixin.MP.AdvancedAPIs;
+using System.Threading.Tasks;
 
 namespace MC
 {
@@ -243,18 +244,13 @@ namespace MC
 
         public override IResponseMessageBase OnEvent_LocationRequest(RequestMessageEvent_Location requestMessage)
         {
+            return null;
             //这里是微信客户端（通过微信服务器）自动发送过来的位置信息
-            var responseMessage = CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "您当前所在位置：\r\n经度：" + requestMessage.Longitude.ToString()
-                + "\r\n维度：" + requestMessage.Latitude.ToString()
-                + "\r\n精度：" + requestMessage.Precision.ToString();
-            return responseMessage; //这里也可以返回null（需要注意写日志时候null的问题）
-        }
-
-        public override IResponseMessageBase OnEvent_ScanRequest(RequestMessageEvent_Scan requestMessage)
-        {
-            //通过扫描关注
-            return base.OnEvent_ScanRequest(requestMessage);
+            //var responseMessage = CreateResponseMessage<ResponseMessageText>();
+            //responseMessage.Content = "您当前所在位置：\r\n经度：" + requestMessage.Longitude.ToString()
+            //    + "\r\n维度：" + requestMessage.Latitude.ToString()
+            //    + "\r\n精度：" + requestMessage.Precision.ToString();
+            //return responseMessage; //这里也可以返回null（需要注意写日志时候null的问题）
         }
 
         public override IResponseMessageBase OnEvent_ViewRequest(RequestMessageEvent_View requestMessage)
