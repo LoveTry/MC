@@ -64,7 +64,7 @@
                             </label>
                         </div>
                         <div class="weui-cell__bd weui-cell_primary">
-                            @Html.DropDownList("Sex", ViewBag.Sex as List<SelectListItem>, new { @class = "weui-select" })
+                            @Html.DropDownListFor(model=>model.Sex, ViewBag.Sex as List<SelectListItem>, new { @class = "weui-select" })
                         </div>
                     </div>
                     <div class="weui-cell">

@@ -13,6 +13,13 @@ namespace MC.Controllers
         public ActionResult Add()
         {
             var info = new Customer();
+
+            ViewBag.Sex = new List<SelectListItem>() {
+                new SelectListItem() {Text="",Value="" },
+                new SelectListItem() { Text="男", Value="男" },
+                new SelectListItem() { Text="女", Value="女" },
+            };
+
             return View(info);
         }
 
