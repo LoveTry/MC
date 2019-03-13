@@ -1,89 +1,103 @@
-﻿using Castle.ActiveRecord;
-using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Web;
+using System.Text;
+using Castle.ActiveRecord;
+using System.Data;
+using System.Data.SqlClient;
+using System.Collections;
 
 namespace MC.Models
 {
-    [ActiveRecord("t_User")]
-    public class User : ActiveRecordBase<User>,IModel<User>
+
+    [ActiveRecord("t_Order")]
+    public class Order : ActiveRecordBase<Order>
     {
+
         #region
+
         /// <summary>
-        /// 用户ID
+        /// 主键ID
         /// </summary>
-        [PrimaryKey(PrimaryKeyType.Assigned)]
-        public Guid UserID
+        [PrimaryKey(PrimaryKeyType.Identity)]
+        public int ID
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 用户名
-        /// </summary>
-        [Property]
-        public string UserName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 真实姓名
+        /// 流水号
         /// </summary>
         [Property]
-        public string TrueName
+        public string OrderNo
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 微信openid
+        /// 客户ID
         /// </summary>
         [Property]
-        public string OpenID
+        public Guid CusID
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 性别
+        /// 产品ID
         /// </summary>
         [Property]
-        public string Sex
+        public Guid ProID
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 手机号
+        /// 产品价格
         /// </summary>
         [Property]
-        public string Phone
+        public decimal ProMoney
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 邮箱
+        /// 当前状态
         /// </summary>
         [Property]
-        public string Email
+        public string State
         {
             get;
             set;
         }
 
         /// <summary>
-        /// 创建时间
+        /// 状态信息
+        /// </summary>
+        [Property]
+        public string StateInfo
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 推荐人ID
+        /// </summary>
+        [Property]
+        public Guid CrUserID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 推荐时间
         /// </summary>
         [Property]
         public DateTime? CrTime
@@ -92,21 +106,6 @@ namespace MC.Models
             set;
         }
 
-        /// <summary>
-        /// 最后登录时间
-        /// </summary>
-        [Property]
-        public DateTime? LastOnLineTime
-        {
-            get;
-            set;
-        }
         #endregion
-
-        public User FindByProperty(string property, object value)
-        {
-            ICriterion exp = Restrictions.Eq(property, value);
-            return FindOne(exp);
-        }
     }
 }

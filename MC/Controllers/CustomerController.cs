@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,8 @@ namespace MC.Controllers
         // GET: Customer
         public ActionResult Add()
         {
-            return View();
+            var info = new Customer();
+            return View(info);
         }
 
         public ActionResult Detail()

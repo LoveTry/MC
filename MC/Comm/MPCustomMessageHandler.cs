@@ -140,10 +140,10 @@ namespace MC
                 switch (requestMessage.EventKey.ToInt())
                 {
                     case (int)CustomerAgent.YILICHANG:
-                        responseMessage.Content = "亿利昶专供一次性餐饮用品，服务至上。详情请点击<a href='www.dc.cargocargo.cn/ad/1001'>www.dc.cargocargo.cn/ad/ad/1001</a>";
+                        responseMessage.Content = "亿利昶专供一次性餐饮用品，服务至上。详情请点击<a href='dc.cargocargo.cn/ad/ad/1001'>dc.cargocargo.cn/ad/ad/1001</a>";
                         return responseMessage;
                     case (int)CustomerAgent.LIN:
-                        responseMessage.Content = "艺利广告，专注新媒体。详情请点击<a href='www.dc.cargocargo.cn/ad/1001'>www.dc.cargocargo.cn/ad/ad/1002</a>";
+                        responseMessage.Content = "艺利广告，专注新媒体。详情请点击<a href='dc.cargocargo.cn/ad/ad/1002'>dc.cargocargo.cn/ad/ad/1002</a>";
                         return responseMessage;
                     case 0:
                         return base.OnEvent_ScanRequest(requestMessage);

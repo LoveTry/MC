@@ -12,7 +12,7 @@ namespace MC.Comm
     {
         public static string CreateQrCode(string url)
         {
-            var qr = QrCodeApi.Create(MPBasicSetting.AppID, 0, (int)CustomerAgent.YILICHANG, QrCode_ActionName.QR_LIMIT_SCENE);
+            var qr = QrCodeApi.Create(MPBasicSetting.AppID, 0, (int)CustomerAgent.LIN, QrCode_ActionName.QR_LIMIT_SCENE);
             if (qr.errcode == ReturnCode.请求成功)
             {
                 return QrCodeApi.GetShowQrCodeUrl(qr.ticket);
