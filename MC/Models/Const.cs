@@ -11,5 +11,10 @@ namespace MC.Models
         /// 获取用户信息
         /// </summary>
         public const string SESSION_USRE_INFO = "SESSION_USRE_INFO";
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        public const string PC_USRE_INFO = "PC_USRE_INFO";
     }
 }

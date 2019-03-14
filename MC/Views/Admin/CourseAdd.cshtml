@@ -1,0 +1,86 @@
+﻿@model MC.Models.Project
+
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden(Model.ID.ToString())
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "请输入课程名称" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description)
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "请输入课程描述" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price)
+        @Html.TextBox(nameof(Model.Price),Model.Price.ToString("F2"), new { @class = "form-control", placeholder = "请输入单价", type = "number" })
+        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Amount)
+        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", placeholder = "请输入课时", type = "number" })
+        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Total)
+        @Html.TextBox(nameof(Model.Total), Model.Total.ToString("F2"), new { @class = "form-control", placeholder = "请输入总价", type = "number" })
+        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DisCount)
+        @Html.TextBoxFor(model => model.DisCount, new { @class = "form-control", placeholder = "请输入单位" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Unit)
+        @Html.TextBoxFor(model => model.Unit, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartDate)
+        @Html.TextBox(nameof(Model.StartDate),Model.StartDate.Value.ToString("yyyy-MM-dd"), new { @class = "form-control", placeholder = "开课时间", type = "date" })
+        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndDate)
+        @Html.TextBox(nameof(Model.EndDate), Model.EndDate.Value.ToString("yyyy-MM-dd"), new { @class = "form-control", placeholder = "结课时间", type = "date" })
+        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CrTime)
+        @Html.TextBoxFor(model => model.CrTime, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CrUser)
+        @Html.TextBoxFor(model => model.CrUser, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UpTime)
+        @Html.TextBoxFor(model => model.UpTime, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UpUser)
+        @Html.TextBoxFor(model => model.UpUser, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">保存返回</button>
+    <button type="submit" class="btn btn-primary">保存新增</button>
+
+}

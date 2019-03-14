@@ -9,7 +9,7 @@ using System.Web;
 namespace MC.Models
 {
     [ActiveRecord("t_User")]
-    public class User : ActiveRecordBase<User>,IModel<User>
+    public class User : ActiveRecordBase<User>
     {
         #region
         /// <summary>
@@ -103,7 +103,7 @@ namespace MC.Models
         }
         #endregion
 
-        public User FindByProperty(string property, object value)
+        public static User FindByProperty(string property, object value)
         {
             ICriterion exp = Restrictions.Eq(property, value);
             return FindOne(exp);

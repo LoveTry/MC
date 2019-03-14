@@ -169,6 +169,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Comm\QrCodeCreater.cs" />
     <Compile Include="Controllers\ADController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
@@ -190,6 +191,7 @@
     </Compile>
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
+    <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\table\Order.cs" />
     <Compile Include="Models\table\Customer.cs" />
     <Compile Include="Models\table\IModel.cs" />
@@ -198,8 +200,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\jquery-weui.css" />
     <Content Include="Content\jquery-weui.min.css" />
+    <Content Include="Content\pc.css" />
     <Content Include="Content\weui.css" />
     <Content Include="Content\weui.min.css" />
     <Content Include="favicon.ico" />
@@ -221,6 +225,7 @@
     <Content Include="images\yuwen1.jpg" />
     <Content Include="images\yuwen2.jpg" />
     <Content Include="images\推荐.png" />
+    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
     <Content Include="Scripts\fastclick.js" />
@@ -262,9 +267,16 @@
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="数据库设计文档.xlsm" />
     <Content Include="Views\AD\Ad.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Order.cshtml" />
+    <Content Include="Views\Admin\Course.cshtml" />
+    <Content Include="Views\Admin\Fee.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\CourseAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\query\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
