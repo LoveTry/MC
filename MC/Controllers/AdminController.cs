@@ -46,6 +46,7 @@ namespace MC.Controllers
                 {
                     ViewBag.Title = "课程新增";
                     var model = new Project();
+                    model.IsUse = false;
                     model.StartDate = model.EndDate = DateTime.Now;
                     model.CrUser = loginUser.UserName;
                     model.UpUser = loginUser.UserName;

@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using NHibernate.Criterion;
 
 namespace MC.Models
 {
@@ -180,13 +181,29 @@ namespace MC.Models
             set;
         }
 
+        /// <summary>
+        /// 更新
+        /// </summary>
+        [Property]
+        [Display(Name = "是否有效")]
+        public bool IsUse
+        {
+            get;
+            set;
+        }
         #endregion
 
         public static Project[] GetList()
         {
             //string sql = "SELECT * FROM dbo.t_Project";
             //return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
-            return Project.FindAll();
+            return FindAll();
+        }
+
+        public static Project[] GetChooseList()
+        {
+            ICriterion exp = Restrictions.Eq("IsUse", true);
+            return FindAll(exp);
         }
 
 

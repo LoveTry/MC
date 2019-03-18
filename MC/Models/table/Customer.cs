@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using NHibernate.Criterion;
+using System.ComponentModel.DataAnnotations;
 
 namespace MC.Models
 {
@@ -61,6 +62,7 @@ namespace MC.Models
         /// 描述
         /// </summary>
         [Property]
+        [Required]
         public string Remark
         {
             get;
@@ -110,11 +112,11 @@ namespace MC.Models
         #endregion
 
         /// <summary>
-        /// 记录选择项目
+        /// 记录选择项目(用逗号隔开)
         /// </summary>
-        public List<string> ChooseIDList
+        public string ChooseIDList
         {
-            get;set;
+            get; set;
         }
 
         public Customer FindByProperty(string property, object value)

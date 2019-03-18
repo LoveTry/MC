@@ -20,10 +20,28 @@ namespace MC.Controllers
                 new SelectListItem() { Text="女", Value="女" },
             };
 
+            ViewBag.ProjectList = Project.GetChooseList();
+
             return View(info);
         }
 
         public ActionResult Detail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add(Customer model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return RedirectToAction("CusList");
+          
+        }
+
+        public ActionResult CusList()
         {
             return View();
         }

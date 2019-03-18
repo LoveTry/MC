@@ -6,6 +6,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.Hidden(Model.ID.ToString())
+    @Html.HiddenFor(model=>model.IsUse)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.Name)
@@ -21,7 +22,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Price)
-        @Html.TextBox(nameof(Model.Price),Model.Price.ToString("F2"), new { @class = "form-control", placeholder = "请输入单价", type = "number" })
+        @Html.TextBox(nameof(Model.Price), Model.Price.ToString("F2"), new { @class = "form-control", placeholder = "请输入单价", type = "number" })
         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
     </div>
 
@@ -50,7 +51,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.StartDate)
-        @Html.TextBox(nameof(Model.StartDate),Model.StartDate.Value.ToString("yyyy-MM-dd"), new { @class = "form-control", placeholder = "开课时间", type = "date" })
+        @Html.TextBox(nameof(Model.StartDate), Model.StartDate.Value.ToString("yyyy-MM-dd"), new { @class = "form-control", placeholder = "开课时间", type = "date" })
         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
     </div>
 

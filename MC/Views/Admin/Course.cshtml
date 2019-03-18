@@ -52,7 +52,7 @@
             foreach (var item in ViewBag.Source as MC.Models.Project[])
             {
                 <tr>
-                    <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a></td>
+                    <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a><a href='#' class="btn btn-primary btn-sm" role="button">开启</a></td>
                     <td>@item.Name</td>
                     <td>@item.Price.ToString("F2")</td>
                     <td>@item.Amount</td>

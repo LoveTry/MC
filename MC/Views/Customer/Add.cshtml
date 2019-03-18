@@ -32,8 +32,35 @@
             $('.weui-cell_swiped').swipeout();
 
             $("#btnSave").on('click', function () {
+                if ($("#CusName").val() == "") {
+                    $.toptip('请输入名称', 'warning');
+                    return false;
+                }
+                if ($("#CusPhone").val() == "") {
+                    $.toptip('请输入手机号', 'warning');
+                    return false;
+                }
+                var chooseidlist = "";
+                $("#choosed").find("input[type='hidden'][name='chooseid']").each(function () {
+                    chooseidlist += $(this).val() + ",";
+                });
+                if (chooseidlist === "") {
+                    $.toptip('请选择意向课程', 'warning');
+                    return false;
+                }
+                $("#ChooseIDList").val(chooseidlist.trim());
                 $.showLoading();
                 $("#form0").submit();
+            });
+
+            $('.project_list').on("click", function () {
+                var id = $(this).find("input[type='hidden'][name='id']").first().val();
+                var name = $(this).find("input[type='hidden'][name='name']").first().val();
+                //alert(id);
+                //alert(name);
+                $("#choosed").append('<div class="weui-cell weui-cell_swiped"><div class="weui-cell__bd" ><div class="weui-cell"><div class="weui-cell__bd">'
+                    + '<p>' + name + '</p><input type="hidden" value="' + id + '" name="chooseid"/></div><div class="weui-cell__ft">左滑动删除</div></div></div><div class="weui-cell__ft"><a class="weui-swiped-btn weui-swiped-btn_warn delete-swipeout" href="javascript:">删除</a></div></div>');
+                $('.weui-cell_swiped').swipeout();
             });
         });
     </script>
@@ -41,6 +68,8 @@
 <body ontouchstart>
     @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnSuccess = "save", OnFailure = "hideLoading" }))
     {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(model => model.ChooseIDList)
         <div class="weui-cells  weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
@@ -72,69 +101,65 @@
                     <div class="weui-textarea-counter"><span>0</span>/200</div>
                 </div>
             </div>
-            <a class="weui-cell weui-cell_access open-popup" data-target="#list">
-                <div class="weui-cell__hd"><img src="~/images/plus.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p>选择意向课程</p>
-                </div>
-                <div class="weui-cell__ft"></div>
-            </a>
-            <div class="weui-cells__title">已选择课程</div>
-            <div class="weui-cell weui-cell_swiped">
-                <div class="weui-cell__bd">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <p>高中物理</p>
-                        </div>
-                        <div class="weui-cell__ft">左滑动删除</div>
-                    </div>
-                </div>
-                <div class="weui-cell__ft">
-                    <a class="weui-swiped-btn weui-swiped-btn_warn delete-swipeout" href="javascript:">删除</a>
-                </div>
+        </div>
+
+        <a class="weui-cell weui-cell_access open-popup" data-target="#list">
+            <div class="weui-cell__hd"><img src="~/images/plus.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>选择意向课程</p>
             </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <div class="weui-cells__title">已选择课程</div>
+        <div id="choosed">
+            @*<div class="weui-cell weui-cell_swiped">
+                    <div class="weui-cell__bd">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <p>高中物理</p>
+                            </div>
+                            <div class="weui-cell__ft">左滑动删除</div>
+                        </div>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <a class="weui-swiped-btn weui-swiped-btn_warn delete-swipeout" href="javascript:">删除</a>
+                    </div>
+                </div>*@
         </div>
         <div class="btn-margin">
-            <a href="javascript:;" class="weui-btn weui-btn_primary">推荐</a>
+            <a href="javascript:;" id="btnSave" class="weui-btn weui-btn_primary">推荐</a>
         </div>
+
     }
     <div id="list" class='weui-popup__container'>
         <div class="weui-popup__overlay"></div>
         <div class="weui-popup__modal">
-            <div class="weui-panel weui-panel_access">
-                <div class="weui-panel__bd">
-                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg weui-cell_access">
-                        <div class="weui-media-box__hd">
-                            <img class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==" alt="">
-                        </div>
-                        <div class="weui-media-box__bd">
-                            <h4 class="weui-media-box__title">中学语文</h4>
-                            <p class="weui-media-box__desc">由知名教师授课 1对1教学</p>
-                        </div>
-                        <span class="weui-cell__ft"></span>
-                    </a>
-                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg weui-cell_access">
-                        <div class="weui-media-box__hd">
-                            <img class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==" alt="">
-                        </div>
-                        <div class="weui-media-box__bd">
-                            <h4 class="weui-media-box__title">小数数学</h4>
-                            <p class="weui-media-box__desc">由知名教师授课 1对1教学</p>
-                        </div>
-                        <span class="weui-cell__ft"></span>
-                    </a>
-                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg weui-cell_access">
-                        <div class="weui-media-box__hd">
-                            <img class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==" alt="">
-                        </div>
-                        <div class="weui-media-box__bd">
-                            <h4 class="weui-media-box__title">高中物理</h4>
-                            <p class="weui-media-box__desc">由知名教师授课 1对1教学</p>
-                        </div>
-                        <span class="weui-cell__ft"></span>
-                    </a>
+            @if (ViewBag.ProjectList != null && (ViewBag.ProjectList as MC.Models.Project[]).Length > 0)
+            {
+                <div class="weui-panel weui-panel_access">
+                    <div class="weui-panel__bd">
+                        @foreach (var item in ViewBag.ProjectList as MC.Models.Project[])
+                        {
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg weui-cell_access project_list close-popup">
+                                @Html.Hidden("id", item.ID)
+                                @Html.Hidden("name", item.Name)
+                                <div class="weui-media-box__hd">
+                                    <img class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==" alt="">
+                                </div>
+                                <div class="weui-media-box__bd">
+                                    <h4 class="weui-media-box__title">@item.Name</h4>
+                                    <p class="weui-media-box__desc">@item.Description</p>
+                                </div>
+                                <span class="weui-cell__ft"></span>
+                            </a>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <P>未查询到数据</P>
+            }
             <a href="javascript:;" class="weui-btn weui-btn_primary close-popup">关闭</a>
         </div>
     </div>
