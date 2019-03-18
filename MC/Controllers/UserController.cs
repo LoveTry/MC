@@ -32,7 +32,8 @@ namespace MC.Controllers
                 DBUserInfo.CleearUserSession();
                 DBUserInfo.GetUserDBInfo(model.OpenID);
             }
-            return RedirectToAction("Index", "Center", new { Actived = 4 });
+           
+            return Json(new { url = "/Center/Index/4" });
         }
 
 

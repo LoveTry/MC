@@ -23,11 +23,6 @@ namespace MC.Models
             set;
         }
 
-        public string TrueName
-        {
-            get;
-            set;
-        }
         public string openID
         {
             get;

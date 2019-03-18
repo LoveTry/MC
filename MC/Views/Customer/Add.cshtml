@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery-weui.min.js"></script>
     <script src="~/Scripts/fastclick.js"></script>
     <script src="~/Scripts/mc.js"></script>
@@ -66,7 +67,7 @@
     </script>
 </head>
 <body ontouchstart>
-    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnSuccess = "save", OnFailure = "hideLoading" }))
+    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnFailure = "hideLoading", OnSuccess= "save",  }))
     {
         @Html.AntiForgeryToken();
         @Html.HiddenFor(model => model.ChooseIDList)
@@ -97,7 +98,7 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="客户描述说明" rows="3"></textarea>
+                    @Html.TextAreaFor(model => model.Remark, new { @class = "weui-textarea", rows = "3", placeholder = "客户描述说明" })
                     <div class="weui-textarea-counter"><span>0</span>/200</div>
                 </div>
             </div>

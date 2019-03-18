@@ -17,7 +17,7 @@ namespace MC.Controllers
             ViewBag.HeadImageUrl = CommFunction.HeadImage(DBUserInfo.openID);
             ViewBag.CompanyName = "佣金0.00元";
             ViewBag.openid = DBUserInfo.openID;
-            Actived(Request.QueryString["Actived"] != null ? Request.QueryString["Actived"].ToInt() : 1);
+            Actived(Request.RequestContext.RouteData.Values["id"] != null ? Request.RequestContext.RouteData.Values["id"].ToString().ToInt() : 1);
             return View();
         }
 

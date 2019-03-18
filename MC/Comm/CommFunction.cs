@@ -218,9 +218,9 @@ namespace MC
         {
             try
             {
-                string first = dbUserInfo.TrueName + ",您好。您收到一条{0}消息。".FormatWith(titleName);
+                string first = "您好。您收到一条{0}消息。".FormatWith(titleName);
                 string keyword1 = content.Length > 10 ? content.Substring(0, 9) + "......" : content;
-                string keyword2 = string.Format("{0}在{1}发送", dbUserInfo.TrueName, DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                string keyword2 = string.Format("在{0}发送", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
                 string remark = "请点击【详情】查看";
 
                 var temp = new 提醒通用模板()

@@ -17,4 +17,11 @@ namespace MC.Models
         /// </summary>
         public const string PC_USRE_INFO = "PC_USRE_INFO";
     }
+
+    public enum AjaxReturnCode
+    {
+        OK = 1,
+        ERROR = 2,
+        WARNNING = 3
+    }
 }

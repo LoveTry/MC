@@ -32,6 +32,7 @@ namespace MC.Models
         /// 客户名称
         /// </summary>
         [Property]
+        [Required]
         public string CusName
         {
             get;
@@ -42,6 +43,7 @@ namespace MC.Models
         /// 客户电话
         /// </summary>
         [Property]
+        [Required]
         public string CusPhone
         {
             get;
@@ -62,7 +64,6 @@ namespace MC.Models
         /// 描述
         /// </summary>
         [Property]
-        [Required]
         public string Remark
         {
             get;
