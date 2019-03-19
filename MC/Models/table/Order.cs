@@ -6,6 +6,7 @@ using Castle.ActiveRecord;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
+using MCComm;
 
 namespace MC.Models
 {
@@ -106,6 +107,11 @@ namespace MC.Models
             set;
         }
 
+        public static DataTable GetList(string where)
+        {
+            string sql = "SELECT * FROM v_OrderList where {0} ORDER BY CrUserID,CrTime DESC".FormatWith(where);
+            return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
+        }
         #endregion
     }
 }

@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace MC.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
-        private LoginUser loginUser;
+ 
         // GET: Admin
         public ActionResult Index()
         {
@@ -27,7 +27,7 @@ namespace MC.Controllers
 
         public ActionResult CourseAdd()
         {
-            if (loginUser != null)
+            if (LUser != null)
             {
                 if (Request.RequestContext.RouteData.Values["id"] != null)
                 {
@@ -48,8 +48,8 @@ namespace MC.Controllers
                     var model = new Project();
                     model.IsUse = false;
                     model.StartDate = model.EndDate = DateTime.Now;
-                    model.CrUser = loginUser.UserName;
-                    model.UpUser = loginUser.UserName;
+                    model.CrUser = LUser.UserName;
+                    model.UpUser = LUser.UserName;
                     model.Amount = 0;
                     return View(model);
                 }
@@ -63,7 +63,7 @@ namespace MC.Controllers
         [HttpPost]
         public ActionResult CourseAdd(Project model)
         {
-            if (loginUser != null)
+            if (LUser != null)
             {
                 if (model.Name.IsEmpty())
                 {
@@ -86,7 +86,7 @@ namespace MC.Controllers
                     ModelState.AddModelError(nameof(model.Total), "请输入总价.");
                 }
                 model.UpTime = model.CrTime = DateTime.Now;
-                model.CrUserID = loginUser.UserId.ToGuid();
+                model.CrUserID = LUser.UserId.ToGuid();
                 if (ModelState.IsValid)
                 {
                     if (model.ID.IsEmpty())
@@ -112,19 +112,9 @@ namespace MC.Controllers
             }
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        public ActionResult Order()
         {
-            base.OnActionExecuting(filterContext);
-            if (Session[Const.PC_USRE_INFO] != null)
-            {
-                //Session里存在 说明登录过
-                loginUser = Session[Const.PC_USRE_INFO] as LoginUser;
-            }
-            else
-            {
-                LoginUser.GetLoginUser("88888888-8888-8888-8888-888888888888".ToGuid());
-                //filterContext.Result = RedirectToAction("Login", "Login", new { msg = "该页面已经过期，请退出当前菜单重新进入！" });
-            }
+            return View();
         }
     }
 }

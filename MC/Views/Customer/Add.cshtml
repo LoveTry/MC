@@ -67,7 +67,7 @@
     </script>
 </head>
 <body ontouchstart>
-    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnFailure = "hideLoading", OnSuccess= "save",  }))
+    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnFailure = "hideLoading", OnSuccess= "save"  }))
     {
         @Html.AntiForgeryToken();
         @Html.HiddenFor(model => model.ChooseIDList)

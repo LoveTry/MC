@@ -169,7 +169,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Comm\QrCodeCreater.cs" />
     <Compile Include="Controllers\ADController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\admin\AdminController.cs" />
+    <Compile Include="Controllers\admin\BaseController.cs" />
+    <Compile Include="Controllers\admin\BasicCodeController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
@@ -192,6 +194,8 @@
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Models\LoginUser.cs" />
+    <Compile Include="Models\table\BasicInfoContent.cs" />
+    <Compile Include="Models\table\BasicInfoType.cs" />
     <Compile Include="Models\table\Order.cs" />
     <Compile Include="Models\table\Customer.cs" />
     <Compile Include="Models\table\IModel.cs" />
@@ -276,10 +280,14 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\CourseAdd.cshtml" />
     <Content Include="Views\Customer\CusList.cshtml" />
+    <Content Include="Views\BasicCode\BasicTypeList.cshtml" />
+    <Content Include="Views\BasicCode\BasicTypeAdd.cshtml" />
+    <Content Include="Views\BasicCode\BasicContentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\query\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
