@@ -1,7 +1,77 @@
 ﻿
 @{
-    ViewBag.Title = "BasicContentList";
+    ViewBag.Title = "基本代码";
 }
 
-<h2>BasicContentList</h2>
+<h2>@ViewBag.Title</h2>
+<form class="form-inline">
+    <div class="form-group" style="margin-left:20px">
+        <label class="sr-only" for="exampleInputEmail3">类型</label>
+        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="类型">
+    </div>
+    <div class="form-group" style="margin-left:20px">
+        <label class="sr-only" for="exampleInputEmail3">名称</label>
+        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="名称">
+    </div>
+    <div class="checkbox" style="margin-left:20px">
+        <label>
+            <input type="checkbox"> 禁用
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-left:20px">检索</button>
+
+    <a href='@Url.Action("BasicContentAdd","BasicCode")' class="btn btn-primary" role="button">新建</a>
+    <a href='@Url.Action("BasicTypeList","BasicCode")' class="btn btn-primary" role="button">新建类型</a>
+</form>
+<br />
+<table class="table table-hover " style="vertical-align:middle;">
+    <thead>
+        <tr>
+            <th>
+                操作
+            </th>
+            <th>
+                类型
+            </th>
+            <th>
+                名称
+            </th>
+            <th>
+                排序
+            </th>
+            <th>
+                创建人
+            </th>
+            <th>
+                创建时间
+            </th>
+            <th>
+                更新人
+            </th>
+            <th>
+                更新时间
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Source != null)
+        {
+
+            foreach (var item in ViewBag.Source as List<MC.Models.BasicInfoContent>)
+            {
+                <tr>
+                    <td><a href='@Url.Action("BasicContentAdd","BasicCode",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a></td>
+                    <td>@item.BasicTypeName</td>
+                    <td>@item.TypeName</td>
+                    <td>@item.SequenceOrder</td>
+                    <td>@item.CrUser</td>
+                    <td>@item.CrTime.Value.ToString("yyyy-MM-dd")</td>
+                    <td>@item.UpUser</td>
+                    <td>@item.UpTime.Value.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
 

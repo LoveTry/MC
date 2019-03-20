@@ -1,6 +1,6 @@
-﻿@model MC.Models.BasicInfoType
+﻿@model MC.Models.BasicInfoContent
 @{
-    ViewBag.Title = "基本类型添加";
+    ViewBag.Title = "基本代码添加";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,12 +13,12 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.TypeID)
-        @Html.TextBoxFor(model => model.TypeID, new { @class = "form-control", @readonly = "readonly" })
+        @Html.DropDownList("TypeID", ViewBag.BasicTypeList as IEnumerable<SelectListItem>, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.TypeName)
-        @Html.TextBoxFor(model => model.TypeName, new { @class = "form-control", placeholder = "请输入类型名称" })
+        @Html.TextBoxFor(model => model.TypeName, new { @class = "form-control", placeholder = "请输入名称" })
         @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
@@ -29,6 +29,11 @@
                 </labe>
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SequenceOrder)
+        @Html.TextBoxFor(model => model.SequenceOrder, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(model => model.SequenceOrder, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.CrUser)

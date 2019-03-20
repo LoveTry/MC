@@ -283,6 +283,7 @@
     <Content Include="Views\BasicCode\BasicTypeList.cshtml" />
     <Content Include="Views\BasicCode\BasicTypeAdd.cshtml" />
     <Content Include="Views\BasicCode\BasicContentList.cshtml" />
+    <Content Include="Views\BasicCode\BasicContentAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
