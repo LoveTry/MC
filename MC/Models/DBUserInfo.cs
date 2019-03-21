@@ -49,7 +49,11 @@ namespace MC.Models
                 user.CrTime = user.LastOnLineTime = DateTime.Now;
                 user.Create();
             }
-
+            else
+            {
+                user.LastOnLineTime= DateTime.Now;
+                user.UpdateAndFlush();
+            }
             DBUserInfo dbUserInfo = new DBUserInfo();
             dbUserInfo.UserID = user.UserID.ToString();
             dbUserInfo.NickName = user.UserName;

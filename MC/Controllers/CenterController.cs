@@ -1,7 +1,10 @@
 ﻿using MC.Controllers;
+using MC.Models;
+using MC.Models.query;
 using MCComm;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +20,20 @@ namespace MC.Controllers
             ViewBag.HeadImageUrl = CommFunction.HeadImage(DBUserInfo.openID);
             ViewBag.CompanyName = "佣金0.00元";
             ViewBag.openid = DBUserInfo.openID;
+            //默认激活那个页面
             Actived(Request.RequestContext.RouteData.Values["id"] != null ? Request.RequestContext.RouteData.Values["id"].ToString().ToInt() : 1);
+
+            //客户列表数据
+            var queryCustomerList = from row in Customer.GetCustomerList("CrUserID='{0}'".FormatWith(DBUserInfo.UserID)).AsEnumerable()
+                                    select new CustomerQuery
+                                    {
+                                        ID = row.Field<Guid>("ID"),
+                                        Name = row.Field<string>("CusName"),
+                                        Num = row.Field<int>("OrderNum"),
+                                        Phone = row.Field<string>("CusPhone"),
+                                        Sex = row.Field<string>("Sex")
+                                    };
+            ViewBag.CustomerList = queryCustomerList.ToList();
             return View();
         }
 

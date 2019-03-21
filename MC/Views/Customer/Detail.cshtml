@@ -1,7 +1,7 @@
-﻿
+﻿@model MC.Models.Customer
 @{
     Layout = null;
-    ViewBag.Title = "客户状态";
+    ViewBag.Title = "客户进度";
 }
 
 <!DOCTYPE html>
@@ -24,16 +24,17 @@
         }
 
         .progress {
-            margin: 20px;
+            margin: 20px 0 10px 0;
         }
 
             .progress li {
-                padding: 0px 20px 0 40px;
+                padding: 0px 15px 0 25px;
                 line-height: 40px;
                 background-color: #50abe4;
                 display: inline-block;
                 color: #fff;
                 position: relative;
+                font-size:10pt;
             }
 
                 .progress li:after {
@@ -61,7 +62,7 @@
 
                 .progress li:first-child {
                     border-radius: 4px 0 0 4px;
-                    padding-left: 25px;
+                    padding-left: 20px;
                 }
 
                 .progress li:last-child, .cssNavEnd {
@@ -89,6 +90,15 @@
                         border-top-color: #ef72b6;
                         border-bottom-color: #ef72b6;
                     }
+
+        body {
+            color: #999999;
+        }
+
+        .title_glay {
+            color: #999999;
+        }
+
     </style>
 </head>
 <body>
@@ -96,26 +106,45 @@
         <div class="weui-tab__bd">
             <div class="weui-flex" style="padding:20px">
                 <div class="weui-flex__item">
-                    <p>客户名称：小张</p>
-                    <p>客户电话：12366544455</p>
+                    <p>客户名称：@Model.CusName</p>
+                    <p>客户电话：@Model.CusPhone</p>
                 </div>
                 <div class="weui-flex__item" style="text-align:right;vertical-align:middle;">
                     <a class="weui-btn weui-btn_mini weui-btn_warn" href="#">修改</a>
                 </div>
             </div>
-            <hr />
-            <div class="weui-cell__bd weui-cell_primary" style="padding:20px">
-                <p>项目进度：</p>
-                <div>
-                    <ul class="progress">
-                        <li>报备</li>
-                        <li class="active">成交</li>
-                        <li>结佣</li>
-                    </ul>
-                </div>
-                <p>备注信息:</p>
-                <p>成交完成，正在结佣。</p>
-            </div>
+            @if (ViewBag.OrderList != null)
+            {
+                foreach (var item in ViewBag.OrderList as List<MC.Models.query.OrderQuery>)
+                {
+                    <hr />
+                    <div class="weui-cell__bd weui-cell_primary" style="padding:20px">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item"><span class="title_glay">意向课程：</span>@item.Name<span style="text-align:right;"></div>
+                            <div class="weui-flex__item" style="text-align:right;vertical-align:middle;"><span class="title_glay">课程费用：</span><span style="color:#f28a29"> @item.ProMoney.ToString("F2")</span>元</div>
+                        </div>
+                        <div>
+                            @if (ViewBag.StateList != null)
+                            {
+                                <ul class="progress">
+                                    @foreach (var state in ViewBag.StateList as List<SelectListItem>)
+                                    {
+                                        if (state.Text.Equals(item.State))
+                                        {
+                                            <li class="active">@state.Text</li>
+                                        }
+                                        else
+                                        {
+                                            <li>@state.Text</li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        </div>
+                        <p><span class="title_glay">备注信息:</span>@item.StateInfo</p>
+                    </div>
+                }
+            }
         </div>
     </div>
 </body>

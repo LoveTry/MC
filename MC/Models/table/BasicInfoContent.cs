@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Collections;
 using MCComm;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using NHibernate.Criterion;
 
 namespace MC.Models
 {
@@ -138,6 +140,21 @@ namespace MC.Models
         {
             string sql = "SELECT ISNULL(MAX(SequenceOrder),0) FROM dbo.t_BasicInfoContent";
             return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteScalar(sql).ToString().ToInt();
+        }
+
+        public static List<SelectListItem> GetBasicContent(StateType type)
+        {
+            ICriterion exp = Restrictions.Eq("DelFlag", false);
+            exp = Restrictions.And(exp, Restrictions.Eq("TypeID", (int)type));
+            NHibernate.Criterion.Order[] orders = new NHibernate.Criterion.Order[1] { new NHibernate.Criterion.Order("SequenceOrder", true) };
+            var list = from content in FindAll(orders, exp).AsEnumerable()
+                       select new SelectListItem
+                       {
+                           Text = content.TypeName,
+                           Value = content.TypeID.ToString()
+                       };
+
+            return list.ToList();
         }
     }
 }

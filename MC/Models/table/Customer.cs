@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using NHibernate.Criterion;
 using System.ComponentModel.DataAnnotations;
+using MCComm;
 
 namespace MC.Models
 {
@@ -120,10 +121,27 @@ namespace MC.Models
             get; set;
         }
 
-        public Customer FindByProperty(string property, object value)
+        public static Customer FindByProperty(string property, object value)
         {
             ICriterion exp = Restrictions.Eq(property, value);
             return Customer.FindOne(exp);
+        }
+
+        public static Customer FindByIdAndCrId(Guid CusID, Guid CrUserID)
+        {
+            ICriterion exp = Restrictions.Eq("ID", CusID);
+            exp = Restrictions.And(exp, Restrictions.Eq("CrUserID", CrUserID));
+            return FindOne(exp);
+        }
+
+        public static DataTable GetCustomerList(string where = "1=1")
+        {
+            string sql = @"SELECT *,
+       (
+           SELECT COUNT(ID) FROM dbo.t_Order WHERE t_Order.CusID = t_Customer.ID
+       ) AS OrderNum
+FROM dbo.t_Customer where {0} ORDER BY CrTime DESC".FormatWith(where);
+            return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
         }
     }
 }

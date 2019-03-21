@@ -78,6 +78,16 @@ namespace MC.Models
         }
 
         /// <summary>
+        /// 当前状态
+        /// </summary>
+        [Property]
+        public int StateID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 状态信息
         /// </summary>
         [Property]
@@ -106,12 +116,13 @@ namespace MC.Models
             get;
             set;
         }
+        #endregion
+
 
         public static DataTable GetList(string where)
         {
             string sql = "SELECT * FROM v_OrderList where {0} ORDER BY CrUserID,CrTime DESC".FormatWith(where);
             return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
         }
-        #endregion
     }
 }

@@ -24,4 +24,9 @@ namespace MC.Models
         ERROR = 2,
         WARNNING = 3
     }
+
+    public enum StateType
+    {
+        OrderSate = 1
+    }
 }

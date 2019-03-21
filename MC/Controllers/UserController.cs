@@ -13,7 +13,7 @@ namespace MC.Controllers
         // GET: User
         public ActionResult Update()
         {
-            ViewBag.Sex = new List<SelectListItem>() {
+            ViewBag.SexList = new List<SelectListItem>() {
                 new SelectListItem() {Text="",Value="" },
                 new SelectListItem() { Text="男", Value="男" },
                 new SelectListItem() { Text="女", Value="女" },

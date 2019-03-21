@@ -194,6 +194,8 @@
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Models\LoginUser.cs" />
+    <Compile Include="Models\query\CustomerQuery.cs" />
+    <Compile Include="Models\query\OrderQuery.cs" />
     <Compile Include="Models\table\BasicInfoContent.cs" />
     <Compile Include="Models\table\BasicInfoType.cs" />
     <Compile Include="Models\table\Order.cs" />
@@ -228,7 +230,9 @@
     <Content Include="images\show.png" />
     <Content Include="images\yuwen1.jpg" />
     <Content Include="images\yuwen2.jpg" />
+    <Content Include="images\female.png" />
     <Content Include="images\推荐.png" />
+    <Content Include="images\male.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
@@ -274,7 +278,7 @@
     <Content Include="数据库设计文档.xlsm" />
     <Content Include="Views\AD\Ad.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Order.cshtml" />
+    <Content Include="Views\Admin\OrderList.cshtml" />
     <Content Include="Views\Admin\Course.cshtml" />
     <Content Include="Views\Admin\Fee.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
@@ -287,7 +291,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\query\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using MC.Models;
+using MC.Models.query;
 using MCComm;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace MC.Controllers
         {
             var info = new Customer();
 
-            ViewBag.Sex = new List<SelectListItem>() {
+            ViewBag.SexList = new List<SelectListItem>() {
                 new SelectListItem() {Text="",Value="" },
                 new SelectListItem() { Text="男", Value="男" },
                 new SelectListItem() { Text="女", Value="女" },
@@ -28,9 +30,37 @@ namespace MC.Controllers
             return View(info);
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(Guid ID)
         {
-            return View();
+            var model = Customer.FindByIdAndCrId(ID, DBUserInfo.UserID.ToGuid());
+            if (model != null)
+            {
+                var query = from row in Order.GetList("CusID='{0}' AND CrUserID='{1}'".FormatWith(ID, DBUserInfo.UserID)).AsEnumerable()
+                            select new OrderQuery
+                            {
+                                CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
+                                CusName = row.Field<string>("CusName"),
+                                CusPhone = row.Field<string>("CusPhone"),
+                                ID = row.Field<int>("ID"),
+                                Name = row.Field<string>("Name"),
+                                OrderNo = row.Field<string>("OrderNo"),
+                                ProMoney = row.Field<decimal>("ProMoney"),
+                                State = row.Field<string>("State"),
+                                StateInfo = row.Field<string>("StateInfo"),
+                                TrueName = row.Field<string>("TrueName"),
+                                UserName = row.Field<string>("UserName")
+                            };
+                ViewBag.OrderList = query.ToList();
+
+                ViewBag.StateList = BasicInfoContent.GetBasicContent(StateType.OrderSate);
+
+                return View(model);
+            }
+            else
+            {
+                FileHelper.WriteLog("ID={0} UID={1}的客户没有查到".FormatWith(ID, DBUserInfo.UserID));
+                return RedirectToAction("ErrorPage", "Error", new { msg = "没有查询到客户" });
+            }
         }
 
         [HttpPost]

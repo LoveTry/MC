@@ -187,24 +187,35 @@
                 </div>
                 <div class="weui-panel weui-panel_access">
                     <div class="weui-panel__bd">
-                        <a href='@Url.Action("Detail", "Customer", new { openid=ViewBag.openid })' class="weui-media-box weui-media-box_appmsg">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="~/images/avatar2.jpg" alt="">
-                                @*<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>*@
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">
-                                    彭于晏
-                                    <span class="weui-media-box__title-after">下午8:12 正在约谈</span>
-                                </h4>
-                                <p class="weui-media-box__desc">18241112320</p>
-                                
-                            </div>
-                        </a>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="~/images/avatar2.jpg" alt="">
-                                @*<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>*@
+                        @if (ViewBag.CustomerList != null)
+                        {
+                            foreach (var item in ViewBag.CustomerList as List<MC.Models.query.CustomerQuery>)
+                            {
+                                <a href='@Url.Action("Detail", "Customer", new { ID=item.ID })' class="weui-media-box weui-media-box_appmsg">
+                                    <div class="weui-media-box__hd">
+                                        <img class="weui-media-box__thumb" src='~/images/@Html.Raw(item.Sex.Equals("男")? "male.png":"female.png")' alt="">
+                                        @*<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>*@
+                                    </div>
+                                    <div class="weui-media-box__bd">
+                                        <h4 class="weui-media-box__title">
+                                            @item.Name
+                                            <span class="weui-media-box__title-after"><span style="color:brown">@item.Num</span>项课程 ></span>
+                                        </h4>
+                                        <p class="weui-media-box__desc">@item.Phone</p>
+
+                                    </div>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            @Html.Raw("<p>无推荐客户</p>");
+                        }
+
+                        @*<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                                    <div class="weui-media-box__hd">
+                                        <img class="weui-media-box__thumb" src="~/images/avatar2.jpg" alt="">
+                                        <span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>
                             </div>
                             <div class="weui-media-box__bd">
                                 <h4 class="weui-media-box__title">
@@ -214,7 +225,7 @@
                                 <p class="weui-media-box__desc">13888888888</p>
 
                             </div>
-                        </a>
+                            </a>*@
                     </div>
                 </div>
             </div>

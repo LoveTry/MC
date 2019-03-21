@@ -3,20 +3,22 @@ using MCComm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Web;
 using System.Web.Mvc;
+using MC.Models.query;
 
 namespace MC.Controllers
 {
     public class AdminController : BaseController
     {
- 
+
         // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
-
+        #region Course
         public ActionResult Course()
         {
             var dt = Project.GetList();
@@ -111,9 +113,26 @@ namespace MC.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
+        #endregion
 
-        public ActionResult Order()
+        public ActionResult OrderList()
         {
+            var query = from row in Order.GetList("1=1").AsEnumerable()
+                     select new OrderQuery
+                     {
+                         CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
+                         CusName = row.Field<string>("CusName"),
+                         CusPhone = row.Field<string>("CusPhone"),
+                         ID = row.Field<int>("ID"),
+                         Name = row.Field<string>("Name"),
+                         OrderNo = row.Field<string>("OrderNo"),
+                         ProMoney = row.Field<decimal>("ProMoney"),
+                         State = row.Field<string>("State"),
+                         StateInfo = row.Field<string>("StateInfo"),
+                         TrueName = row.Field<string>("TrueName"),
+                         UserName = row.Field<string>("UserName")
+                     };
+            ViewBag.Source = query.ToList();
             return View();
         }
     }
