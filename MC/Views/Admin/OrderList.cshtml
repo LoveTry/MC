@@ -45,7 +45,7 @@
             foreach (var item in ViewBag.Source as List<MC.Models.query.OrderQuery>)
             {
                 <tr>
-                    <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">确认</a>&nbsp;<a href='#' class="btn btn-primary btn-sm" role="button">结佣</a></td>
+                    <td><a href='@Url.Action("OrderConfirm","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">确认</a></td>
                     <td>@item.OrderNo</td>
                     <td>@item.State</td>
                     <td>@item.CusName</td>

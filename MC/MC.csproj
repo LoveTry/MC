@@ -194,11 +194,13 @@
     </Compile>
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
+    <Compile Include="Models\table\Fee.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\query\CustomerQuery.cs" />
     <Compile Include="Models\query\OrderQuery.cs" />
     <Compile Include="Models\table\BasicInfoContent.cs" />
     <Compile Include="Models\table\BasicInfoType.cs" />
+    <Compile Include="Models\table\FeeRate.cs" />
     <Compile Include="Models\table\Order.cs" />
     <Compile Include="Models\table\Customer.cs" />
     <Compile Include="Models\table\IModel.cs" />
@@ -388,7 +390,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\OrderList.cshtml" />
     <Content Include="Views\Admin\Course.cshtml" />
-    <Content Include="Views\Admin\Fee.cshtml" />
+    <Content Include="Views\Admin\FeeList.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\CourseAdd.cshtml" />
     <Content Include="Views\Customer\CusList.cshtml" />
@@ -397,10 +399,10 @@
     <Content Include="Views\BasicCode\BasicContentList.cshtml" />
     <Content Include="Views\BasicCode\BasicContentAdd.cshtml" />
     <Content Include="Views\PicShow\Index.cshtml" />
+    <Content Include="Views\Admin\FeeRate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

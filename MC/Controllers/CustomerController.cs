@@ -116,7 +116,7 @@ namespace MC.Controllers
                    });
                 }
             }
-            return Json(new { url = Url.Action("CusList") });
+            return Json(new { url = "/Center/Index/2" });
 
         }
 

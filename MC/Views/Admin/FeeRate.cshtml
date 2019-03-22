@@ -1,0 +1,44 @@
+﻿@model MC.Models.FeeRate
+@{
+    ViewBag.Title = "佣金公式";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.CrUserId)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rate)
+        @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", placeholder = "请输入佣金比例（小数）" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Other)
+        @Html.TextBoxFor(model => model.Other, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CrUser)
+        @Html.TextBoxFor(model => model.CrUser, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CrTime)
+        @Html.TextBoxFor(model => model.CrTime, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UpUser)
+        @Html.TextBoxFor(model => model.UpUser, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UpTime)
+        @Html.TextBoxFor(model => model.UpTime, new { @class = "form-control", type = "datetime", @readonly = "readonly" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">保存返回</button>
+
+}
+
+

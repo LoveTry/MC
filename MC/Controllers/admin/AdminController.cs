@@ -18,6 +18,7 @@ namespace MC.Controllers
         {
             return View();
         }
+
         #region Course
         public ActionResult Course()
         {
@@ -118,22 +119,113 @@ namespace MC.Controllers
         public ActionResult OrderList()
         {
             var query = from row in Order.GetList("1=1").AsEnumerable()
-                     select new OrderQuery
-                     {
-                         CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
-                         CusName = row.Field<string>("CusName"),
-                         CusPhone = row.Field<string>("CusPhone"),
-                         ID = row.Field<int>("ID"),
-                         Name = row.Field<string>("Name"),
-                         OrderNo = row.Field<string>("OrderNo"),
-                         ProMoney = row.Field<decimal>("ProMoney"),
-                         State = row.Field<string>("State"),
-                         StateInfo = row.Field<string>("StateInfo"),
-                         TrueName = row.Field<string>("TrueName"),
-                         UserName = row.Field<string>("UserName")
-                     };
+                        select new OrderQuery
+                        {
+                            CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
+                            CusName = row.Field<string>("CusName"),
+                            CusPhone = row.Field<string>("CusPhone"),
+                            ID = row.Field<int>("ID"),
+                            Name = row.Field<string>("Name"),
+                            OrderNo = row.Field<string>("OrderNo"),
+                            ProMoney = row.Field<decimal>("ProMoney"),
+                            State = row.Field<string>("State"),
+                            StateInfo = row.Field<string>("StateInfo"),
+                            TrueName = row.Field<string>("TrueName"),
+                            UserName = row.Field<string>("UserName")
+                        };
             ViewBag.Source = query.ToList();
             return View();
+        }
+
+        public ActionResult OrderConfirm(int id)
+        {
+            var info = Order.TryFind(id);
+            if (info != null)
+            {
+                decimal fee = 0;
+                var feeRate = MC.Models.FeeRate.FindFirst();
+                if (feeRate != null)
+                {
+                    fee = info.ProMoney * feeRate.Rate - feeRate.Other;
+                }
+                info.State = "结佣中";
+                info.StateID = 2;
+                info.StateInfo = "管理员已经审核完成，等待结佣{0}元".FormatWith(fee.ToMoney(2));
+                info.UpdateAndFlush();
+
+                var feeInfo = new Fee();
+                feeInfo.ID = GuidHelper.GuidNew();
+                feeInfo.OrderID = info.ID;
+                feeInfo.Money = fee;
+                feeInfo.IsPay = false;
+                feeInfo.PayeeID = info.CrUserID;
+                feeInfo.CrUserID = LUser.UserId.ToGuid();
+                feeInfo.CrUser = LUser.UserName;
+                feeInfo.CrTime = DateTime.Now;
+                feeInfo.CreateAndFlush();
+            }
+            return RedirectToAction("FeeList");
+        }
+
+
+        public ActionResult FeeList()
+        {
+            var query = from row in Fee.GetFeeListAll().AsEnumerable()
+                        select new Fee
+                        {
+                            Approver = row.Field<string>("Approver"),
+                            ApproverID = row.Field<Guid>("ApproverID"),
+                            CrTime = row.Field<DateTime>("CrTime"),
+                            CrUser = row.Field<string>("CrUser"),
+                            CrUserID = row.Field<Guid>("CrUserID"),
+                            ID = row.Field<Guid>("ID"),
+                            IsPay = row.Field<bool>("IsPay"),
+                            Money = row.Field<decimal>("Money"),
+                            OrderID = row.Field<int>("OrderID"),
+                            OrderNo = row.Field<string>("OrderNo"),
+                            PayeeID = row.Field<Guid>("PayeeID"),
+                            PayeeTrueName = row.Field<string>("PayeeTrueName"),
+                            PayeeUserName = row.Field<string>("PayeeUserName"),
+                            ApproveTime = row.Field<DateTime?>("ApproveTime")
+                        };
+            ViewBag.Source = query.ToList();
+            return View();
+        }
+
+
+        public ActionResult FeeRate()
+        {
+            var info = Models.FeeRate.FindOne();
+            if (info == null)
+            {
+                info = new FeeRate();
+                info.Rate = 0;
+                info.Other = 0;
+                info.CrUser = info.UpUser = LUser.UserName;
+            }
+            return View(info);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FeeRate(Models.FeeRate model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.ID.IsEmpty())
+                {
+                    model.ID = GuidHelper.GuidNew();
+                    model.CrUserId = LUser.UserId.ToGuid();
+                    model.UpTime = model.CrTime = DateTime.Now;
+                    model.CreateAndFlush();
+                }
+                else
+                {
+                    model.UpTime = DateTime.Now;
+                    model.UpUser = LUser.UserName;
+                    model.UpdateAndFlush();
+                }
+            }
+            return View(model);
         }
     }
 }
