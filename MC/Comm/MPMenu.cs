@@ -29,6 +29,12 @@ namespace MC
                 url = GetAuthUrl("Center/Index"),
                 name = "分销系统"
             });
+
+            btnGroup.button.Add(new SingleViewButton()
+            {
+                url = "http://game.cargocargo.cn/",
+                name = "微信小游戏"
+            });
             #region 注释
             ////第一组：----------------------------------------------
             //SubButton subButtonOne = new SubButton() { name = "航运通+" };
