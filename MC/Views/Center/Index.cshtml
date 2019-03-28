@@ -20,13 +20,14 @@
             height: 100%;
             -webkit-tap-highlight-color: transparent;
         }
-            .placeholder a {
-                height: 70px;
-                line-height: 70px;
-                font-size: 20px;
-            }
 
-            .page-header {
+        .placeholder a {
+            height: 70px;
+            line-height: 70px;
+            font-size: 20px;
+        }
+
+        .page-header {
             height: 175px;
             background-color: #01A9DA;
             box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
@@ -46,17 +47,6 @@
             height: 100px;
             background-color: #6CC8E2;
             border-radius: 50px;
-        }
-
-        .small-circle {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background: url("@ViewBag.HeadImageUrl") no-repeat center center;
-            background-size: 100% 100%;
-            border-radius: 45px;
-            margin-left: 5px;
-            margin-top: 5px;
         }
 
         .wxname {
@@ -105,6 +95,22 @@
             background-position-y: center;
             background-size: 100% 100%;
         }
+
+        .weui-popup__container {
+            z-index: 501;
+        }
+    </style>
+    <style>
+           .small-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: url("@ViewBag.HeadImageUrl") no-repeat center center;
+            background-size: 100% 100%;
+            border-radius: 45px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body ontouchstart>
@@ -120,7 +126,7 @@
                     </div>
                     <div class="weui-flex__item">
                         <div class="btn-margin">
-                            <a id="btnNo" href="javascript:void(0);" class="weui-btn weui-btn_warn">
+                            <a id="btnNo" href="javascript:myCus();" class="weui-btn weui-btn_warn">
                                 我的客户
                             </a>
                         </div>
@@ -134,7 +140,7 @@
                     </div>
                     <div class="weui-flex__item">
                         <div class="btn-margin">
-                            <a id="btnNo" href="javascript:void(0);" class="weui-btn weui-btn_warn">活动规则</a>
+                            <a id="btnNo" href="javascript:void(0);" class="weui-btn weui-btn_warn open-popup" data-target="#half">活动规则</a>
                         </div>
                     </div>
                 </div>
@@ -363,26 +369,26 @@
         </div>
 
         <div class="weui-tabbar">
-            <a href="#tab1" class="weui-tabbar__item @ViewBag.TabActived1">
+            <a id="tabbar1" href="#tab1" class="weui-tabbar__item @ViewBag.TabActived1">
                 @*<span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>*@
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_button.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="#tab2" class="weui-tabbar__item @ViewBag.TabActived2">
+            <a id="tabbar2" href="#tab2" class="weui-tabbar__item @ViewBag.TabActived2">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_msg.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">客户</p>
             </a>
-            <a href="#tab3" class="weui-tabbar__item @ViewBag.TabActived3">
+            <a id="tabbar3" href="#tab3" class="weui-tabbar__item @ViewBag.TabActived3">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_article.png" alt="">
                 </div>
                 <p class="weui-tabbar__label">动态</p>
             </a>
-            <a href="#tab4" class="weui-tabbar__item @ViewBag.TabActived4">
+            <a id="tabbar4" href="#tab4" class="weui-tabbar__item @ViewBag.TabActived4">
                 <div class="weui-tabbar__icon">
                     <img src="~/images/icon_nav_cell.png" alt="">
                 </div>
@@ -390,11 +396,38 @@
             </a>
         </div>
 
+        <div id="half" class='weui-popup__container popup-bottom'>
+            <div class="weui-popup__overlay"></div>
+            <div class="weui-popup__modal">
+                <div class="toolbar">
+                    <div class="toolbar-inner">
+                        <a href="javascript:;" class="picker-button close-popup">关闭</a>
+                        <h1 class="title">活动规则</h1>
+                    </div>
+                </div>
+                <div class="modal-content">
+                    <article class="weui-article">
+                        <section>
+                            @ViewBag.ActivityRule
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
     <script>
         $(function () {
             FastClick.attach(document.body);
         });
+
+        function myCus() {
+            $("#tab1").removeClass("weui-tab__bd-item--active");
+            $("#tabbar1").removeClass("weui-bar__item--on");
+            $("#tab2").addClass("weui-tab__bd-item--active");
+            $("#tabbar2").addClass("weui-bar__item--on");
+        }
     </script>
 </body>
 </html>

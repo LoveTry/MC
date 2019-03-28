@@ -205,6 +205,7 @@
     <Compile Include="Models\table\Customer.cs" />
     <Compile Include="Models\table\IModel.cs" />
     <Compile Include="Models\table\Project.cs" />
+    <Compile Include="Models\table\Setting.cs" />
     <Compile Include="Models\table\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

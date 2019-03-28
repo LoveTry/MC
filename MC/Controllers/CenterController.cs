@@ -34,6 +34,8 @@ namespace MC.Controllers
                                         Sex = row.Field<string>("Sex")
                                     };
             ViewBag.CustomerList = queryCustomerList.ToList();
+
+            ViewBag.ActivityRule = Setting.FindFirst().ActivityRule;
             return View();
         }
 
