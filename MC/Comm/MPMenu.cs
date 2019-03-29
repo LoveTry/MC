@@ -27,7 +27,7 @@ namespace MC
             btnGroup.button.Add(new SingleViewButton()
             {
                 url = GetAuthUrl("Center/Index"),
-                name = "分销系统"
+                name = MPBasicSetting.WeChatTitleName
             });
 
             btnGroup.button.Add(new SingleViewButton()

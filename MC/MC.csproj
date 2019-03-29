@@ -194,6 +194,7 @@
     </Compile>
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
+    <Compile Include="Models\query\FeeQuery.cs" />
     <Compile Include="Models\table\Fee.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\query\CustomerQuery.cs" />
@@ -236,8 +237,11 @@
     <Content Include="images\yuwen2.jpg" />
     <Content Include="images\female.png" />
     <Content Include="images\pic1.jpg" />
+    <Content Include="images\setting.png" />
+    <Content Include="images\fee.png" />
     <Content Include="images\推荐.png" />
     <Content Include="images\male.png" />
+    <Content Include="images\game.png" />
     <Content Include="layui\css\layui.css" />
     <Content Include="layui\css\layui.mobile.css" />
     <Content Include="layui\css\modules\laydate\default\laydate.css" />

@@ -137,5 +137,21 @@ namespace MC.Models
             return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
         }
 
+        /// <summary>
+        /// 获取用户结佣金额
+        /// </summary>
+        /// <param name="IsPay">是否已付</param>
+        /// <param name="userid">用户ID</param>
+        /// <returns></returns>
+        public static decimal GetFee(bool IsPay, Guid userid)
+        {
+            var feeQuery = FindAllByProperty("PayeeID", userid);
+            if (feeQuery != null && feeQuery.Count() > 0)
+            {
+                return feeQuery.Where(w => w.IsPay == IsPay).Sum(f => f.Money);
+            }
+            return 0;
+        }
+
     }
 }

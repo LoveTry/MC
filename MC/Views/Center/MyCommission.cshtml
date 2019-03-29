@@ -43,36 +43,63 @@
     <div class="weui-tab">
         <div class="weui-navbar">
             <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
-                待结佣
+                待结佣金
             </a>
             <a class="weui-navbar__item" href="#tab2">
-                部分结佣
-            </a>
-            <a class="weui-navbar__item" href="#tab3">
-                已结佣
+                已结佣金
             </a>
         </div>
         <div class="weui-tab__bd">
-            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active" style="text-align:center; color:#bfbfbf">
-                <div>
-                    <br />
-                    <img src="~/images/rmb.png" />
-                </div>
-                <p>无可结佣金</p>
+            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+                @if (ViewBag.WaitFee != null && (ViewBag.WaitFee as List<MC.Models.query.FeeQuery>).Count > 0)
+                {
+                    <div class="weui-cells__title">待结算总金额：<span class="fee-color">@Html.Raw(ViewBag.WaitFeeSum + "元")</span></div>
+                    <div class="weui-cells">
+                        @foreach (var item in ViewBag.WaitFee as List<MC.Models.query.FeeQuery>)
+                        {
+                            <a class="weui-cell weui-cell_access" href="javascript:;">
+                                <div class="weui-cell__bd">
+                                    <p class="fee-color">@Html.Raw(item.Money.ToString("F2") + "元")</p>
+                                </div>
+                                <div class="weui-cell__ft">@item.OrderNo</div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div style="text-align:center; color:#bfbfbf">
+                        <br />
+                        <img src="~/images/rmb.png" />
+                        <p>无待结佣金</p>
+                    </div>
+                }
+
             </div>
-            <div id="tab2" class="weui-tab__bd-item" style="text-align:center;color:#bfbfbf">
-                <div>
-                    <br />
-                    <img src="~/images/rmb.png" />
-                </div>
-                <p>无可结佣金</p>
-            </div>
-            <div id="tab3" class="weui-tab__bd-item" style="text-align:center;color:#bfbfbf">
-                <div>
-                    <br />
-                    <img src="~/images/rmb.png" />
-                </div>
-                <p>无可结佣金</p>
+            <div id="tab2" class="weui-tab__bd-item">
+                @if (ViewBag.OverFee != null && (ViewBag.OverFee as List<MC.Models.query.FeeQuery>).Count > 0)
+                {
+                    <div class="weui-cells__title">已结算总金额：<span class="fee-color">@Html.Raw(ViewBag.OverFeeSum + "元")</span></div>
+                    <div class="weui-cells">
+                        @foreach (var item in ViewBag.OverFee as List<MC.Models.query.FeeQuery>)
+                        {
+                            <a class="weui-cell weui-cell_access" href="javascript:;">
+                                <div class="weui-cell__bd">
+                                    <p class="fee-color">@Html.Raw(item.Money.ToString("F2") + "元")</p>
+                                </div>
+                                <div class="weui-cell__ft">@item.OrderNo</div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div style="text-align:center; color:#bfbfbf">
+                        <br />
+                        <img src="~/images/rmb.png" />
+                        <p>无已结佣金</p>
+                    </div>
+                }
             </div>
         </div>
     </div>

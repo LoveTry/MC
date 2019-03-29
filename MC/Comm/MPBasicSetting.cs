@@ -37,7 +37,7 @@ namespace MC
             get { return AppSettingValue(); }
         }
 
-        public static string WeChatTitleName = "微信分销";
+        public static string WeChatTitleName = "菁汇";
         public static string MenuCreateFlag = "0";
         public static string FirstCertification = "0";
         public static string EncodingAESKey = "";

@@ -12,6 +12,9 @@
                 操作
             </th>
             <th>
+                是否启用
+            </th>
+            <th>
                 课程名称
             </th>
             <th>
@@ -51,20 +54,21 @@
         {
             foreach (var item in ViewBag.Source as MC.Models.Project[])
             {
-                <tr>
-                    <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a><a href='#' class="btn btn-primary btn-sm" role="button">开启</a></td>
-                    <td>@item.Name</td>
-                    <td>@item.Price.ToString("F2")</td>
-                    <td>@item.Amount</td>
-                    <td>@item.Total.ToString("F2")</td>
-                    <td>@item.Unit</td>
-                    <td>@item.StartDate.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@item.EndDate.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@item.CrTime.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@item.CrUser</td>
-                    <td>@item.UpTime.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@item.UpUser</td>
-                </tr>
+        <tr>
+            <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a><a href='#' class="btn btn-primary btn-sm" role="button">开启</a></td>
+            <td>@Html.Raw(item.IsUse?"是":"否")</td>
+            <td>@item.Name</td>
+            <td>@item.Price.ToString("F2")</td>
+            <td>@item.Amount</td>
+            <td>@item.Total.ToString("F2")</td>
+            <td>@item.Unit</td>
+            <td>@item.StartDate.Value.ToString("yyyy-MM-dd")</td>
+            <td>@item.EndDate.Value.ToString("yyyy-MM-dd")</td>
+            <td>@item.CrTime.Value.ToString("yyyy-MM-dd")</td>
+            <td>@item.CrUser</td>
+            <td>@item.UpTime.Value.ToString("yyyy-MM-dd")</td>
+            <td>@item.UpUser</td>
+        </tr>
             }
         }
     </tbody>

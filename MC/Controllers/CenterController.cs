@@ -34,14 +34,49 @@ namespace MC.Controllers
                                         Sex = row.Field<string>("Sex")
                                     };
             ViewBag.CustomerList = queryCustomerList.ToList();
+            //获取项目列表
+            ViewBag.ProjectList = Project.GetChooseList();
+            //获取结佣信息
+            ViewBag.UserWaitFee = Fee.GetFee(false, DBUserInfo.UserID.ToGuid()).ToMoney(2);
+            ViewBag.UserOverFee = Fee.GetFee(true, DBUserInfo.UserID.ToGuid()).ToMoney(2);
 
             ViewBag.ActivityRule = Setting.FindFirst().ActivityRule;
             return View();
         }
 
-        public ActionResult MyCommission(string openid)
+        public ActionResult MyCommission()
         {
+            var dt = Fee.GetFeeListAll("PayeeID='" + DBUserInfo.UserID + "'");
+
+            var waitFee = from row in dt.AsEnumerable()
+                          where row.Field<bool>("IsPay") == false
+                          select new FeeQuery
+                          {
+                              Money = row.Field<decimal>("Money"),
+                              OrderID = row.Field<int>("OrderID"),
+                              OrderNo = row.Field<string>("OrderNo"),
+                              PayDate = row.Field<DateTime?>("PayDate"),
+                          };
+            var waitFeeSum = waitFee.Sum(t => t.Money);
+            var overFee = from row in dt.AsEnumerable()
+                          where row.Field<bool>("IsPay") == true
+                          select new FeeQuery
+                          {
+                              Money = row.Field<decimal>("Money"),
+                              OrderID = row.Field<int>("OrderID"),
+                              OrderNo = row.Field<string>("OrderNo"),
+                              PayDate = row.Field<DateTime?>("PayDate"),
+                          };
+            var overFeeSum = overFee.Sum(t => t.Money);
+
+            ViewBag.WaitFee = waitFee.ToList();
+            ViewBag.OverFee = overFee.ToList();
+
+            ViewBag.WaitFeeSum = waitFeeSum.ToString("F2");
+            ViewBag.OverFeeSum = overFeeSum.ToString("F2");
+
             return View();
+
         }
 
 
