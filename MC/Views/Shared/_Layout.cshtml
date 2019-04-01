@@ -1,45 +1,106 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>@Html.Raw(MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(MC.MPBasicSetting.WeChatTitleName + "后台管理平台", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("推荐管理", "OrderList", "Admin")</li>
-                    <li>@Html.ActionLink("课程管理", "Course", "Admin")</li>
-                    <li>@Html.ActionLink("佣金管理", "FeeList", "Admin")</li>
-                    <li>@Html.ActionLink("基础代码", "BasicContentList", "BasicCode")</li>
-                    <li>@Html.ActionLink("佣金公式", "FeeRate", "Admin")</li>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">@Html.Raw(MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                @*<li class="layui-nav-item">@Html.ActionLink("推荐管理", "OrderList", "Admin")</li>*@
+                <li class="layui-nav-item"><a href="javascript:active('推荐管理','/Admin/OrderList','order');">推荐管理</a></li>
+                <li class="layui-nav-item">@Html.ActionLink("课程管理", "Course", "Admin")</li>
+                <li class="layui-nav-item">@Html.ActionLink("佣金管理", "FeeList", "Admin")</li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#">用户信息</a></dd>
+                        <dd>@Html.ActionLink("佣金公式", "FeeRate", "Admin")</dd>
+                        <dd>@Html.ActionLink("基础代码", "BasicContentList", "BasicCode")</dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        贤心
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退了</a></li>
+            </ul>
+        </div>
+        @*@RenderSection("LeftSide", false)*@
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">信息列表</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">推荐人列表</a></dd>
+                            <dd><a href="javascript:;">客户列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">统计报表</a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="OrderList" data-jump="/Admin/OrderList"><a href="javascript:;" lay-href="/Admin/OrderList">佣金排行</a></dd>
+                            <dd><a href="javascript:;">销量走势</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="#">其他推荐</a></li>
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - @Html.Raw(MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                @*@RenderBody()*@
+                <div class="layui-tab" lay-filter="main-tab" lay-allowclose="true">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" lay-id="11"><i class="layui-icon layui-icon-home"></i></li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">主页</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            <p>&copy; @DateTime.Now.Year - @Html.Raw(MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</p>
+        </div>
+    </div>
+    <script>
+        var element, $;
+        layui.use('element', function () {
+            $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        })
+
+        var active = function (title, url, id) {
+            element.tabAdd('main-tab', {
+                title: title
+                , content: '<iframe src=' + url + ' width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>'
+                , id: id
+            });
+            element.tabChange('main-tab', id)
+        };
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
