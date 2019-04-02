@@ -23,13 +23,29 @@ iframe {
     right: 0;
     bottom: 0;
 }
+
 .layui-tab-content {
     position: absolute;
-    left: 20px;
+    left: 15px;
     bottom: 0;
     top: 70px;
-    right: 0;
+    right: 15px;
 }
-.layui-tab-title li:first-child i:nth-child(2) {
-    display:none;
+
+.layui-tab-title {
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    background-color: #fff;
+}
+
+    .layui-tab-title li:first-child i:nth-child(2) {
+        display: none;
+    }
+
+    .layui-tab-title .layui-this {
+        border-top: 2px solid #000;
+    }
+
+        .layui-tab-title .layui-this:after {
+            height: 39px;
+        }
 }

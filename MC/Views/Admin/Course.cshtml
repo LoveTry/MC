@@ -1,76 +1,110 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "课程管理";
+    Layout = null;
 }
 
-<h2>@ViewBag.Title</h2>
-<a href='@Url.Action("CourseAdd","Admin")' class="btn btn-primary" role="button">新建</a>
-<table class="table table-hover " style="vertical-align:middle;">
-    <thead>
-        <tr>
-            <th>
-                操作
-            </th>
-            <th>
-                是否启用
-            </th>
-            <th>
-                课程名称
-            </th>
-            <th>
-                单价
-            </th>
-            <th>
-                课时
-            </th>
-            <th>
-                总价
-            </th>
-            <th>
-                单位
-            </th>
-            <th>
-                开课时间
-            </th>
-            <th>
-                结课时间
-            </th>
-            <th>
-                创建时间
-            </th>
-            <th>
-                创建人
-            </th>
-            <th>
-                更新时间
-            </th>
-            <th>
-                更新人
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (ViewBag.Source != null)
-        {
-            foreach (var item in ViewBag.Source as MC.Models.Project[])
-            {
-        <tr>
-            <td><a href='@Url.Action("CourseAdd","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">修改</a><a href='#' class="btn btn-primary btn-sm" role="button">开启</a></td>
-            <td>@Html.Raw(item.IsUse?"是":"否")</td>
-            <td>@item.Name</td>
-            <td>@item.Price.ToString("F2")</td>
-            <td>@item.Amount</td>
-            <td>@item.Total.ToString("F2")</td>
-            <td>@item.Unit</td>
-            <td>@item.StartDate.Value.ToString("yyyy-MM-dd")</td>
-            <td>@item.EndDate.Value.ToString("yyyy-MM-dd")</td>
-            <td>@item.CrTime.Value.ToString("yyyy-MM-dd")</td>
-            <td>@item.CrUser</td>
-            <td>@item.UpTime.Value.ToString("yyyy-MM-dd")</td>
-            <td>@item.UpUser</td>
-        </tr>
-            }
-        }
-    </tbody>
-</table>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">@ViewBag.Title</div>
+        <div class="layui-card-body">
+            <table class="layui-hide" id="course-list" lay-filter="course-list"></table>
 
+            <script type="text/html" id="course-toolbar">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新建</button>
+                </div>
+            </script>
+
+            <script type="text/html" id="course-bar">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">启用</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+            <script type="text/html" id="isUseTpl">
+                {{#  if(d.IsUse){ }}
+                已启用
+                {{#  } else { }}
+                未启用
+                {{#  } }}
+            </script>
+
+            <script>
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.render({
+                        elem: '#course-list'
+                        , url: '/admin/courselistjson'
+                        , toolbar: '#course-toolbar'
+                        , title: '课程数据表'
+                        , cols: [[
+                            { field: 'IsUse', title: '状态', width: 80, templet:'#isUseTpl'}
+                            , { field: 'Name', title: '名称', sort: true }
+                            , { field: 'Price', title: '单价' }
+                            , { field: 'Amount', title: '课时', width:60 }
+                            , { field: 'Total', title: '总价', }
+                            //, { field: 'Unit', title: '单位' }
+                            , { field: 'StartDate', title: '开课日期', width: 110 , sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.StartDate.replace("/Date(","").replace(")/", ""), 10),"yyyy-MM-dd")}}</div>' }
+                            , { field: 'EndDate', title: '结课日期', width: 110, sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.EndDate.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>'}
+                            , { field: 'CrTime', title: '创建日期', width: 110,sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.CrTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
+                            , { field: 'CrUser', title: '创建人', sort: true }
+                            , { field: 'UpTime', title: '更新日期', width: 110, sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.UpTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
+                            , { field: 'UpUser', title: '更新人', sort: true }
+                            , { fixed: 'right', title: '操作', toolbar: '#course-bar', width: 120 }
+                        ]]
+                        , page: true
+                    });
+
+                    //头工具栏事件
+                    table.on('toolbar(course-list)', function (obj) {
+                        var checkStatus = table.checkStatus(obj.config.id);
+                        switch (obj.event) {
+                            case 'getCheckData':
+                                var data = checkStatus.data;
+                                layer.alert(JSON.stringify(data));
+                                break;
+                            case 'getCheckLength':
+                                var data = checkStatus.data;
+                                layer.msg('选中了：' + data.length + ' 个');
+                                break;
+                            case 'isAll':
+                                layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                                break;
+                        };
+                    });
+
+                    //监听行工具事件
+                    table.on('tool(course-list)', function (obj) {
+                        var data = obj.data;
+                        //console.log(obj)
+                        if (obj.event === 'del') {
+                            layer.confirm('真的删除行么', function (index) {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'edit') {
+                            layer.prompt({
+                                formType: 2
+                                , value: data.email
+                            }, function (value, index) {
+                                obj.update({
+                                    email: value
+                                });
+                                layer.close(index);
+                            });
+                        }
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>

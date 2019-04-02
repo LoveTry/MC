@@ -1,11 +1,131 @@
 ﻿
 @{
     ViewBag.Title = "佣金管理";
+    Layout = null;
 }
 
-<h2>@ViewBag.Title</h2>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">@ViewBag.Title</div>
+        <div class="layui-card-body">
+            <table class="layui-hide" id="fee-list" lay-filter="fee-list"></table>
 
-<table class="table table-hover " style="vertical-align:middle;">
+            <script type="text/html" id="fee-toolbar">
+                @*<div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新建</button>
+                </div>*@
+            </script>
+
+            <script type="text/html" id="fee-bar">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">审核</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">支付</a>
+            </script>
+
+            <script type="text/html" id="isPayTpl">
+                {{#  if(d.IsPay){ }}
+                已支付
+                {{#  } else { }}
+                未支付
+                {{#  } }}
+            </script>
+
+            <script type="text/html" id="approveTimeTpl">
+                {{#  if(d.ApproveTime){ }}
+                {{ layui.util.toDateString(parseInt(d.ApproveTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}
+                {{#  } else { }}
+
+                {{#  } }}
+            </script>
+
+            <script type="text/html" id="payDateTpl">
+                {{#  if(d.ApproveTime){ }}
+                {{ layui.util.toDateString(parseInt(d.PayDate.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}
+                {{#  } else { }}
+
+                {{#  } }}
+            </script>
+
+            <script>
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.render({
+                        elem: '#fee-list'
+                        , url: '/admin/feelistjson'
+                        , toolbar: '#fee-toolbar'
+                        , title: '课程数据表'
+                        , cols: [[
+                            { field: 'OrderNo', title: '订单号', width: 140, sort: true}
+                            , { field: 'Money', title: '佣金' }
+                            , { field: 'IsPay', title: '支付状态', templet: '#isPayTpl' }
+                            , { field: 'PayDate', title: '支付日期', templet: '#payDateTpl' }
+                            , { field: 'PayeeUserName', title: '推荐昵称' }
+                            , { field: 'PayeeTrueName', title: '推荐姓名' }
+                            , { field: 'CrUser', title: '创建人', sort: true }
+                            , { field: 'CrTime', title: '创建日期', width: 110,sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.CrTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
+                            , { field: 'Approver', title: '审核人', sort: true }
+                            , { field: 'ApproveTime', title: '审核日期', width: 110, sort: true, templet: '#approveTimeTpl' }
+                            , { fixed: 'right', title: '操作', toolbar: '#fee-bar', width: 120 }
+                        ]]
+                        , page: true
+                    });
+
+                    //头工具栏事件
+                    table.on('toolbar(fee-list)', function (obj) {
+                        var checkStatus = table.checkStatus(obj.config.id);
+                        switch (obj.event) {
+                            case 'getCheckData':
+                                var data = checkStatus.data;
+                                layer.alert(JSON.stringify(data));
+                                break;
+                            case 'getCheckLength':
+                                var data = checkStatus.data;
+                                layer.msg('选中了：' + data.length + ' 个');
+                                break;
+                            case 'isAll':
+                                layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                                break;
+                        };
+                    });
+
+                    //监听行工具事件
+                    table.on('tool(fee-list)', function (obj) {
+                        var data = obj.data;
+                        //console.log(obj)
+                        if (obj.event === 'del') {
+                            layer.confirm('真的删除行么', function (index) {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'edit') {
+                            layer.prompt({
+                                formType: 2
+                                , value: data.email
+                            }, function (value, index) {
+                                obj.update({
+                                    email: value
+                                });
+                                layer.close(index);
+                            });
+                        }
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+
+
+@*<table class="table table-hover " style="vertical-align:middle;">
     <thead>
         <tr>
             <th>操作</th>
@@ -40,6 +160,6 @@
 
             }
         }
-    </tbody>
+    </tbody>*@
 </table>
 

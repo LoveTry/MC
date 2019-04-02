@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "登录";
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@Html.Raw(ViewBag.Title + "-" + MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</title>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+</head>
+<body style="background-image:url(../../images/bak.jpg);">
+    <div class="layadmin-user-login">
+        <div class="layui-card layadmin-user-login-main">
+            <div class="layadmin-user-login-box layadmin-user-login-header">
+                <h2>@Html.Raw(MC.MPBasicSetting.WeChatTitleName + "后台管理平台")</h2>
+                <p>登录</p>
+            </div>
+            <form class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="user-login-username"></label>
+                    <input type="text" name="username" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="user-login-password"></label>
+                    <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <div id="slider"></div>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="user-login-submit">登 入</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" charset="utf-8">
+    layui.config({
+        base: '/layui_exts/'
+    }).extend({
+        sliderVerify: '/sliderVerify/sliderVerify'
+    }).use(['sliderVerify', 'jquery', 'form'], function () {
+        var sliderVerify = layui.sliderVerify,
+            form = layui.form;
+        var slider = sliderVerify.render({
+            elem: '#slider',
+            onOk: function () {//当验证通过回调
+                layer.msg("滑块验证通过");
+            }
+        })
+        form.render();
+        //监听提交
+        form.on('submit(user-login-submit)', function (data) {
+            if (slider.isOk()) {
+                layer.msg(JSON.stringify(data.field));
+            } else {
+                layer.msg("请先通过滑块验证");
+            }
+            return false;
+        });
+
+    })
+</script>
+
+</html>
+
+
+

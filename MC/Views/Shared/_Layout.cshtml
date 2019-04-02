@@ -16,8 +16,8 @@
             <ul class="layui-nav layui-layout-left">
                 @*<li class="layui-nav-item">@Html.ActionLink("推荐管理", "OrderList", "Admin")</li>*@
                 <li class="layui-nav-item"><a href="javascript:active('推荐管理','/Admin/OrderList','order');">推荐管理</a></li>
-                <li class="layui-nav-item">@Html.ActionLink("课程管理", "Course", "Admin")</li>
-                <li class="layui-nav-item">@Html.ActionLink("佣金管理", "FeeList", "Admin")</li>
+                <li class="layui-nav-item"><a href="javascript:active('课程管理','/Admin/Course','course');">课程管理</a></li>
+                <li class="layui-nav-item"><a href="javascript:active('佣金管理','/Admin/FeeList','fee');">佣金管理</a></li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">系统管理</a>
                     <dl class="layui-nav-child">
@@ -65,16 +65,15 @@
             </div>
         </div>
 
-        <div class="layui-body">
+        <div class="layui-body" style="background-color:#eee;">
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
-                @*@RenderBody()*@
                 <div class="layui-tab" lay-filter="main-tab" lay-allowclose="true">
                     <ul class="layui-tab-title">
-                        <li class="layui-this" lay-id="11"><i class="layui-icon layui-icon-home"></i></li>
+                        <li class="layui-this" lay-id="admin"><i class="layui-icon layui-icon-home"></i></li>
                     </ul>
                     <div class="layui-tab-content">
-                        <div class="layui-tab-item layui-show">主页</div>
+                        <div class="layui-tab-item layui-show"> @RenderBody()</div>
                     </div>
                 </div>
             </div>
@@ -93,12 +92,24 @@
         })
 
         var active = function (title, url, id) {
-            element.tabAdd('main-tab', {
-                title: title
-                , content: '<iframe src=' + url + ' width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>'
-                , id: id
+            var isHave = false;
+            $(".layui-tab-title li").each(function (index, dom) {
+                var dom = $(dom);
+                if (dom.attr("lay-id") == id) {
+                    element.tabChange('main-tab', id);
+                    isHave = true;
+                    return;
+                }
             });
-            element.tabChange('main-tab', id)
+            if (!isHave) {
+                element.tabAdd('main-tab', {
+                    title: title
+                    , content: '<iframe src=' + url + ' width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>'
+                    , id: id
+                });
+                element.tabChange('main-tab', id);
+            }
+
         };
     </script>
     @RenderSection("scripts", required: false)

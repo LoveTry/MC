@@ -172,6 +172,7 @@
     <Compile Include="Controllers\admin\AdminController.cs" />
     <Compile Include="Controllers\admin\BaseController.cs" />
     <Compile Include="Controllers\admin\BasicCodeController.cs" />
+    <Compile Include="Controllers\admin\LoginController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
     <Compile Include="Comm\LocationService.cs" />
@@ -194,6 +195,7 @@
     </Compile>
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
+    <Compile Include="Models\JsonReturn.cs" />
     <Compile Include="Models\query\FeeQuery.cs" />
     <Compile Include="Models\table\Fee.cs" />
     <Compile Include="Models\LoginUser.cs" />
@@ -214,6 +216,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\jquery-weui.css" />
     <Content Include="Content\jquery-weui.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\other.css" />
     <Content Include="Content\pc.css" />
     <Content Include="Content\weui.css" />
     <Content Include="Content\weui.min.css" />
@@ -222,6 +226,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\avatar2.jpg" />
+    <Content Include="images\bak.jpg" />
     <Content Include="images\error.png" />
     <Content Include="images\icon_nav_article.png" />
     <Content Include="images\icon_nav_button.png" />
@@ -345,6 +350,7 @@
     <Content Include="layui\lay\modules\tree.js" />
     <Content Include="layui\lay\modules\upload.js" />
     <Content Include="layui\lay\modules\util.js" />
+    <Content Include="layui_exts\sliderVerify\sliderVerify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
@@ -396,7 +402,7 @@
     <Content Include="Views\Admin\OrderList.cshtml" />
     <Content Include="Views\Admin\Course.cshtml" />
     <Content Include="Views\Admin\FeeList.cshtml" />
-    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Login\index.cshtml" />
     <Content Include="Views\Admin\CourseAdd.cshtml" />
     <Content Include="Views\Customer\CusList.cshtml" />
     <Content Include="Views\BasicCode\BasicTypeList.cshtml" />

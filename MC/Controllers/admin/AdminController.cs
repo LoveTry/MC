@@ -27,6 +27,13 @@ namespace MC.Controllers
             return View();
         }
 
+        public JsonResult CourseListJson(int page, int limit)
+        {
+            var query = Project.GetChooseList();
+            var data = new JsonReturn(query, page, limit);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult CourseAdd()
         {
@@ -137,6 +144,27 @@ namespace MC.Controllers
             return View();
         }
 
+        public JsonResult OrderListJson(int page, int limit)
+        {
+            var query = from row in Order.GetList("1=1").AsEnumerable()
+                        select new OrderQuery
+                        {
+                            CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
+                            CusName = row.Field<string>("CusName"),
+                            CusPhone = row.Field<string>("CusPhone"),
+                            ID = row.Field<int>("ID"),
+                            Name = row.Field<string>("Name"),
+                            OrderNo = row.Field<string>("OrderNo"),
+                            ProMoney = row.Field<decimal>("ProMoney"),
+                            State = row.Field<string>("State"),
+                            StateInfo = row.Field<string>("StateInfo"),
+                            TrueName = row.Field<string>("TrueName"),
+                            UserName = row.Field<string>("UserName")
+                        };
+            var data = new JsonReturn(query, page, limit);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult OrderConfirm(int id)
         {
             var info = Order.TryFind(id);
@@ -180,6 +208,7 @@ namespace MC.Controllers
                             CrUserID = row.Field<Guid>("CrUserID"),
                             ID = row.Field<Guid>("ID"),
                             IsPay = row.Field<bool>("IsPay"),
+                            PayDate = row.Field<DateTime?>("PayDate"),
                             Money = row.Field<decimal>("Money"),
                             OrderID = row.Field<int>("OrderID"),
                             OrderNo = row.Field<string>("OrderNo"),
@@ -190,6 +219,30 @@ namespace MC.Controllers
                         };
             ViewBag.Source = query.ToList();
             return View();
+        }
+
+        public JsonResult FeeListJson(int page, int limit)
+        {
+            var query = from row in Fee.GetFeeListAll().AsEnumerable()
+                        select new Fee
+                        {
+                            Approver = row.Field<string>("Approver"),
+                            ApproverID = row.Field<Guid>("ApproverID"),
+                            CrTime = row.Field<DateTime>("CrTime"),
+                            CrUser = row.Field<string>("CrUser"),
+                            CrUserID = row.Field<Guid>("CrUserID"),
+                            ID = row.Field<Guid>("ID"),
+                            IsPay = row.Field<bool>("IsPay"),
+                            Money = row.Field<decimal>("Money"),
+                            OrderID = row.Field<int>("OrderID"),
+                            OrderNo = row.Field<string>("OrderNo"),
+                            PayeeID = row.Field<Guid>("PayeeID"),
+                            PayeeTrueName = row.Field<string>("PayeeTrueName"),
+                            PayeeUserName = row.Field<string>("PayeeUserName"),
+                            ApproveTime = row.Field<DateTime?>("ApproveTime")
+                        };
+            var data = new JsonReturn(query, page, limit);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
 

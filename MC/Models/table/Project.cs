@@ -99,6 +99,7 @@ namespace MC.Models
         /// </summary>
         [Property]
         [Display(Name = "开课时间")]
+        [DisplayFormat]
         public DateTime? StartDate
         {
             get;
@@ -203,7 +204,8 @@ namespace MC.Models
         public static Project[] GetChooseList()
         {
             ICriterion exp = Restrictions.Eq("IsUse", true);
-            return FindAll(exp);
+            NHibernate.Criterion.Order[] orders = new NHibernate.Criterion.Order[1] { new NHibernate.Criterion.Order("CrTime", false) };
+            return FindAll(orders, exp);
         }
 
 

@@ -126,6 +126,15 @@ namespace MC.Models
             get; set;
         }
 
+        /// <summary>
+        /// 支付时间
+        /// </summary>
+        [Property]
+        public DateTime? PayDate
+        {
+            get; set;
+        }
+
         #endregion
 
         public string PayeeUserName { get; set; }
