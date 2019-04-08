@@ -11,16 +11,28 @@ namespace MC.Models
         public string UserId { get; set; }
         public string Role { get; set; }
 
-        public static LoginUser GetLoginUser(Guid userid)
+        public static LoginUser GetLoginUser(string username, string password)
         {
-            var loginer = new LoginUser()
+            var adminUser = AdminUser.GetAdminUser(username, password);
+            if (adminUser != null)
             {
-                Role = "",
-                UserId = "88888888-8888-8888-8888-888888888888",
-                UserName = "Admin"
-            };
-            HttpContext.Current.Session.Add(Const.PC_USRE_INFO, loginer);
-            return loginer;
+                var loginer = new LoginUser()
+                {
+                    Role = "",
+                    UserId = adminUser.ID.ToString(),
+                    UserName = adminUser.UserName
+                };
+                HttpContext.Current.Session.Add(Const.PC_USRE_INFO, loginer);
+                //更新登录时间
+                adminUser.LastOnLineTime = DateTime.Now;
+                adminUser.UpdateAndFlush();
+                return loginer;
+            }
+            else
+            {
+                HttpContext.Current.Session[Const.PC_USRE_INFO] = null;
+                return null;
+            }
         }
     }
 }

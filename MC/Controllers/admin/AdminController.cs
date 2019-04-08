@@ -16,7 +16,14 @@ namespace MC.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+            ViewBag.UserName = LUser.UserName;
             return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("index", "login");
         }
 
         #region Course

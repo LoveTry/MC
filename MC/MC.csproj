@@ -193,6 +193,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminUser.cs" />
     <Compile Include="Models\Const.cs" />
     <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Models\JsonReturn.cs" />
@@ -236,6 +237,7 @@
     <Content Include="images\plus.png" />
     <Content Include="images\qrcode.jpg" />
     <Content Include="images\rmb.png" />
+    <Content Include="images\touxiang.jpeg" />
     <Content Include="images\welcome.jpg" />
     <Content Include="images\show.png" />
     <Content Include="images\yuwen1.jpg" />
@@ -370,6 +372,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\mc.js" />
+    <Content Include="Scripts\md5.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\swiper.js" />
     <Content Include="Scripts\swiper.min.js" />

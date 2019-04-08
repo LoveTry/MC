@@ -33,6 +33,7 @@ namespace MC.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
+            //Session.Clear();
             if (Session[Const.PC_USRE_INFO] != null)
             {
                 //Session里存在 说明登录过
@@ -40,8 +41,8 @@ namespace MC.Controllers
             }
             else
             {
-                LoginUser.GetLoginUser("88888888-8888-8888-8888-888888888888".ToGuid());
-                //filterContext.Result = RedirectToAction("Login", "Login", new { msg = "该页面已经过期，请退出当前菜单重新进入！" });
+                //LoginUser.GetLoginUser("admin", "e6f59560edc55d422647b50df2ed6113");
+                filterContext.Result = RedirectToAction("index", "login");
             }
         }
     }
