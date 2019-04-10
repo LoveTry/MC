@@ -21,29 +21,31 @@
             </script>
 
             <script type="text/html" id="order-bar">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">确认</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a class="layui-btn layui-btn-xs" lay-event="yes">通过</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="no">不通过</a>
             </script>
             <script>
-                layui.use('table', function () {
+                layui.use(['table','jquery'], function () {
                     var table = layui.table;
-
-                    table.render({
+                    var $ = layui.jquery;
+                    var tableIns = table.render({
                         elem: '#order-list'
                         , url: '/admin/orderlistjson'
                         , toolbar: '#order-toolbar'
                         , title: '推荐数据表'
                         , cols: [[
-                            { field: 'OrderNo', title: '订单号', width: 140, sort: true }
-                            , { field: 'State', title: '状态' }
-                            , { field: 'CusName', title: '客户名', sort: true }
-                            , { field: 'CusPhone', title: '客户手机', width: 130 }
+                            { field: 'ID', title: 'ID', hide: true }
+                            , { field: 'OrderNo', title: '订单号', width: 140, sort: true }
+                            , { field: 'State', title: '状态', width: 75 }
+                            , { field: 'StateInfo', title: '状态信息' }
+                            , { field: 'CusName', title: '客户名', width: 80, sort: true }
+                            , { field: 'CusPhone', title: '客户手机', width: 120 }
                             , { field: 'Name', title: '意向课程' }
                             , { field: 'ProMoney', title: '课程费用', sort: true }
                             , { field: 'UserName', title: '推荐昵称', sort: true }
                             , { field: 'TrueName', title: '推荐姓名', sort: true }
                             , { field: 'CrTime', title: '推荐日期', sort: true }
-                            , { fixed: 'right', title: '操作', toolbar: '#order-bar', width: 120 }
+                            , { fixed: 'right', title: '审核', toolbar: '#order-bar', width: 130 }
                         ]]
                         , page: true
                     });
@@ -52,21 +54,42 @@
                     table.on('tool(order-list)', function (obj) {
                         var data = obj.data;
                         //console.log(obj)
-                        if (obj.event === 'del') {
-                            layer.confirm('真的删除行么', function (index) {
-                                obj.del();
-                                layer.close(index);
-                            });
-                        } else if (obj.event === 'edit') {
-                            layer.prompt({
-                                formType: 2
-                                , value: data.email
-                            }, function (value, index) {
-                                obj.update({
-                                    email: value
+                        if (obj.event === 'yes') {
+                            layer.confirm('确认通过审核么？', function (index) {
+                                $.get("/admin/orderconfirm", { id: data.ID, isOK: true, msg: '' }, function (data) {
+                                    tableIns.reload({
+                                        where: {}
+                                        , page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
                                 });
+
                                 layer.close(index);
                             });
+                        } else if (obj.event === 'no') {
+                            layer.prompt({
+                                formType: 2 //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                                , value: ''
+                                , maxlength: 200 //可输入文本的最大长度，默认200
+                                , title: '请输入审核信息'
+                                , btn: ['通过', '不通过', '取消']
+                                , btn2: function (index) {
+                                    var value = layui.jquery('#layui-layer' + index + " .layui-layer-input").val();
+                                    if (!value) {
+                                        return false;　　// 如果value为空，停止继续执行
+                                    }
+                                    layer.close(index);
+                                }
+                            }
+                                , function (value, index) {
+                                    alert("ss");
+                                    obj.update({
+                                        StateInfo: value
+                                    });
+                                    layer.close(index);
+                                }
+                            );
                         }
                     });
                 });

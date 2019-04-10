@@ -198,6 +198,8 @@
     <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Models\JsonReturn.cs" />
     <Compile Include="Models\query\FeeQuery.cs" />
+    <Compile Include="Models\query\ReportTotal.cs" />
+    <Compile Include="Models\table\ApproveDetail.cs" />
     <Compile Include="Models\table\Fee.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\query\CustomerQuery.cs" />
@@ -356,11 +358,13 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\city-picker.js" />
     <Content Include="Scripts\city-picker.min.js" />
+    <Content Include="Scripts\echarts.min.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="layui\font\iconfont.eot" />
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
+    <Content Include="文档.txt" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-weui.js" />

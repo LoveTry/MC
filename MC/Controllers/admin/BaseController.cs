@@ -41,8 +41,11 @@ namespace MC.Controllers
             }
             else
             {
-                //LoginUser.GetLoginUser("admin", "e6f59560edc55d422647b50df2ed6113");
+#if DEBUG
+                LoginUser.GetLoginUser("admin", "e6f59560edc55d422647b50df2ed6113");
+#else
                 filterContext.Result = RedirectToAction("index", "login");
+#endif
             }
         }
     }

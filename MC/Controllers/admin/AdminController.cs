@@ -17,6 +17,9 @@ namespace MC.Controllers
         public ActionResult Index()
         {
             ViewBag.UserName = LUser.UserName;
+            var obj = CommFunction.GetArrayByDt(ReportTotal.GetProNameAndFee());
+            ViewBag.LegendArray = obj["Name"];
+            ViewBag.SeriesArray = obj["Fee"];
             return View();
         }
 
@@ -29,8 +32,6 @@ namespace MC.Controllers
         #region Course
         public ActionResult Course()
         {
-            var dt = Project.GetList();
-            ViewBag.Source = dt;
             return View();
         }
 
@@ -132,22 +133,6 @@ namespace MC.Controllers
 
         public ActionResult OrderList()
         {
-            var query = from row in Order.GetList("1=1").AsEnumerable()
-                        select new OrderQuery
-                        {
-                            CrTime = row.Field<DateTime>("CrTime").ToString("yyyy-MM-dd"),
-                            CusName = row.Field<string>("CusName"),
-                            CusPhone = row.Field<string>("CusPhone"),
-                            ID = row.Field<int>("ID"),
-                            Name = row.Field<string>("Name"),
-                            OrderNo = row.Field<string>("OrderNo"),
-                            ProMoney = row.Field<decimal>("ProMoney"),
-                            State = row.Field<string>("State"),
-                            StateInfo = row.Field<string>("StateInfo"),
-                            TrueName = row.Field<string>("TrueName"),
-                            UserName = row.Field<string>("UserName")
-                        };
-            ViewBag.Source = query.ToList();
             return View();
         }
 
@@ -172,34 +157,55 @@ namespace MC.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult OrderConfirm(int id)
+        public JsonResult OrderConfirm(int id, bool isOK, string msg)
         {
             var info = Order.TryFind(id);
             if (info != null)
             {
-                decimal fee = 0;
-                var feeRate = MC.Models.FeeRate.FindFirst();
-                if (feeRate != null)
+                if (isOK)
                 {
-                    fee = info.ProMoney * feeRate.Rate - feeRate.Other;
-                }
-                info.State = "结佣中";
-                info.StateID = 2;
-                info.StateInfo = "管理员已经审核完成，等待结佣{0}元".FormatWith(fee.ToMoney(2));
-                info.UpdateAndFlush();
+                    decimal fee = 0;
+                    var feeRate = MC.Models.FeeRate.FindFirst();
+                    if (feeRate != null)
+                    {
+                        fee = info.ProMoney * feeRate.Rate - feeRate.Other;
+                    }
+                    info.State = "结佣中";
+                    info.StateID = 2;
+                    info.StateInfo = "管理员已经审核完成，等待结佣{0}元".FormatWith(fee.ToMoney(2));
+                    info.UpdateAndFlush();
 
-                var feeInfo = new Fee();
-                feeInfo.ID = GuidHelper.GuidNew();
-                feeInfo.OrderID = info.ID;
-                feeInfo.Money = fee;
-                feeInfo.IsPay = false;
-                feeInfo.PayeeID = info.CrUserID;
-                feeInfo.CrUserID = LUser.UserId.ToGuid();
-                feeInfo.CrUser = LUser.UserName;
-                feeInfo.CrTime = DateTime.Now;
-                feeInfo.CreateAndFlush();
+                    var feeInfo = new Fee();
+                    feeInfo.ID = GuidHelper.GuidNew();
+                    feeInfo.OrderID = info.ID;
+                    feeInfo.Money = fee;
+                    feeInfo.IsPay = false;
+                    feeInfo.PayeeID = info.CrUserID;
+                    feeInfo.CrUserID = LUser.UserId.ToGuid();
+                    feeInfo.CrUser = LUser.UserName;
+                    feeInfo.CrTime = DateTime.Now;
+                    feeInfo.CreateAndFlush();
+                }
+                else
+                {
+                    info.State = "被驳回";
+                    info.StateInfo = msg;
+                    info.StateID = 5;
+                    info.UpdateAndFlush();
+                }
+
+                var approve = new ApproveDetail()
+                {
+                    ApproveMsg = msg,
+                    Approver = LUser.UserName,
+                    ApproveTime = DateTime.Now,
+                    ApproveType = (int)ApproveType.ORDER,
+                    BusinessIntID = id,
+                    IsOK = isOK
+                };
+                approve.CreateAndFlush();
             }
-            return RedirectToAction("FeeList");
+            return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
         }
 
 

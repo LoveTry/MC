@@ -88,6 +88,26 @@ namespace MC
             }
         }
 
+        /// <summary>
+        /// DataTable转换成列数组用于Echarts.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string[]> GetArrayByDt(DataTable dt)
+        {
+            var obj = new Dictionary<string, string[]>();
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                var strArray = new string[dt.Rows.Count];
+                for (int j = 0; j < dt.Rows.Count; j++)
+                {
+                    strArray[j] = dt.Rows[j][i].ToString();
+                }
+                obj.Add(dt.Columns[i].ColumnName, strArray);
+            }
+            return obj;
+        }
+
         public static string HeadImage(string wxfusn)
         {
             try

@@ -12,6 +12,8 @@ namespace MC.Models
         public int count { get; set; }
         public object data { get; set; }
 
+        public JsonReturn() { }
+
         /// <summary>
         /// 构建Json返回数据
         /// </summary>
@@ -24,6 +26,11 @@ namespace MC.Models
             msg = "";
             this.count = data.Count();
             this.data = data.Skip((page - 1) * limit).Take(limit).ToList();
+        }
+
+        public static JsonReturn OK()
+        {
+            return new JsonReturn() { code = 0, msg = "" };
         }
     }
 
