@@ -25,7 +25,7 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="no">不通过</a>
             </script>
             <script>
-                layui.use(['table','jquery'], function () {
+                layui.use(['table', 'jquery'], function () {
                     var table = layui.table;
                     var $ = layui.jquery;
                     var tableIns = table.render({
@@ -72,21 +72,17 @@
                                 formType: 2 //输入框类型，支持0（文本）默认1（密码）2（多行文本）
                                 , value: ''
                                 , maxlength: 200 //可输入文本的最大长度，默认200
-                                , title: '请输入审核信息'
-                                , btn: ['通过', '不通过', '取消']
-                                , btn2: function (index) {
-                                    var value = layui.jquery('#layui-layer' + index + " .layui-layer-input").val();
-                                    if (!value) {
-                                        return false;　　// 如果value为空，停止继续执行
-                                    }
-                                    layer.close(index);
-                                }
+                                , title: '请输入不通过原因'
                             }
                                 , function (value, index) {
-                                    alert("ss");
                                     obj.update({
-                                        StateInfo: value
+                                        StateInfo: value,
+                                        State: '被驳回'
                                     });
+
+                                    $.get("/admin/orderconfirm", { id: data.ID, isOK: false, msg: value }, function (data) {
+                                    });
+
                                     layer.close(index);
                                 }
                             );

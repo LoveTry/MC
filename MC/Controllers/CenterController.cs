@@ -56,6 +56,9 @@ namespace MC.Controllers
                               OrderID = row.Field<int>("OrderID"),
                               OrderNo = row.Field<string>("OrderNo"),
                               PayDate = row.Field<DateTime?>("PayDate"),
+                              ApplyDate = row.Field<DateTime>("ApplyDate"),
+                              CusName = row.Field<string>("CusName"),
+                              CusPhone = row.Field<string>("CusPhone")
                           };
             var waitFeeSum = waitFee.Sum(t => t.Money);
             var overFee = from row in dt.AsEnumerable()
@@ -66,6 +69,9 @@ namespace MC.Controllers
                               OrderID = row.Field<int>("OrderID"),
                               OrderNo = row.Field<string>("OrderNo"),
                               PayDate = row.Field<DateTime?>("PayDate"),
+                              ApplyDate = row.Field<DateTime>("ApplyDate"),
+                              CusName = row.Field<string>("CusName"),
+                              CusPhone = row.Field<string>("CusPhone")
                           };
             var overFeeSum = overFee.Sum(t => t.Money);
 

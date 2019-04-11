@@ -12,5 +12,8 @@ namespace MC.Models.query
         public decimal Money { get; set; }
         public int OrderID { get; set; }
         public DateTime? PayDate { get; set; }
+        public string CusName { get; set; }
+        public string CusPhone { get; set; }
+        public DateTime ApplyDate { get; set; }
     }
 }

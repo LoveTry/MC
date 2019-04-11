@@ -32,7 +32,7 @@ namespace MC
 
             btnGroup.button.Add(new SingleViewButton()
             {
-                url = "http://game.cargocargo.cn/",
+                url = "http://game.shundao.cn/",
                 name = "微信小游戏"
             });
             #region 注释

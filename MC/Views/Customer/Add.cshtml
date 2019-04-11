@@ -67,7 +67,7 @@
     </script>
 </head>
 <body ontouchstart>
-    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnFailure = "hideLoading", OnSuccess= "save"  }))
+    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", OnFailure = "hideLoading", OnSuccess = "save" }))
     {
         @Html.AntiForgeryToken();
         @Html.HiddenFor(model => model.ChooseIDList)
@@ -103,14 +103,15 @@
                 </div>
             </div>
         </div>
-
-        <a class="weui-cell weui-cell_access open-popup" data-target="#list">
-            <div class="weui-cell__hd"><img src="~/images/plus.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p>选择意向课程</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-        </a>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access open-popup" data-target="#list">
+                <div class="weui-cell__hd"><img src="~/images/plus.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>选择意向课程</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
         <div class="weui-cells__title">已选择课程</div>
         <div id="choosed">
             @*<div class="weui-cell weui-cell_swiped">
