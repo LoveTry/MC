@@ -23,8 +23,7 @@ namespace MC
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/pc.css"));
+                      "~/Content/bootstrap.css"));
         }
     }
 }

@@ -15,7 +15,7 @@
     <script src="~/Scripts/jquery-weui.min.js"></script>
     <link href="~/Content/weui.min.css" rel="stylesheet" />
     <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Site.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
     <style>
         .weui-navbar {
             background-color: #fff;
@@ -96,15 +96,11 @@
                 }
                 else
                 {
-                    < div style = "text-align:center; color:#bfbfbf" >
-
-                    < br />
-
-                    < img src = "~/images/rmb.png" />
-
-                    < p > 无待结佣金 </ p >
-
-                    </ div >
+                    <div style="text-align:center; color:#bfbfbf">
+                        <br />
+                        <img src="~/images/rmb.png" />
+                        <p> 无待结佣金 </p>
+                    </div>
                 }
 
             </div>
