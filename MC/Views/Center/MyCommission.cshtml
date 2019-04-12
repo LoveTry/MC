@@ -53,19 +53,6 @@
             <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
                 @if (ViewBag.WaitFee != null && (ViewBag.WaitFee as List<MC.Models.query.FeeQuery>).Count > 0)
                 {
-                    @*<div class="weui-cells__title">待结总金额：<span class="fee-color">@Html.Raw(ViewBag.WaitFeeSum + "元")</span></div>
-                        <div class="weui-cells">
-                            @foreach (var item in ViewBag.WaitFee as List<MC.Models.query.FeeQuery>)
-                            {
-                                <a class="weui-cell weui-cell_access" href="javascript:;">
-                                    <div class="weui-cell__bd">
-                                        <p class="fee-color">@Html.Raw(item.Money.ToString("F2") + "元")</p>
-                                    </div>
-                                    <div class="weui-cell__ft">@item.OrderNo</div>
-                                </a>
-                            }
-                        </div>*@
-
                     <div class="weui-form-preview">
                         <div class="mc-card">
                             <div class="weui-form-preview__bd"><span class="weui-form-preview__value fee-color">待结算总金额：@Html.Raw("¥" + ViewBag.WaitFeeSum)</span></div>
@@ -107,16 +94,30 @@
             <div id="tab2" class="weui-tab__bd-item">
                 @if (ViewBag.OverFee != null && (ViewBag.OverFee as List<MC.Models.query.FeeQuery>).Count > 0)
                 {
-                    <div class="weui-cells__title">已结算总金额：<span class="fee-color">@Html.Raw(ViewBag.OverFeeSum + "元")</span></div>
-                    <div class="weui-cells">
+                    <div class="weui-form-preview">
+                        <div class="mc-card">
+                            <div class="weui-form-preview__bd"><span class="weui-form-preview__value fee-color">已结算总金额：@Html.Raw("¥" + ViewBag.OverFeeSum)</span></div>
+                        </div>
                         @foreach (var item in ViewBag.OverFee as List<MC.Models.query.FeeQuery>)
                         {
-                            <a class="weui-cell weui-cell_access" href="javascript:;">
-                                <div class="weui-cell__bd">
-                                    <p class="fee-color">@Html.Raw(item.Money.ToString("F2") + "元")</p>
+                            <div class="mc-card">
+                                <div class="weui-form-preview__hd">
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">待结金额</label>
+                                        <em class="weui-form-preview__value fee-color">@Html.Raw("¥" + item.Money.ToString("F2"))</em>
+                                    </div>
                                 </div>
-                                <div class="weui-cell__ft">@item.OrderNo</div>
-                            </a>
+                                <div class="weui-form-preview__bd">
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">客户名称</label>
+                                        <span class="weui-form-preview__value">@item.CusName</span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">推荐日期</label>
+                                        <span class="weui-form-preview__value">@item.ApplyDate.ToString("yyyy-MM-dd")</span>
+                                    </div>
+                                </div>
+                            </div>
                         }
                     </div>
                 }

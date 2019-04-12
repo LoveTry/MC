@@ -204,14 +204,13 @@
                                 <a href='@Url.Action("Detail", "Customer", new { ID=item.ID })' class="weui-media-box weui-media-box_appmsg">
                                     <div class="weui-media-box__hd">
                                         <img class="weui-media-box__thumb" src='~/images/@Html.Raw(item.Sex.Equals("男")? "male.png":"female.png")' alt="">
-                                        @*<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>*@
                                     </div>
                                     <div class="weui-media-box__bd">
                                         <h4 class="weui-media-box__title">
                                             @item.Name
-                                            <span class="weui-media-box__title-after"><span style="color:brown">@item.Num</span>项课程 ></span>
+                                            <span class="weui-media-box__title-after">@item.Phone</span>
                                         </h4>
-                                        <p class="weui-media-box__desc">@item.Phone</p>
+                                        <p class="weui-media-box__desc">推荐<span style="color:brown">@item.Num</span>次</p>
 
                                     </div>
                                 </a>
@@ -300,7 +299,7 @@
                         </div>
                         <div class="weui-cell__ft">我的佣金</div>
                     </a>
-                    <a class="weui-cell weui-cell_access" href="http://game.cargocargo.cn/">
+                    <a class="weui-cell weui-cell_access" href="http://game.shundao.cn/">
                         <div class="weui-cell__hd"><img src="~/images/game.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                         <div class="weui-cell__bd">
                             <p>游戏娱乐</p>

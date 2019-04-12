@@ -29,3 +29,68 @@ body {
 .weui-tabbar {
     background-color: #FFF;
 }
+.weui-panel__bd .weui-media-box__hd {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+/*
+    进度流程
+*/
+.step-list {
+    margin: 0;
+    padding: 0;
+    margin-left: 12px;
+    margin-top: -9px;
+    padding-left: 10px;
+    list-style: none;
+    font-size: 12px
+}
+
+    .step-list li {
+        height: 40px;
+        border-left: 1px solid #d9d9d9;
+    }
+
+        .step-list li:before {
+            content: '';
+            border: 5px solid #f3f3f3;
+            background-color: green;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: -10px;
+            margin-right: 10px
+        }
+
+    .step-list .step {
+        font-weight: 700;
+        margin-right: 8px;
+        line-height: 0.8em;
+        display: inline-block;
+        vertical-align: text-top;
+        color: #4B4B4B;
+    }
+
+    .step-list .content {
+        display: inline-block;
+        width: 653px;
+        vertical-align: text-top;
+        line-height: 0.5em;
+        color: #999;
+    }
+
+    .step-list li:last-child {
+        border: none;
+        height:20px;
+    }
+
+    .step-list .acive:before {
+        background-color: #fe4300;
+        border-color: #f8e9e4
+    }
+
+    .step-list .acive span {
+        color: #fe4300
+    }

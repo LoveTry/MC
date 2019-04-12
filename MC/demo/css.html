@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .chuguo-lc-wrap {
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            display: flex;
+            background: url(../images/jmyz-lc-bg.png) no-repeat center top;
+            background-size: auto 534px;
+            height: 621px;
+        }
+
+            .chuguo-lc-wrap ul {
+                width: 50%;
+                flex: 1;
+                list-style:none;
+            }
+
+                .chuguo-lc-wrap ul.lc-right {
+                    margin-top: 56px;
+                }
+
+                .chuguo-lc-wrap ul li {
+                    position: relative;
+                    height: 95px;
+                    margin-bottom: 18px;
+                }
+
+                    .chuguo-lc-wrap ul li .lc-title {
+                        color: #fff;
+                        background-color: #35516c;
+                        width: 83%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        line-height: 25px;
+                        text-align: center;
+                        z-index: 9;
+                        border-bottom: 1px solid rgba(0,0,0,0.2);
+                        box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+                        font-size: 15px;
+                    }
+
+                .chuguo-lc-wrap ul.lc-right li .lc-title {
+                    top: 0;
+                    right: 0;
+                    left: auto;
+                }
+
+                .chuguo-lc-wrap ul.lc-left li .lc-title::before {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border: 5px solid #304859;
+                    border-bottom-color: transparent;
+                    border-left-color: transparent;
+                    position: absolute;
+                    bottom: -11px;
+                    left: 0;
+                }
+
+                .chuguo-lc-wrap ul.lc-right li .lc-title::before {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border: 5px solid #304859;
+                    border-bottom-color: transparent;
+                    border-right-color: transparent;
+                    position: absolute;
+                    bottom: -11px;
+                    right: 0;
+                }
+
+                .chuguo-lc-wrap ul.lc-left li .lc-title::after {
+                    content: '';
+                    width: 26px;
+                    height: 26px;
+                    position: absolute;
+                    border-radius: 50%;
+                    top: 0;
+                    right: -13px;
+                    background: #35516c;
+                }
+
+                .chuguo-lc-wrap ul.lc-right li .lc-title::after {
+                    content: '';
+                    width: 26px;
+                    height: 26px;
+                    position: absolute;
+                    border-radius: 50%;
+                    top: 0;
+                    left: -13px;
+                    background: #35516c;
+                }
+
+                .chuguo-lc-wrap ul li .lc-content {
+                    position: absolute;
+                    top: 0;
+                    left: 10px;
+                    padding-top: 34px;
+                    width: 70%;
+                    padding-bottom: 12px;
+                    text-align: center;
+                    box-shadow: 0px 2px 2px rgba(0,0,0,0.4);
+                    color: #333;
+                    background-color: #f1f2f3;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+
+                .chuguo-lc-wrap ul.lc-right li .lc-content {
+                    left: auto;
+                    right: 10px;
+                }
+
+                .chuguo-lc-wrap ul.lc-left li:nth-child(2) .lc-title {
+                    background-color: #f6004b;
+                }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(2) .lc-title::before {
+                        border: 5px solid #ad003a;
+                        border-bottom-color: transparent;
+                        border-left-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(2) .lc-title::after {
+                        background: #f6004b;
+                    }
+
+                .chuguo-lc-wrap ul.lc-left li:nth-child(3) .lc-title {
+                    background-color: #00b1b1;
+                }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(3) .lc-title::before {
+                        border: 5px solid #008183;
+                        border-bottom-color: transparent;
+                        border-left-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(3) .lc-title::after {
+                        background: #00b1b1;
+                    }
+
+                .chuguo-lc-wrap ul.lc-left li:nth-child(4) .lc-title {
+                    background-color: #4a90e2;
+                }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(4) .lc-title::before {
+                        border: 5px solid #2a5f9c;
+                        border-bottom-color: transparent;
+                        border-left-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(4) .lc-title::after {
+                        background: #4a90e2;
+                    }
+
+                .chuguo-lc-wrap ul.lc-left li:nth-child(5) .lc-title {
+                    background-color: #417505;
+                }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(5) .lc-title::before {
+                        border: 5px solid #335906;
+                        border-bottom-color: transparent;
+                        border-left-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-left li:nth-child(5) .lc-title::after {
+                        background: #417505;
+                    }
+
+
+                .chuguo-lc-wrap ul.lc-right li:nth-child(1) .lc-title {
+                    background-color: #ffcc00;
+                }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(1) .lc-title::before {
+                        border: 5px solid #efa100;
+                        border-bottom-color: transparent;
+                        border-right-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(1) .lc-title::after {
+                        background: #ffcc00;
+                    }
+
+                .chuguo-lc-wrap ul.lc-right li:nth-child(2) .lc-title {
+                    background-color: #005d8e;
+                }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(2) .lc-title::before {
+                        border: 5px solid #034c7b;
+                        border-bottom-color: transparent;
+                        border-right-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(2) .lc-title::after {
+                        background: #005d8e;
+                    }
+
+                .chuguo-lc-wrap ul.lc-right li:nth-child(3) .lc-title {
+                    background-color: #d94135;
+                }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(3) .lc-title::before {
+                        border: 5px solid #a53626;
+                        border-bottom-color: transparent;
+                        border-right-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(3) .lc-title::after {
+                        background: #d94135;
+                    }
+
+                .chuguo-lc-wrap ul.lc-right li:nth-child(4) .lc-title {
+                    background-color: #6d219b;
+                }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(4) .lc-title::before {
+                        border: 5px solid #4e3675;
+                        border-bottom-color: transparent;
+                        border-right-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(4) .lc-title::after {
+                        background: #6d219b;
+                    }
+
+                .chuguo-lc-wrap ul.lc-right li:nth-child(5) .lc-title {
+                    background-color: #ab6b42;
+                }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(5) .lc-title::before {
+                        border: 5px solid #744224;
+                        border-bottom-color: transparent;
+                        border-right-color: transparent;
+                    }
+
+                    .chuguo-lc-wrap ul.lc-right li:nth-child(5) .lc-title::after {
+                        background: #ab6b42;
+                    }
+    </style>
+    <style>
+        .step-list {
+            margin: 0;
+            padding: 0;
+            margin-left: 12px;
+            margin-top: -9px;
+            padding-left: 10px;
+            list-style: none;
+            font-size: 12px
+        }
+
+            .step-list li {
+                height: 60px;
+                border-left: 1px solid #d9d9d9;
+            }
+
+                .step-list li:before {
+                    content: '';
+                    border: 5px solid #f3f3f3;
+                    background-color: green;
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin-left: -10px;
+                    margin-right: 10px
+                }
+
+            .step-list .step {
+                font-weight: 700;
+                margin-right: 8px;
+                font-family: Arial;
+                line-height: 0.8em;
+                display: inline-block;
+                vertical-align: text-top;
+            }
+
+            .step-list .content {
+                display: inline-block;
+                width: 653px;
+                vertical-align: text-top;
+                line-height: 0.5em;
+                color: #999;
+            }
+
+            .step-list li:last-child {
+                border: none;
+            }
+
+            .step-list .acive:before {
+                background-color: #fe4300;
+                border-color: #f8e9e4
+            }
+            .step-list .acive span {
+                color: #fe4300
+            }
+    </style>
+    <style>
+        .progress {
+            margin: 20px 0 10px 0;
+        }
+
+            .progress li {
+                padding: 0px 15px 0 25px;
+                line-height: 40px;
+                background-color: #50abe4;
+                display: inline-block;
+                color: #fff;
+                position: relative;
+                font-size: 10pt;
+            }
+
+                .progress li:after {
+                    content: '';
+                    display: block;
+                    border-top: 20px solid transparent;
+                    border-bottom: 20px solid transparent;
+                    border-left: 20px solid #50abe4;
+                    position: absolute;
+                    right: -20px;
+                    top: 0;
+                    z-index: 10;
+                }
+
+                .progress li:before {
+                    content: '';
+                    display: block;
+                    border-top: 20px solid #50abe4;
+                    border-bottom: 20px solid #50abe4;
+                    border-left: 20px solid #fff;
+                    position: absolute;
+                    left: 0px;
+                    top: 0;
+                }
+
+                .progress li:first-child {
+                    border-radius: 4px 0 0 4px;
+                    padding-left: 20px;
+                }
+
+                .progress li:last-child, .cssNavEnd {
+                    border-radius: 0px 4px 4px 0px;
+                    padding-right: 25px;
+                }
+
+                .progress li:first-child:before {
+                    display: none;
+                }
+
+                .progress li:last-child:after, .cssNavEnd:after {
+                    display: none;
+                }
+
+                .progress li.active {
+                    background-color: #ef72b6;
+                }
+
+                    .progress li.active:after {
+                        border-left-color: #ef72b6;
+                    }
+
+                    .progress li.active:before {
+                        border-top-color: #ef72b6;
+                        border-bottom-color: #ef72b6;
+                    }
+    </style>
+</head>
+<body>
+    <div class="chuguo-lc-wrap">
+        <ul class="lc-left">
+            <li>
+                <div class="lc-title">
+                    01 前期咨询
+                </div>
+                <div class="lc-content font-14">
+                    沟通咨询了解眼角膜移植相关内容
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    03 病例翻译
+                </div>
+                <div class="lc-content font-14">
+                    整理病例资料并翻译传送相关医院
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    05 出国准备
+                </div>
+                <div class="lc-content font-14">
+                    客人准备护照及出国签证相关资料
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    07 全程陪同
+                </div>
+                <div class="lc-content font-14">
+                    当地工作人员全程接待根据约定的时间陪同
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    09 术后复查
+                </div>
+                <div class="lc-content font-14">
+                    完成辅助检查，指导用药，治疗结束之后、回国定期复查
+                </div>
+            </li>
+        </ul>
+        <ul class="lc-right">
+            <li>
+                <div class="lc-title">
+                    02 签订协议
+                </div>
+                <div class="lc-content font-14">
+                    签署正规服务合同、支付相应款项
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    04 预约手术
+                </div>
+                <div class="lc-content font-14">
+                    华印医疗与眼科中心预约手术时间
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    06 行程安排
+                </div>
+                <div class="lc-content font-14">
+                    机票酒店预定以及出行前行程说明
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    08 手术安排
+                </div>
+                <div class="lc-content font-14">
+                    前往相关医院问诊、术前检查、确定手术，安排手术
+                </div>
+            </li>
+            <li>
+                <div class="lc-title">
+                    10 国内随访
+                </div>
+                <div class="lc-content font-14">
+                    国内私人医生与国外医生保持沟通，定期随访
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="step-list">
+        <li class="acive">
+            <span class="step">第一天</span>
+            <div class="content">中山陵</div>
+        </li>
+        <li>
+            <span class="step">第二天</span>
+            <div class="content">夫子庙</div>
+        </li>
+        <li>
+            <span class="step">第三天</span>
+            <div class="content">总统府</div>
+        </li>
+        <li>
+            <span class="step">第四天</span>
+            <div class="content">牛首山</div>
+        </li>
+        <li>
+            <span class="step">第五天</span>
+            <div class="content">图书馆</div>
+        </li>
+    </ul>
+
+
+    <ul class="progress">
+        <li>进度1</li>
+        <li class="active">进度2</li>
+        <li>进度3</li>
+        <li>进度4</li>
+        <li>进度5</li>
+    </ul>
+</body>
+</html>
