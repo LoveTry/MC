@@ -64,9 +64,10 @@ namespace MC.Controllers
                 {
                     ViewBag.Title = "课程新增";
                     var model = new Project();
-                    model.IsUse = false;
+                    model.IsUse = true;
                     model.StartDate = model.EndDate = DateTime.Now;
                     model.CrUser = LUser.UserName;
+                    model.CrTime=model.UpTime= DateTime.Now;
                     model.UpUser = LUser.UserName;
                     model.Amount = 0;
                     return View(model);

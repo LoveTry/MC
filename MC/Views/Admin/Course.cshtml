@@ -19,13 +19,13 @@
 
             <script type="text/html" id="course-toolbar">
                 <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新建</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="create">新建</button>
                 </div>
             </script>
 
             <script type="text/html" id="course-bar">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">启用</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
             </script>
 
             <script type="text/html" id="isUseTpl">
@@ -64,20 +64,13 @@
 
                     //头工具栏事件
                     table.on('toolbar(course-list)', function (obj) {
-                        var checkStatus = table.checkStatus(obj.config.id);
-                        switch (obj.event) {
-                            case 'getCheckData':
-                                var data = checkStatus.data;
-                                layer.alert(JSON.stringify(data));
-                                break;
-                            case 'getCheckLength':
-                                var data = checkStatus.data;
-                                layer.msg('选中了：' + data.length + ' 个');
-                                break;
-                            case 'isAll':
-                                layer.msg(checkStatus.isAll ? '全选' : '未全选');
-                                break;
-                        };
+                        layer.open({
+                            type: 2,
+                            offset: 't',
+                            title:'课程新增',
+                            area: ['400px', '700px'],
+                            content: ['/admin/courseadd']//这里content是一个普通的String
+                        });
                     });
 
                     //监听行工具事件

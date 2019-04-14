@@ -99,7 +99,6 @@ namespace MC.Models
         /// </summary>
         [Property]
         [Display(Name = "开课时间")]
-        [DisplayFormat]
         public DateTime? StartDate
         {
             get;
@@ -186,7 +185,7 @@ namespace MC.Models
         /// 更新
         /// </summary>
         [Property]
-        [Display(Name = "是否有效")]
+        [Display(Name = "是否启用")]
         public bool IsUse
         {
             get;
