@@ -47,8 +47,8 @@
                         , cols: [[
                             { field: 'IsUse', title: '状态', width: 80, templet:'#isUseTpl'}
                             , { field: 'Name', title: '名称', sort: true }
-                            , { field: 'Price', title: '单价' }
-                            , { field: 'Amount', title: '课时', width:60 }
+                            //, { field: 'Price', title: '单价' }
+                            //, { field: 'Amount', title: '课时', width:60 }
                             , { field: 'Total', title: '总价', }
                             //, { field: 'Unit', title: '单位' }
                             , { field: 'StartDate', title: '开课日期', width: 110 , sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.StartDate.replace("/Date(","").replace(")/", ""), 10),"yyyy-MM-dd")}}</div>' }
@@ -68,8 +68,15 @@
                             type: 2,
                             offset: 't',
                             title:'课程新增',
-                            area: ['400px', '700px'],
-                            content: ['/admin/courseadd']//这里content是一个普通的String
+                            area: ['800px', '630px'],
+                            content: ['/admin/courseadd'],//这里content是一个普通的String
+                            cancel: function (index1, layero) {
+                                layer.confirm('确认关闭吗?', { icon: 3, title: '提示' }, function (index) {
+                                    layer.close(index);
+                                    layer.close(index1);
+                                });
+                                return false;
+                            }
                         });
                     });
 

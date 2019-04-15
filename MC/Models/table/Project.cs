@@ -43,7 +43,7 @@ namespace MC.Models
         /// 产品描述
         /// </summary>
         [Property]
-        [Display(Name = "产品描述")]
+        [Display(Name = "课程描述")]
         public string Description
         {
             get;

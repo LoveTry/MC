@@ -84,26 +84,6 @@ namespace MC.Controllers
         {
             if (LUser != null)
             {
-                if (model.Name.IsEmpty())
-                {
-                    ModelState.AddModelError(nameof(model.Name), "请输入课程名称.");
-                }
-                if (model.Description.IsEmpty())
-                {
-                    ModelState.AddModelError(nameof(model.Description), "请输入课程描述.");
-                }
-                if (model.Price == 0)
-                {
-                    ModelState.AddModelError(nameof(model.Price), "请输入课时单价.");
-                }
-                if (model.Amount == 0)
-                {
-                    ModelState.AddModelError(nameof(model.Amount), "请输入课时.");
-                }
-                if (model.Total == 0)
-                {
-                    ModelState.AddModelError(nameof(model.Total), "请输入总价.");
-                }
                 model.UpTime = model.CrTime = DateTime.Now;
                 model.CrUserID = LUser.UserId.ToGuid();
                 if (ModelState.IsValid)
