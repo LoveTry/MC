@@ -32,6 +32,11 @@ namespace MC.Models
         {
             return new JsonReturn() { code = 0, msg = "" };
         }
+
+        public static JsonReturn Error(string msg)
+        {
+            return new JsonReturn() { code = 1, msg = msg };
+        }
     }
 
 

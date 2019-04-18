@@ -80,7 +80,7 @@ namespace MC.Controllers
         }
 
         [HttpPost]
-        public ActionResult CourseAdd(Project model)
+        public JsonResult CourseAdd(Project model)
         {
             if (LUser != null)
             {
@@ -98,16 +98,16 @@ namespace MC.Controllers
                     {
                         model.UpdateAndFlush();
                     }
-                    return RedirectToAction("Course", "Admin");
+                    return Json(JsonReturn.OK());
                 }
                 else
                 {
-                    return View(model);
+                    return Json(JsonReturn.Error("填写的信息有误请确认。"));
                 }
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return Json(JsonReturn.Error("操作超时"));
             }
         }
         #endregion
