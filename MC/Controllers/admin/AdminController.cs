@@ -18,6 +18,7 @@ namespace MC.Controllers
         {
             ViewBag.UserName = LUser.UserName;
             var obj = CommFunction.GetArrayByDt(ReportTotal.GetProNameAndFee());
+            //报表设置
             ViewBag.LegendArray = obj["Name"];
             ViewBag.SeriesArray = obj["Fee"];
             return View();
@@ -67,7 +68,7 @@ namespace MC.Controllers
                     model.IsUse = true;
                     model.StartDate = model.EndDate = DateTime.Now;
                     model.CrUser = LUser.UserName;
-                    model.CrTime=model.UpTime= DateTime.Now;
+                    model.CrTime = model.UpTime = DateTime.Now;
                     model.UpUser = LUser.UserName;
                     model.Amount = 0;
                     return View(model);
@@ -112,6 +113,7 @@ namespace MC.Controllers
         }
         #endregion
 
+        #region Order
         public ActionResult OrderList()
         {
             return View();
@@ -188,30 +190,11 @@ namespace MC.Controllers
             }
             return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
-
+        #region FeeList
         public ActionResult FeeList()
         {
-            var query = from row in Fee.GetFeeListAll().AsEnumerable()
-                        select new Fee
-                        {
-                            Approver = row.Field<string>("Approver"),
-                            ApproverID = row.Field<Guid>("ApproverID"),
-                            CrTime = row.Field<DateTime>("CrTime"),
-                            CrUser = row.Field<string>("CrUser"),
-                            CrUserID = row.Field<Guid>("CrUserID"),
-                            ID = row.Field<Guid>("ID"),
-                            IsPay = row.Field<bool>("IsPay"),
-                            PayDate = row.Field<DateTime?>("PayDate"),
-                            Money = row.Field<decimal>("Money"),
-                            OrderID = row.Field<int>("OrderID"),
-                            OrderNo = row.Field<string>("OrderNo"),
-                            PayeeID = row.Field<Guid>("PayeeID"),
-                            PayeeTrueName = row.Field<string>("PayeeTrueName"),
-                            PayeeUserName = row.Field<string>("PayeeUserName"),
-                            ApproveTime = row.Field<DateTime?>("ApproveTime")
-                        };
-            ViewBag.Source = query.ToList();
             return View();
         }
 
@@ -238,6 +221,8 @@ namespace MC.Controllers
             var data = new JsonReturn(query, page, limit);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
 
 
         public ActionResult FeeRate()
@@ -252,9 +237,9 @@ namespace MC.Controllers
             }
             return View(info);
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult FeeRate(Models.FeeRate model)
+        public ActionResult FeeRate(FeeRate model)
         {
             if (ModelState.IsValid)
             {
