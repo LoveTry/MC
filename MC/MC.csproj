@@ -226,6 +226,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\qrcode.jpg" />
     <Content Include="images\avatar2.jpg" />
     <Content Include="images\bak.jpg" />
     <Content Include="images\error.png" />
@@ -235,7 +236,6 @@
     <Content Include="images\icon_nav_msg.png" />
     <Content Include="images\mail.png" />
     <Content Include="images\plus.png" />
-    <Content Include="images\qrcode.jpg" />
     <Content Include="images\rmb.png" />
     <Content Include="images\touxiang.jpeg" />
     <Content Include="images\welcome.jpg" />
