@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using NHibernate.Criterion;
+using MCComm;
+using NHibernate;
 
 namespace MC.Models
 {
@@ -193,20 +195,46 @@ namespace MC.Models
         }
         #endregion
 
-        public static Project[] GetList()
+        public static Project[] GetList(GeneralQuery query = null)
         {
-            //string sql = "SELECT * FROM dbo.t_Project";
-            //return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
-            return FindAll();
+            if (query != null)
+            {
+                DetachedCriteria exp = DetachedCriteria.For(typeof(Project));
+                if (query.date.IsNotEmpty())
+                {
+                    exp.Add(Restrictions.Ge("StartDate", query.date.ToDateTime()));
+                }
+                if (query.name.IsNotEmpty())
+                {
+                    exp.Add(Restrictions.Like("Name", "%" + query.name + "%"));
+                }
+                switch (query.state)
+                {
+                    case 1://全部
+                        break;
+                    case 0://初始化
+                    case 2://已启用
+                        exp.Add(Restrictions.Eq("IsUse", true));
+                        break;
+                    case 3://未启用
+                        exp.Add(Restrictions.Eq("IsUse", false));
+                        break;
+                }
+                exp.AddOrder(NHibernate.Criterion.Order.Desc("CrTime"));
+                return FindAll(exp);
+            }
+            else
+            {
+                return FindAll();
+            }
         }
 
         public static Project[] GetChooseList()
         {
-            ICriterion exp = Restrictions.Eq("IsUse", true);
-            NHibernate.Criterion.Order[] orders = new NHibernate.Criterion.Order[1] { new NHibernate.Criterion.Order("CrTime", false) };
-            return FindAll(orders, exp);
+            DetachedCriteria exp = DetachedCriteria.For(typeof(Project));
+            exp.Add(Restrictions.Eq("IsUse", true));
+            exp.AddOrder(NHibernate.Criterion.Order.Desc("CrTime"));
+            return FindAll(exp);
         }
-
-
     }
 }

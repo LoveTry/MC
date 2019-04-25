@@ -10,10 +10,45 @@
     <link href="~/layui/css/layui.css" rel="stylesheet" />
     <script src="~/layui/layui.js"></script>
     <link href="~/Content/other.css" rel="stylesheet" />
+    <style>
+        .layui-card-header {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="layui-card">
-        <div class="layui-card-header">@ViewBag.Title</div>
+        <div class="layui-card-header">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开课时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" name="date" id="idStartDate" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block">
+                            <select name="state">
+                                <option value="1">全部</option>
+                                <option value="2" selected="">已启用</option>
+                                <option value="3">未启用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="save"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="layui-card-body">
             <table class="layui-hide" id="course-list" lay-filter="course-list"></table>
 
@@ -25,7 +60,12 @@
 
             <script type="text/html" id="course-bar">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                {{# if(d.IsUse){}}
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
+                {{# }else{ }}
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="open">启用</a>
+                {{# } }}
+
             </script>
 
             <script type="text/html" id="isUseTpl">
@@ -37,15 +77,39 @@
             </script>
 
             <script>
-                layui.use('table', function () {
-                    var table = layui.table;
+                layui.use(['table', 'laydate','form','jquery'], function () {
+                    var table = layui.table,
+                        laydate = layui.laydate,
+                        $ = layui.jquery;
+                        form = layui.form;
+
+                    laydate.render({
+                        elem: '#idStartDate',
+                    });
+
+                    form.on('switch(isUse)', function (data) {
+
+                    });
+
+                    form.on('submit(save)', function (data) {
+                        //alert(JSON.stringify(data.field));
+                        table.reload('course-list', {
+                            where: data.field
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+
+                    });
+
                     table.render({
                         elem: '#course-list'
                         , url: '/admin/courselistjson'
                         , toolbar: '#course-toolbar'
                         , title: '课程数据表'
                         , cols: [[
-                            { field: 'IsUse', title: '状态', width: 80, templet: '#isUseTpl' }
+                            { field: 'ID', title: 'ID', hide: true }
+                            ,{ field: 'IsUse', title: '状态', width: 80, templet: '#isUseTpl' }
                             , { field: 'Name', title: '名称', sort: true }
                             //, { field: 'Price', title: '单价' }
                             //, { field: 'Amount', title: '课时', width:60 }
@@ -85,22 +149,35 @@
 
                     //监听行工具事件
                     table.on('tool(course-list)', function (obj) {
-                        var data = obj.data;
-                        //console.log(obj)
+                        var id = obj.data.ID;
                         if (obj.event === 'del') {
-                            layer.confirm('真的删除行么', function (index) {
-                                obj.del();
-                                layer.close(index);
-                            });
-                        } else if (obj.event === 'edit') {
-                            layer.prompt({
-                                formType: 2
-                                , value: data.email
-                            }, function (value, index) {
-                                obj.update({
-                                    email: value
+                            layer.confirm('确认禁用吗？', function (index) {
+                                $.get("/admin/coursedel", { id: id, isUse: false }, function (data) {
+                                    obj.del();
+                                    layer.close(index);
                                 });
-                                layer.close(index);
+                            });
+                        } else if (obj.event === 'open') {
+                            layer.confirm('确认启用吗？', function (index) {
+                                $.get("/admin/coursedel", { id: id, isUse: true }, function (data) {
+                                    table.reload("course-list", {
+                                        url: '/admin/courselistjson/'
+                                    });
+                                    layer.close(index);
+                                });
+                            });
+                        }else if (obj.event === 'edit') {
+                            layer.open({
+                                type: 2,
+                                offset: 't',
+                                title: '课程编辑',
+                                area: ['800px', '630px'],
+                                content: ['/admin/courseadd/'+id],//这里content是一个普通的String
+                                cancel: function (index, layero) {
+                                    table.reload("course-list", {
+                                        url: '/admin/courselistjson/'
+                                    });
+                                }
                             });
                         }
                     });

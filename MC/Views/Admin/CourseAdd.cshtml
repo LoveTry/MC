@@ -89,13 +89,13 @@
             <div class="layui-form-item">
                 @Html.LabelFor(model => model.IsUse, new { @class = "layui-form-label" })
                 <div class="layui-input-inline">
-                    @Html.TextBoxFor(model => model.IsUse, new Dictionary<string, object> { { "lay-skin", "switch" }, { "lay-filter", "switchOn" }, { "lay-text", "已启用|未启用" }, { "type", "checkbox" } })
+                    @Html.CheckBoxFor(model => model.IsUse, new Dictionary<string, object> { { "lay-skin", "switch" }, { "lay-filter", "isUse" }, { "lay-text", "已启用|未启用" } })
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="save">提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -116,6 +116,11 @@
                 laydate.render({
                     elem: '#idEndDate',
                     //type: 'datetime'
+                });
+                form.on("switch(isUse)", function (data) {
+                    //alert(data.elem.checked)
+                    // alert(data.value);
+                    $("#IsUse").val(data.elem.checked);
                 });
 
                 form.on('submit(save)', function (data) {

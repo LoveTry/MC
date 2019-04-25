@@ -195,6 +195,7 @@
     <Compile Include="Models\DBUserInfo.cs" />
     <Compile Include="Models\JsonReturn.cs" />
     <Compile Include="Models\query\FeeQuery.cs" />
+    <Compile Include="Models\query\GeneralQuery.cs" />
     <Compile Include="Models\query\ReportTotal.cs" />
     <Compile Include="Models\table\ApproveDetail.cs" />
     <Compile Include="Models\table\Fee.cs" />

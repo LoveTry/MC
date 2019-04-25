@@ -33,12 +33,14 @@ namespace MC.Controllers
         #region Course
         public ActionResult Course()
         {
-            return View();
+            var query = new GeneralQuery();
+            return View(query);
         }
 
         public JsonResult CourseListJson(int page, int limit)
         {
-            var query = Project.GetChooseList();
+            var where = GeneralQuery.Get(Request.QueryString);
+            var query = Project.GetList(where);
             var data = new JsonReturn(query, page, limit);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -58,7 +60,7 @@ namespace MC.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Login", "Login");
+                        return Json(JsonReturn.Error("查询数据失败"), JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
@@ -76,7 +78,7 @@ namespace MC.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return Json(JsonReturn.Error("登录超时，请重新登录"), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -103,12 +105,36 @@ namespace MC.Controllers
                 }
                 else
                 {
-                    return Json(JsonReturn.Error("填写的信息有误请确认。"));
+                    return Json(JsonReturn.Error("填写的信息有误请确认。"), JsonRequestBehavior.AllowGet);
                 }
             }
             else
             {
-                return Json(JsonReturn.Error("操作超时"));
+                return Json(JsonReturn.Error("登录超时，请重新登录"), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult CourseDel(string id, bool isUse)
+        {
+            if (LUser != null)
+            {
+                var model = Project.TryFind(id.ToGuid());
+                if (model != null)
+                {
+                    model.IsUse = isUse;
+                    model.UpUser = LUser.UserName;
+                    model.UpTime = DateTime.Now;
+                    model.UpdateAndFlush();
+                    return Json(JsonReturn.OK(),JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(JsonReturn.Error("查询数据失败"), JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(JsonReturn.Error("登录超时，请重新登录"), JsonRequestBehavior.AllowGet);
             }
         }
         #endregion
@@ -223,8 +249,7 @@ namespace MC.Controllers
         }
         #endregion
 
-
-
+        #region 佣金费率
         public ActionResult FeeRate()
         {
             var info = Models.FeeRate.FindOne();
@@ -239,7 +264,7 @@ namespace MC.Controllers
         }
 
         [HttpPost]
-        public ActionResult FeeRate(FeeRate model)
+        public JsonResult FeeRate(FeeRate model)
         {
             if (ModelState.IsValid)
             {
@@ -257,7 +282,8 @@ namespace MC.Controllers
                     model.UpdateAndFlush();
                 }
             }
-            return View(model);
+            return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
         }
+        #endregion
     }
 }

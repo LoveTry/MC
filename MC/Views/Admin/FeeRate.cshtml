@@ -24,14 +24,14 @@
 
             <div class="layui-form-item">
                 @Html.LabelFor(model => model.Rate, new { @class = "layui-form-label" })
-                <div class="layui-input-block">
-                    @Html.TextBoxFor(model => model.Rate, new Dictionary<string, object> { { "class", "layui-input" }, { "placeholder", "请输入佣金比例（小数）" }, { "lay-verify", "required" }, { "type", "number" } })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.Rate, new Dictionary<string, object> { { "class", "layui-input" }, { "placeholder", "请输入佣金比例（小数）" }, { "lay-verify", "required|number" } })
                 </div>
             </div>
             <div class="layui-form-item">
                 @Html.LabelFor(model => model.Other, new { @class = "layui-form-label" })
-                <div class="layui-input-block">
-                    @Html.TextBoxFor(model => model.Other, new Dictionary<string, object> { { "class", "layui-input" }, { "type", "number" } })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.Other, new Dictionary<string, object> { { "class", "layui-input" }, { "lay-verify", "required|number" } })
                 </div>
             </div>
             <div class="layui-form-item">
