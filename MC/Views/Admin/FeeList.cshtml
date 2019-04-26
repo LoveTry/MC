@@ -20,13 +20,17 @@
 
             <script type="text/html" id="fee-toolbar">
                 @*<div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新建</button>
-                </div>*@
+                        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新建</button>
+                    </div>*@
             </script>
 
             <script type="text/html" id="fee-bar">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">审核</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">支付</a>
+                @*<a class="layui-btn layui-btn-xs" lay-event="edit">审核</a>*@
+                {{#  if(d.IsPay){ }}
+                完成
+                {{#  } else { }}
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="pay">支付</a>
+                {{#  } }}
             </script>
 
             <script type="text/html" id="isPayTpl">
@@ -46,7 +50,7 @@
             </script>
 
             <script type="text/html" id="payDateTpl">
-                {{#  if(d.ApproveTime){ }}
+                {{#  if(d.PayDate){ }}
                 {{ layui.util.toDateString(parseInt(d.PayDate.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}
                 {{#  } else { }}
 
@@ -54,25 +58,28 @@
             </script>
 
             <script>
-                layui.use('table', function () {
-                    var table = layui.table;
+                layui.use(['table','jquery'], function () {
+                    var table = layui.table,
+                    $ = layui.jquery;
                     table.render({
                         elem: '#fee-list'
                         , url: '/admin/feelistjson'
                         , toolbar: '#fee-toolbar'
                         , title: '课程数据表'
                         , cols: [[
+                            { field: 'ID', title: 'ID', hide: true },
                             { field: 'OrderNo', title: '订单号', width: 140, sort: true}
                             , { field: 'Money', title: '佣金' }
                             , { field: 'IsPay', title: '支付状态', templet: '#isPayTpl' }
-                            , { field: 'PayDate', title: '支付日期', templet: '#payDateTpl' }
+                            //, { field: 'PayDate', title: '支付日期', templet: '#payDateTpl' }
                             , { field: 'PayeeUserName', title: '推荐昵称' }
                             , { field: 'PayeeTrueName', title: '推荐姓名' }
                             , { field: 'CrUser', title: '创建人', sort: true }
                             , { field: 'CrTime', title: '创建日期', width: 110,sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.CrTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
-                            , { field: 'Approver', title: '审核人', sort: true }
-                            , { field: 'ApproveTime', title: '审核日期', width: 110, sort: true, templet: '#approveTimeTpl' }
-                            , { fixed: 'right', title: '操作', toolbar: '#fee-bar', width: 120 }
+                            , { field: 'Approver', title: '支付人', sort: true }
+                            , { field: 'PayDate', title: '支付日期', templet: '#payDateTpl' }
+                            //, { field: 'ApproveTime', title: '审核日期', width: 110, sort: true, templet: '#approveTimeTpl' }
+                            , { fixed: 'right', title: '操作', toolbar: '#fee-bar', width: 65 }
                         ]]
                         , page: true
                     });
@@ -97,12 +104,16 @@
 
                     //监听行工具事件
                     table.on('tool(fee-list)', function (obj) {
-                        var data = obj.data;
+                        var id = obj.data.ID;
                         //console.log(obj)
-                        if (obj.event === 'del') {
-                            layer.confirm('真的删除行么', function (index) {
-                                obj.del();
-                                layer.close(index);
+                        if (obj.event === 'pay') {
+                            layer.confirm('确认支付么？', function (index) {
+                                $.get("/admin/pay", { id: id }, function (data) {
+                                    table.reload("fee-list", {
+                                        url: '/admin/feelistjson/'
+                                    });
+                                    layer.close(index);
+                                });
                             });
                         } else if (obj.event === 'edit') {
                             layer.prompt({
@@ -123,43 +134,5 @@
     </div>
 </body>
 </html>
-
-
-@*<table class="table table-hover " style="vertical-align:middle;">
-    <thead>
-        <tr>
-            <th>操作</th>
-            <th>订单号</th>
-            <th>佣金</th>
-            <th>是否支付</th>
-            <th>推荐人昵称</th>
-            <th>推荐人姓名</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>审核人</th>
-            <th>审核时间</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (ViewBag.Source != null)
-        {
-            foreach (var item in ViewBag.Source as List<MC.Models.Fee>)
-            {
-                <tr>
-                    <td><a href='@Url.Action("OrderConfirm","Admin",new { id=item.ID})' class="btn btn-primary btn-sm" role="button">结佣</a></td>
-                    <td><a href="#">@item.OrderNo</a></td>
-                    <td>@item.Money.ToString("F2")</td>
-                    <td>@Html.Raw(item.IsPay ? "是" : "否")</td>
-                    <td>@item.PayeeUserName</td>
-                    <td>@item.PayeeTrueName</td>
-                    <td>@item.CrUser</td>
-                    <td>@item.CrTime.Value.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Approver</td>
-                    <td>@Html.Raw(item.ApproveTime.HasValue ? item.ApproveTime.Value.ToString("yyyy-MM-dd") : "")</td>
-                </tr>
-
-            }
-        }
-    </tbody>*@
 </table>
 

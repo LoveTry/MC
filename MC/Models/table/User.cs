@@ -108,5 +108,12 @@ namespace MC.Models
             ICriterion exp = Restrictions.Eq(property, value);
             return FindOne(exp);
         }
+
+        public static User[] GetUserList()
+        {
+            DetachedCriteria exp = DetachedCriteria.For(typeof(User));
+            exp.AddOrder(NHibernate.Criterion.Order.Desc("LastOnLineTime"));
+            return FindAll(exp);
+        }
     }
 }

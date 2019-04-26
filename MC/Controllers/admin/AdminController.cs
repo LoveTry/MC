@@ -125,7 +125,7 @@ namespace MC.Controllers
                     model.UpUser = LUser.UserName;
                     model.UpTime = DateTime.Now;
                     model.UpdateAndFlush();
-                    return Json(JsonReturn.OK(),JsonRequestBehavior.AllowGet);
+                    return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -168,53 +168,60 @@ namespace MC.Controllers
 
         public JsonResult OrderConfirm(int id, bool isOK, string msg)
         {
-            var info = Order.TryFind(id);
-            if (info != null)
+            if (LUser != null)
             {
-                if (isOK)
+                var info = Order.TryFind(id);
+                if (info != null)
                 {
-                    decimal fee = 0;
-                    var feeRate = MC.Models.FeeRate.FindFirst();
-                    if (feeRate != null)
+                    if (isOK)
                     {
-                        fee = info.ProMoney * feeRate.Rate - feeRate.Other;
+                        decimal fee = 0;
+                        var feeRate = MC.Models.FeeRate.FindFirst();
+                        if (feeRate != null)
+                        {
+                            fee = info.ProMoney * feeRate.Rate - feeRate.Other;
+                        }
+                        info.State = "结佣中";
+                        info.StateID = 2;
+                        info.StateInfo = "管理员已经审核完成，等待结佣{0}元".FormatWith(fee.ToMoney(2));
+                        info.UpdateAndFlush();
+
+                        var feeInfo = new Fee();
+                        feeInfo.ID = GuidHelper.GuidNew();
+                        feeInfo.OrderID = info.ID;
+                        feeInfo.Money = fee;
+                        feeInfo.IsPay = false;
+                        feeInfo.PayeeID = info.CrUserID;
+                        feeInfo.CrUserID = LUser.UserId.ToGuid();
+                        feeInfo.CrUser = LUser.UserName;
+                        feeInfo.CrTime = DateTime.Now;
+                        feeInfo.CreateAndFlush();
                     }
-                    info.State = "结佣中";
-                    info.StateID = 2;
-                    info.StateInfo = "管理员已经审核完成，等待结佣{0}元".FormatWith(fee.ToMoney(2));
-                    info.UpdateAndFlush();
+                    else
+                    {
+                        info.State = "被驳回";
+                        info.StateInfo = msg;
+                        info.StateID = 5;
+                        info.UpdateAndFlush();
+                    }
 
-                    var feeInfo = new Fee();
-                    feeInfo.ID = GuidHelper.GuidNew();
-                    feeInfo.OrderID = info.ID;
-                    feeInfo.Money = fee;
-                    feeInfo.IsPay = false;
-                    feeInfo.PayeeID = info.CrUserID;
-                    feeInfo.CrUserID = LUser.UserId.ToGuid();
-                    feeInfo.CrUser = LUser.UserName;
-                    feeInfo.CrTime = DateTime.Now;
-                    feeInfo.CreateAndFlush();
+                    var approve = new ApproveDetail()
+                    {
+                        ApproveMsg = msg,
+                        Approver = LUser.UserName,
+                        ApproveTime = DateTime.Now,
+                        ApproveType = (int)ApproveType.ORDER,
+                        BusinessIntID = id,
+                        IsOK = isOK
+                    };
+                    approve.CreateAndFlush();
                 }
-                else
-                {
-                    info.State = "被驳回";
-                    info.StateInfo = msg;
-                    info.StateID = 5;
-                    info.UpdateAndFlush();
-                }
-
-                var approve = new ApproveDetail()
-                {
-                    ApproveMsg = msg,
-                    Approver = LUser.UserName,
-                    ApproveTime = DateTime.Now,
-                    ApproveType = (int)ApproveType.ORDER,
-                    BusinessIntID = id,
-                    IsOK = isOK
-                };
-                approve.CreateAndFlush();
+                return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
             }
-            return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
+            else
+            {
+                return Json(JsonReturn.Error("登录超时"), JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
 
@@ -242,11 +249,60 @@ namespace MC.Controllers
                             PayeeID = row.Field<Guid>("PayeeID"),
                             PayeeTrueName = row.Field<string>("PayeeTrueName"),
                             PayeeUserName = row.Field<string>("PayeeUserName"),
-                            ApproveTime = row.Field<DateTime?>("ApproveTime")
+                            ApproveTime = row.Field<DateTime?>("ApproveTime"),
+                            PayDate = row.Field<DateTime?>("PayDate")
                         };
             var data = new JsonReturn(query, page, limit);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult Pay(string id)
+        {
+            if (LUser != null)
+            {
+                var info = Fee.TryFind(id.ToGuid());
+                if (info != null)
+                {
+                    info.IsPay = true;
+                    info.PayDate = DateTime.Now;
+                    info.Approver = LUser.UserName;
+                    info.UpdateAndFlush();
+                    return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
+                }
+                else
+                    return Json(JsonReturn.Error("获取数据失败"), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(JsonReturn.Error("登录超时"), JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+
+        #region UserList/CustomerList
+        public ActionResult UserList()
+        {
+            return View();
+        }
+
+        public JsonResult UserListJson(int page, int limit)
+        {
+            var query = Models.User.GetUserList();
+            var data = new JsonReturn(query, page, limit);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CustomerList()
+        {
+            return View();
+        }
+        public JsonResult CustomerListJson(int page, int limit)
+        {
+            var query = Customer.GetCustomerList();
+            var data = new JsonReturn(query, page, limit);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region 佣金费率

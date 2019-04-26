@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "用户列表";
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">@ViewBag.Title</div>
+        <div class="layui-card-body">
+            <table class="layui-hide" id="user-list" lay-filter="user-list"></table>
+
+            <script type="text/html" id="user-toolbar">
+            </script>
+
+            @*<script type="text/html" id="order-bar">
+                    <a class="layui-btn layui-btn-xs" lay-event="yes">通过</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="no">不通过</a>
+                </script>*@
+            <script>
+                layui.use(['table', 'jquery'], function () {
+                    var table = layui.table;
+                    var $ = layui.jquery;
+                    var tableIns = table.render({
+                        elem: '#user-list'
+                        , url: '/admin/userlistjson'
+                        , toolbar: '#user-toolbar'
+                        , title: '用户表'
+                        , cols: [[
+                            { field: 'ID', title: 'ID', hide: true }
+                            , { field: 'UserName', title: '昵称', sort: true }
+                            , { field: 'TrueName', title: '真实姓名' }
+                            , { field: 'Sex', title: '性别' }
+                            , { field: 'Phone', title: '电话', sort: true }
+                            , { field: 'Email', title: '邮箱' }
+                            , { field: 'CrTime', title: '创建时间', templet: '<div>{{layui.util.toDateString(parseInt(d.CrTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
+                            , { field: 'LastOnLineTime', title: '最后登录时间', sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.LastOnLineTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
+                            //, { fixed: 'right', title: '审核', toolbar: '#order-bar', width: 130 }
+                        ]]
+                        , page: true
+                    });
+
+                    //监听行工具事件
+                    table.on('tool(user-list)', function (obj) {
+                        var data = obj.data;
+                        //console.log(obj)
+                        if (obj.event === 'yes') {
+                            layer.confirm('确认通过审核么？', function (index) {
+                                $.get("/admin/orderconfirm", { id: data.ID, isOK: true, msg: '' }, function (data) {
+                                    tableIns.reload({
+                                        where: {}
+                                        , page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                });
+
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'no') {
+                            layer.prompt({
+                                formType: 2 //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                                , value: ''
+                                , maxlength: 200 //可输入文本的最大长度，默认200
+                                , title: '请输入不通过原因'
+                            }
+                                , function (value, index) {
+                                    obj.update({
+                                        StateInfo: value,
+                                        State: '被驳回'
+                                    });
+
+                                    $.get("/admin/orderconfirm", { id: data.ID, isOK: false, msg: value }, function (data) {
+                                    });
+
+                                    layer.close(index);
+                                }
+                            );
+                        }
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+

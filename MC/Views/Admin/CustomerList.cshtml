@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "客户列表";
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">@ViewBag.Title</div>
+        <div class="layui-card-body">
+            <table class="layui-hide" id="customer-list" lay-filter="customer-list"></table>
+
+            <script type="text/html" id="customer-toolbar">
+            </script>
+
+            @*<script type="text/html" id="order-bar">
+                    <a class="layui-btn layui-btn-xs" lay-event="yes">通过</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="no">不通过</a>
+                </script>*@
+            <script>
+                layui.use(['table', 'jquery'], function () {
+                    var table = layui.table;
+                    var $ = layui.jquery;
+                    var tableIns = table.render({
+                        elem: '#customer-list'
+                        , url: '/admin/customerlistjson'
+                        , toolbar: '#customer-toolbar'
+                        , title: '客户列表'
+                        , cols: [[
+                            { field: 'ID', title: 'ID', hide: true }
+                            , { field: 'CusName', title: '客户名称', sort: true }
+                            , { field: 'CusPhone', title: '客户手机' }
+                            , { field: 'Sex', title: '性别' }
+                            , { field: 'Remark', title: '备注' }
+                            , { field: 'CrUser', title: '推荐人' }
+                            , { field: 'CrTime', title: '推荐时间', templet: '<div>{{layui.util.toDateString(parseInt(d.CrTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>'}
+                            //, { fixed: 'right', title: '审核', toolbar: '#customer-bar', width: 130 }
+                        ]]
+                        , page: true
+                    });
+
+                    //监听行工具事件
+                    table.on('tool(customer-list)', function (obj) {
+                        var data = obj.data;
+                        //console.log(obj)
+                        if (obj.event === 'yes') {
+                            layer.confirm('确认通过审核么？', function (index) {
+                                $.get("/admin/orderconfirm", { id: data.ID, isOK: true, msg: '' }, function (data) {
+                                    tableIns.reload({
+                                        where: {}
+                                        , page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                });
+
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'no') {
+                            layer.prompt({
+                                formType: 2 //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                                , value: ''
+                                , maxlength: 200 //可输入文本的最大长度，默认200
+                                , title: '请输入不通过原因'
+                            }
+                                , function (value, index) {
+                                    obj.update({
+                                        StateInfo: value,
+                                        State: '被驳回'
+                                    });
+
+                                    $.get("/admin/orderconfirm", { id: data.ID, isOK: false, msg: value }, function (data) {
+                                    });
+
+                                    layer.close(index);
+                                }
+                            );
+                        }
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+

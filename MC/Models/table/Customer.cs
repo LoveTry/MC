@@ -143,5 +143,12 @@ namespace MC.Models
 FROM dbo.t_Customer where {0} ORDER BY CrTime DESC".FormatWith(where);
             return Sunnysoft.DAL.ActiveRecordDBHelper.ExecuteDatatable(sql);
         }
+
+        public static Customer[] GetCustomerList()
+        {
+            DetachedCriteria exp = DetachedCriteria.For(typeof(Customer));
+            exp.AddOrder(NHibernate.Criterion.Order.Desc("CrTime"));
+            return FindAll(exp);
+        }
     }
 }

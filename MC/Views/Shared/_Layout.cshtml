@@ -45,21 +45,23 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">信息列表</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">推荐人列表</a></dd>
-                            <dd><a href="javascript:;">客户列表</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">统计报表</a>
-                        <dl class="layui-nav-child">
-                            <dd data-name="OrderList" data-jump="/Admin/OrderList"><a href="javascript:;" lay-href="/Admin/OrderList">佣金排行</a></dd>
-                            <dd><a href="javascript:;">销量走势</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="#">其他推荐</a></li>
+                    @*<li class="layui-nav-item layui-nav-itemed">
+                            <a class="" href="javascript:;">信息列表</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">推荐人列表</a></dd>
+                                <dd><a href="javascript:;">客户列表</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">统计报表</a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="OrderList" data-jump="/Admin/OrderList"><a href="javascript:;" lay-href="/Admin/OrderList">佣金排行</a></dd>
+                                <dd><a href="javascript:;">销量走势</a></dd>
+                            </dl>
+                        </li>*@
+                    <li class="layui-nav-item"><a href="javascript:active('用户列表','/Admin/UserList','userlist');">用户列表</a></li>
+                    <li class="layui-nav-item"><a href="javascript:active('客户列表','/Admin/CustomerList','customerlist');">客户列表</a></li>
+                    @*<li class="layui-nav-item"><a href="#">其他推荐</a></li>*@
                 </ul>
             </div>
         </div>
