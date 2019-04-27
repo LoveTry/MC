@@ -341,5 +341,41 @@ namespace MC.Controllers
             return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region 
+        public ActionResult Setting()
+        {
+            var info = Models.Setting.FindOne();
+            if (info == null)
+            {
+                info = new Setting();
+                info.ID = GuidHelper.GuidNew();
+                info.CrUser = info.UpUser = LUser.UserName;
+            }
+            return View(info);
+        }
+
+        [HttpPost]
+        public JsonResult Setting(Setting model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.ID.IsEmpty())
+                {
+                    model.ID = GuidHelper.GuidNew();
+                    model.CrUserId = LUser.UserId.ToGuid();
+                    model.UpTime = model.CrTime = DateTime.Now;
+                    model.CreateAndFlush();
+                }
+                else
+                {
+                    model.UpTime = DateTime.Now;
+                    model.UpUser = LUser.UserName;
+                    model.UpdateAndFlush();
+                }
+            }
+            return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

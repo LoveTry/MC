@@ -1,0 +1,83 @@
+﻿@model MC.Models.Setting
+@{
+    ViewBag.Title = "活动规则";
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<body>
+    <div style="padding:20px 30px 0 0">
+        @using (Ajax.BeginForm("setting", "admin", "", new AjaxOptions() { HttpMethod = "post", OnSuccess = "refresh" }, new { @class = "layui-form" }))
+        {
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.CrUserId)
+
+            <div class="layui-form-item">
+                @Html.LabelFor(model => model.ActivityRule, new { @class = "layui-form-label" })
+                <div class="layui-input-block">
+                    @Html.TextAreaFor(model => model.ActivityRule, new Dictionary<string, object> { { "class", "layui-textarea" }, { "placeholder", "请输入活动规则" }, { "lay-verify", "required" } })
+                </div>
+            </div>
+            <div class="layui-form-item">
+                @Html.LabelFor(model => model.CrUser, new { @class = "layui-form-label" })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.CrUser, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                </div>
+            </div>
+            <div class="layui-form-item">
+                @Html.LabelFor(model => model.CrTime, new { @class = "layui-form-label" })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.CrTime, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                </div>
+            </div>
+            <div class="layui-form-item">
+                @Html.LabelFor(model => model.UpUser, new { @class = "layui-form-label" })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.UpUser, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                </div>
+            </div>
+            <div class="layui-form-item">
+                @Html.LabelFor(model => model.UpTime, new { @class = "layui-form-label" })
+                <div class="layui-input-inline">
+                    @Html.TextBoxFor(model => model.UpTime, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="save">提交</button>
+                </div>
+            </div>
+        }
+    </div>
+    <script>
+        var layer;
+        layui.use(['form'], function () {
+
+            var form = layui.form;
+            layer = layui.layer;
+            form.on('submit(save)', function () {
+            });
+        });
+
+        function refresh(data) {
+            if (data.code == 0) {
+
+                layer.msg("保存成功", { icon: 1 });
+            }
+            else {
+                layer.msg(data.msg, { icon: 5 });
+            }
+        }
+    </script>
+</body>
+</html>
+
