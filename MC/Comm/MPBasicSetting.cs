@@ -27,7 +27,12 @@ namespace MC
             get { return AppSettingValue(); }
         }
 
-        public static string 意见建议反馈通知
+        public static string 订单生成通知
+        {
+            get { return AppSettingValue(); }
+        }
+
+        public static string 推荐成交通知
         {
             get { return AppSettingValue(); }
         }
@@ -51,12 +56,6 @@ namespace MC
         /// 通知微信号
         /// </summary>
         public static string noticeopid = "";
-        public static string SignalRSerUrl = "";
-        public static string 审批结果提醒 = "";
-        public static string 流程待审批提醒 = "";
-        public static string 用户绑定通知 = "";
-        public static string 业务交流提醒 = "";
-        public static string 集装箱动态通知 = "";
         public static string ErrorMsgExpire = "该页面已经过期，请退出当前菜单重新进入！";
         public static string ErrorMsgNoEq = "微信用户尚未与系统账户匹配，请与管理员联系！";
         public static string ErrorMsgNoRight = "您没有当前应用的权限，请与管理员联系！(是否设置IP白名单)";
@@ -72,12 +71,7 @@ namespace MC
                 AppID = GetConfigvalue("AppID");
                 AppSecret = GetConfigvalue("AppSecret");
                 EncodingAESKey = GetConfigvalue("EncodingAESKey");
-                流程待审批提醒 = GetConfigvalue("流程待审批提醒");
-                审批结果提醒 = GetConfigvalue("审批结果提醒");
-                用户绑定通知 = GetConfigvalue("用户绑定通知");
-              
                 noticeopid = GetConfigvalue("noticeopid");
-               //SignalRSerUrl = NetShare.SerInfo.ServerURL;
 
             }
             catch (System.Exception ex)
