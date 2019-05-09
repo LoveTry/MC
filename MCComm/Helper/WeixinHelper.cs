@@ -30,56 +30,7 @@ namespace MCComm
             string remark = "请点击详情进行查阅！";
             string msg = string.Join("€", first, keyword1, keyword2, keyword3, keyword4, remark);
             string url = URL + "Feedback/FeedbackDetail?ID=" + id + "&openid=" + openId;
-            string textType = MessageType.Feedback.GetHashCode().ToString();
-            return Get(msg, openId, url, textType);
-        }
-
-        /// <summary>
-        /// 船舶动态提醒
-        /// </summary>
-        /// <param name="title">标题</param>
-        /// <param name="crtime">提出时间</param>
-        /// <param name="feedback">反馈内容</param>
-        /// <param name="replyer">回复人</param>
-        /// <param name="id">业务主键</param>
-        /// <param name="openId">openId</param>
-        /// <returns></returns>
-        public static bool SendNewFeedbackWeixin(string title, string crtime, string feedback, string replyer, string id, string openId)
-        {
-            string first = "您收到新的意见反馈需要处理。";
-            string keyword1 = title.Length > 20 ? title.Substring(0, 20) + "......" : title;
-            string keyword2 = crtime;
-            string keyword3 = feedback.Length > 20 ? feedback.Substring(0, 20) + "......" : feedback;
-            string keyword4 = replyer;
-            string remark = "请点击详情进行查阅！";
-            string msg = string.Join("€", first, keyword1, keyword2, keyword3, keyword4, remark);
-            string url = URL + "Feedback/FeedbackDetail?ID=" + id + "&openid=" + openId;
-            string textType = MessageType.Feedback.GetHashCode().ToString();
-            return Get(msg, openId, url, textType);
-        }
-
-        /// <summary>
-        /// 集装箱动态推送
-        /// </summary>
-        /// <param name="shipname">船名</param>
-        /// <param name="voyage">航次</param>
-        /// <param name="billno">提单号</param>
-        /// <param name="ieflag">进出口标记</param>
-        /// <param name="ctnno">集装箱号</param>
-        /// <param name="id">业务主键</param>
-        /// <param name="openId">openId</param>
-        /// <returns></returns>
-        public static bool SendShipLiveWeixin(string shipname, string voyage, string billno, string ieflag, string ctnno, string id, string openId)
-        {
-            string first = "您有新的集装箱动态信息。" + Environment.NewLine +
-                "船名：" + shipname + Environment.NewLine + "航次：" + voyage + Environment.NewLine + "进出口：" + ieflag;
-            string keyword1 = billno;
-            string keyword2 = ctnno;
-            string keyword3 = "请点击详情进行查阅！";
-            string remark = "更新时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-            string msg = string.Join("€", first, keyword1, keyword2, keyword3, remark);
-            string url = URL + "Ship/ShipLive?id=" + id + "&userid=" + openId;
-            string textType = MessageType.CtnLive.GetHashCode().ToString();
+            string textType = MessageType.订单生成通知.GetHashCode().ToString();
             return Get(msg, openId, url, textType);
         }
 

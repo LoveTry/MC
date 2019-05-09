@@ -605,25 +605,8 @@ namespace MCComm
 
     public enum MessageType
     {
-        UserBind = 0,
-        Text = 1,
-        Image = 2,
-        Approve = 3,
-        /// <summary>
-        /// 审核结果通知
-        /// </summary>
-        AprroveResult = 4,
-        /// <summary>
-        /// 提醒通用模板
-        /// </summary>
-        RemindMsg = 5,
-        /// <summary>
-        /// 反馈提醒
-        /// </summary>
-        Feedback = 6,
-        /// <summary>
-        /// 集装箱动态通知
-        /// </summary>
-        CtnLive = 7
+        订单生成通知 = 1,
+        推荐成交通知 = 2,
+        审核结果通知 = 3
     }
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.Web;
 using System.Web.Mvc;
 using MC.Models.query;
+using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 
 namespace MC.Controllers
 {
@@ -215,6 +216,20 @@ namespace MC.Controllers
                         IsOK = isOK
                     };
                     approve.CreateAndFlush();
+
+                    var temp = new 审核结果通知()
+                    {
+                        first = new TemplateDataItem("您收到一条审核消息"),
+                        keyword1 = new TemplateDataItem(DateTime.Now.ToString("yyyy-MM-dd HH:mm")),
+                        keyword2 = new TemplateDataItem(isOK ? "推荐通过审核，等待结佣" : "推荐未通过审核"),
+                        keyword3 = new TemplateDataItem(info.OrderNo),
+                        remark = new TemplateDataItem("请登录系统查询详细信息")
+                    };
+                    var user = Models.User.TryFind(info.CrUserID);
+                    if (user != null)
+                    {
+                        CommFunction.SendWxTemplateMsg(temp, MessageType.审核结果通知, user.OpenID);
+                    }
                 }
                 return Json(JsonReturn.OK(), JsonRequestBehavior.AllowGet);
             }

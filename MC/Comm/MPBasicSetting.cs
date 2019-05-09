@@ -37,6 +37,11 @@ namespace MC
             get { return AppSettingValue(); }
         }
 
+        public static string 审核结果通知
+        {
+            get { return AppSettingValue(); }
+        }
+
         public static string DownloadV3Url
         {
             get { return AppSettingValue(); }

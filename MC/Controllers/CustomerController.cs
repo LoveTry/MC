@@ -1,6 +1,7 @@
 ﻿using MC.Models;
 using MC.Models.query;
 using MCComm;
+using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -84,36 +85,45 @@ namespace MC.Controllers
                 }
                 else
                 {
-                    Task.Run(() =>
-                   {
-                       model.ID = GuidHelper.GuidNew();
-                       model.CrUserID = DBUserInfo.UserID.ToGuid();
-                       model.CrTime = model.UpTime = DateTime.Now;
-                       model.CrUser = DBUserInfo.NickName;
-                       model.CreateAndFlush();
-                   }).ContinueWith(m =>
-                   {
-                       var orderNo = DateTime.Now.ToString("yyyyMMddHHmmss");
-                       foreach (var item in chooseIdArray)
-                       {
-                           var project = Project.Find(item.ToGuid());
-                           if (project != null && project.IsUse)
-                           {
-                               var order = new Order()
-                               {
-                                   OrderNo = orderNo,
-                                   ProID = project.ID,
-                                   ProMoney = project.Total,
-                                   State = "申请中",
-                                   StateInfo = "正在通知管理员核实",
-                                   CusID = model.ID,
-                                   CrTime = DateTime.Now,
-                                   CrUserID = DBUserInfo.UserID.ToGuid()
-                               };
-                               order.CreateAndFlush();
-                           }
-                       }
-                   });
+
+                    model.ID = GuidHelper.GuidNew();
+                    model.CrUserID = DBUserInfo.UserID.ToGuid();
+                    model.CrTime = model.UpTime = DateTime.Now;
+                    model.CrUser = DBUserInfo.NickName;
+                    model.CreateAndFlush();
+
+
+                    var orderNo = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    foreach (var item in chooseIdArray)
+                    {
+                        var project = Project.Find(item.ToGuid());
+                        if (project != null && project.IsUse)
+                        {
+                            var order = new Order()
+                            {
+                                OrderNo = orderNo,
+                                ProID = project.ID,
+                                ProMoney = project.Total,
+                                State = "申请中",
+                                StateInfo = "正在通知管理员核实",
+                                CusID = model.ID,
+                                CrTime = DateTime.Now,
+                                CrUserID = DBUserInfo.UserID.ToGuid()
+                            };
+                            order.CreateAndFlush();
+                        }
+                    }
+
+
+                    var temp = new 订单生成通知()
+                    {
+                        first = new TemplateDataItem("您收到新的订单"),
+                        keyword1 = new TemplateDataItem(DateTime.Now.ToString("yyyy-MM-dd HH:mm")),
+                        keyword2 = new TemplateDataItem("推荐人：" + DBUserInfo.NickName),
+                        keyword3 = new TemplateDataItem(orderNo),
+                        remark = new TemplateDataItem("请登录后台进行审核。")
+                    };
+                    CommFunction.SendWxTemplateMsg(temp, MessageType.订单生成通知, MPBasicSetting.noticeopid);
                 }
             }
             return Json(new { url = "/Center/Index/2" });

@@ -8,9 +8,9 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using Senparc.Weixin;
 using Newtonsoft.Json;
-using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using MC.Models;
 using MCComm;
+using System.Threading.Tasks;
 
 namespace MC
 {
@@ -188,92 +188,39 @@ namespace MC
         /// <param name="url"></param>
         public static void SendWxTemplateMsg(IMsgTemplate tepm, MessageType textType, string openId, string url = "")
         {
-            try
+            Task.Run(() =>
             {
-                string tempId = string.Empty;
-                switch (textType)
+                try
                 {
-                    case MessageType.Approve://向下一级审核人发送审核通知
-                        tempId = MPBasicSetting.流程待审批提醒;
-                        break;
-                    case MessageType.AprroveResult:
-                        tempId = MPBasicSetting.审批结果提醒;
-                        break;
-                    case MessageType.RemindMsg:
-                        tempId = MPBasicSetting.业务交流提醒;
-                        break;
-                    case MessageType.Feedback:
-                        tempId = MPBasicSetting.意见建议反馈通知;
-                        break;
-                    default:
-                        throw new ArgumentNullException("获取模板ID失败，发送微信模板消息需要模板ID");
-                }
-
-                var sr = TemplateApi.SendTemplateMessage(MPBasicSetting.AppID, openId, tempId, url, tepm);
-                string errmsg = "";
-                if (sr.errcode != ReturnCode.请求成功)
-                {
-                    errmsg = " 错误码:" + sr.errcode + ". " + sr.errmsg + "\r\n";
-                    FileHelper.WriteLog(errmsg);
-                }
-            }
-            catch (Exception ex)
-            {
-                FileHelper.WriteLog(ex.Message);
-            }
-
-        }
-
-
-        /// <summary>
-        /// 发送提醒通用模板微信
-        /// </summary>
-        /// <param name="dbUserInfo"></param>
-        /// <param name="receiverIds">一个或多个接受人ID（用","隔开）</param>
-        /// <param name="titleName">消息标题名称（业务交流、日报等）</param>
-        /// <param name="content">消息内容（自动截取10字）</param>
-        /// <param name="url">消息链接</param>
-        /// <returns></returns>
-        public static bool sendGeneralWxMsg(DBUserInfo dbUserInfo, string receiverIds, string titleName, string content, string url = "")
-        {
-            try
-            {
-                string first = "您好。您收到一条{0}消息。".FormatWith(titleName);
-                string keyword1 = content.Length > 10 ? content.Substring(0, 9) + "......" : content;
-                string keyword2 = string.Format("在{0}发送", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                string remark = "请点击【详情】查看";
-
-                var temp = new 提醒通用模板()
-                {
-                    first = new TemplateDataItem(first),
-                    keyword1 = new TemplateDataItem(keyword1),
-                    keyword2 = new TemplateDataItem(keyword2),
-                    remark = new TemplateDataItem(remark)
-                };
-                string[] ids = receiverIds.Split(',');
-                foreach (string userid in ids)
-                {
-                    if (userid.IsNotEmpty())
+                    string tempId = string.Empty;
+                    switch (textType)
                     {
-                        DataTable dtUser = new DataTable();
-                        if (dtUser.Rows.Count == 0)
-                            continue;
+                        case MessageType.订单生成通知://向下一级审核人发送审核通知
+                            tempId = MPBasicSetting.订单生成通知;
+                            break;
+                        case MessageType.推荐成交通知:
+                            tempId = MPBasicSetting.推荐成交通知;
+                            break;
+                        case MessageType.审核结果通知:
+                            tempId = MPBasicSetting.审核结果通知;
+                            break;
+                        default:
+                            throw new ArgumentNullException("获取模板ID失败，发送微信模板消息需要模板ID");
+                    }
 
-                        string openId = dtUser.Rows[0]["WxOpenID"].ToString();
-                        if (url.IsNotEmpty())
-                        {
-                            url += "&openid={0}".FormatWith(openId);
-                        }
-                        SendWxTemplateMsg(temp, MessageType.RemindMsg, openId, url);
+                    var sr = TemplateApi.SendTemplateMessage(MPBasicSetting.AppID, openId, tempId, url, tepm);
+                    string errmsg = "";
+                    if (sr.errcode != ReturnCode.请求成功)
+                    {
+                        errmsg = " 错误码:" + sr.errcode + ". " + sr.errmsg + "\r\n";
+                        FileHelper.WriteLog(errmsg);
                     }
                 }
-                return true;
-            }
-            catch (Exception e)
-            {
-                FileHelper.WriteLog(e.Message);
-                return false;
-            }
+                catch (Exception ex)
+                {
+                    FileHelper.WriteLog(ex.Message);
+                }
+            });
         }
     }
 }
