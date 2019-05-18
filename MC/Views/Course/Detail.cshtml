@@ -1,4 +1,4 @@
-﻿
+﻿@model MC.Models.Project
 @{
     Layout = null;
     ViewBag.Title = "课程概要";
@@ -17,28 +17,35 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
-    <article class="weui-article">
-        <h1>小学语文</h1>
-        <section>
-            <h2 class="title">课程简介</h2>
-            <section>
-                <h3>课程内容</h3>
-                <p>
-                    课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容
-                </p>
-                <p>
-                    <img src="~/images/yuwen1.jpg" alt="">
-                    <img src="~/images/yuwen2.jpg" alt="" width="480" height="800">
-                </p>
-            </section>
-            <section>
-                <h3>讲师简介</h3>
-                <p>
-                    讲师简介讲师简介讲师简介讲师简介讲师简介讲师简介讲师简介讲师简介讲师简介
-                </p>
-            </section>
-        </section>
-    </article>
+    <div class="weui-tab__bd">
+        <div class="weui-form-preview">
+            <div class="mc-card">
+                <div class="mc-card">
+                    <div class="weui-form-preview__hd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">课程名称</label>
+                            <em class="weui-form-preview__value">@Model.Name</em>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">课程价格</label>
+                            <span class="weui-form-preview__value fee-color">@Html.Raw("¥" + Model.Total.ToString("F2"))</span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">课程时间</label>
+                            <span class="weui-form-preview__value">@Html.Raw(Model.StartDate.Value.ToString("yyyy-MM-dd") + " 至 " + Model.EndDate.Value.ToString("yyyy-MM-dd"))</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mc-card">
+                    @if (ViewBag.Content != null)
+                    {
+                        @Html.Raw(ViewBag.Content)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-

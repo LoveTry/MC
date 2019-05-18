@@ -1,0 +1,86 @@
+﻿@model MC.Models.ProjectIntroduce
+@{
+    ViewBag.Title = "课程简介";
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <script charset="utf-8" src="/kindeditor/kindeditor-all.js"></script>
+    <script charset="utf-8" src="/kindeditor/lang/zh-CN.js"></script>
+    <link href="~/Content/other.css" rel="stylesheet" />
+    <script>
+        KindEditor.ready(function (K) {
+            window.editor = K.create('#editor_id', {
+                uploadJson: '/ApiAshx/kindeditor/upload_json.ashx',
+                fileManagerJson: '/ApiAshx/kindeditor/file_manager_json.ashx',
+                allowFileManager: true
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            简介编辑
+        </div>
+        <div class="layui-card-body">
+            @using (Html.BeginForm("DocsSave", "Admin", FormMethod.Post, new { @class = "layui-form" }))
+            {
+                @Html.HiddenFor(m => m.ID)
+                @Html.HiddenFor(m => m.CrUserID)
+                <div class="layui-form-item">
+                    @Html.LabelFor(model => model.Content, new { @class = "layui-form-label" })
+                    <div class="layui-input-block">
+                        @Html.TextAreaFor(model => model.Content, new Dictionary<string, object> { { "class", "layui-textarea" }, { "id", "editor_id" }, { "style", "height:500px;" } })
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        @Html.LabelFor(model => model.CrUser, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.CrUser, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        @Html.LabelFor(model => model.CrTime, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.CrTime, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        @Html.LabelFor(model => model.UpUser, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.UpUser, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        @Html.LabelFor(model => model.UpTime, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.UpTime, new Dictionary<string, object> { { "class", "layui-input layui-disabled" }, { "readonly", "readonly" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+            form.on('submit(save)', function (data) {
+            });
+        });
+    </script>
+</body>
+</html>

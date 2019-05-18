@@ -138,6 +138,47 @@ namespace MC.Controllers
                 return Json(JsonReturn.Error("登录超时，请重新登录"), JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult ProIndro(string id)
+        {
+            if (id.ToGuid().IsNotEmpty())
+            {
+                var model = ProjectIntroduce.TryFind(id.ToGuid());
+                if (model == null)
+                {
+                    model = new ProjectIntroduce();
+                    model.ID = id.ToGuid();
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage", "Error", new { msg = "获取用户信息失败" });
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult DocsSave(ProjectIntroduce model)
+        {
+            var info = ProjectIntroduce.TryFind(model.ID);
+            if (info != null)
+            {
+                model.UpUser = LUser.UserName;
+                model.UpTime = DateTime.Now;
+                model.UpdateAndFlush();
+            }
+            else
+            {
+                model.CrTime = DateTime.Now;
+                model.CrUser = LUser.UserName;
+                model.CrUserID = LUser.UserId.ToGuid();
+                model.UpUser = LUser.UserName;
+                model.UpTime = DateTime.Now;
+                model.CreateAndFlush();
+            }
+            return View("ProIndro", model);
+        }
         #endregion
 
         #region Order

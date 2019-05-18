@@ -78,11 +78,11 @@
             </script>
 
             <script>
-                layui.use(['table', 'laydate','form','jquery'], function () {
+                layui.use(['table', 'laydate', 'form', 'jquery'], function () {
                     var table = layui.table,
                         laydate = layui.laydate,
                         $ = layui.jquery;
-                        form = layui.form;
+                    form = layui.form;
 
                     laydate.render({
                         elem: '#idStartDate',
@@ -110,7 +110,7 @@
                         , title: '课程数据表'
                         , cols: [[
                             { field: 'ID', title: 'ID', hide: true }
-                            ,{ field: 'IsUse', title: '状态', width: 80, templet: '#isUseTpl' }
+                            , { field: 'IsUse', title: '状态', width: 80, templet: '#isUseTpl' }
                             , { field: 'Name', title: '名称', sort: true }
                             //, { field: 'Price', title: '单价' }
                             //, { field: 'Amount', title: '课时', width:60 }
@@ -167,13 +167,13 @@
                                     layer.close(index);
                                 });
                             });
-                        }else if (obj.event === 'edit') {
+                        } else if (obj.event === 'edit') {
                             layer.open({
                                 type: 2,
                                 offset: 't',
                                 title: '课程编辑',
                                 area: ['800px', '630px'],
-                                content: ['/admin/courseadd/'+id],//这里content是一个普通的String
+                                content: ['/admin/courseadd/' + id],//这里content是一个普通的String
                                 cancel: function (index, layero) {
                                     table.reload("course-list", {
                                         url: '/admin/courselistjson/'
@@ -181,7 +181,9 @@
                                 }
                             });
                         } else if (obj.event === "desc") {
-
+                            //var window = window.open('_blank');
+                            //window.location = ;
+                            window.open("/Admin/ProIndro?id=" + id);
                         }
                     });
                 });
