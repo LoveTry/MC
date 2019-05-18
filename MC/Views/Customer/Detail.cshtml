@@ -29,6 +29,52 @@
             padding: 10px 15px;
         }
     </style>
+    <script>
+        $(function () {
+            $('#modifyCus').click(function () {
+                $("#customerModfyDiv").fadeIn("fast");
+            });
+
+            $("#btnCancel").click(function () {
+                $("#customerModfyDiv").fadeOut("fast");
+            });
+
+            $("#btnYes").click(function () {
+
+                if($.trim($("#CusName").val()).length==0){
+                    $.toptip('未输入客户名称', 'error');
+                    return false;
+                }
+
+                if($.trim($("#CusPhone").val()).length==0){
+                    $.toptip('未输入客户电话', 'error');
+                    return false;
+                }
+
+                $.confirm("您确定修改吗?", "修改", function () {
+                    $.showLoading();
+                    var data={};
+                    data.id='@Model.ID';
+                    data.cusName=$("#CusName").val();
+                    data.cusPhone=$("#CusPhone").val();
+                    $.ajax({
+                        url: "/Customer/ModifyCus",
+                        data:data,
+                        success: function (data) {
+                            window.location.href=data.url;
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $.toptip('请用微信访问', 'error');
+                            $.hideLoading();
+                        }
+                    });
+                }, function () {
+                    //取消操作
+                });
+            });
+        });
+
+    </script>
 </head>
 <body>
     <div class="weui-tab">
@@ -40,7 +86,7 @@
                         <p>客户电话：@Model.CusPhone</p>
                     </div>
                     <div class="weui-flex__item" style="text-align:right;vertical-align:middle;">
-                        <a class="weui-btn weui-btn_mini weui-btn_warn" href="#">修改</a>
+                        <a class="weui-btn weui-btn_mini weui-btn_warn" href="javascript:void(0);" id="modifyCus">修改</a>
                     </div>
                 </div>
             </div>
@@ -98,6 +144,45 @@
                     </div>
                 }
             }
+        </div>
+    </div>
+    <div id="customerModfyDiv" class="reply_message" style="display: none">
+        <div class="weui-cells weui-cells_form">
+            <div id='titleMsg' class="weui-cells__title">
+                修改客户
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">
+                        客户名称
+                    </label>
+                </div>
+                <div class="weui-cell__bd weui-cell_primary">
+                    @Html.TextBox("CusName", Model.CusName, new { @class = "weui-input" })
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">
+                        客户电话
+                    </label>
+                </div>
+                <div class="weui-cell__bd weui-cell_primary">
+                    @Html.TextBox("CusPhone", Model.CusPhone, new { @class = "weui-input" })
+                </div>
+            </div>
+            <div class="weui-flex" style="margin: .4em">
+                <div class="weui-flex__item ">
+                    <div class="placeholder">
+                        <a id="btnYes" href="javascript:void(0);" class="weui-btn weui-btn_primary">保存</a>
+                    </div>
+                </div>
+                <div class="weui-flex__item">
+                    <div class="placeholder">
+                        <a id="btnCancel" href="javascript:void(0);" class="weui-btn weui-btn_warn">取消</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

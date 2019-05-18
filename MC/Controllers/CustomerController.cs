@@ -130,6 +130,24 @@ namespace MC.Controllers
 
         }
 
+        public ActionResult ModifyCus()
+        {
+            string id = HttpContext.Request.Params["id"];
+            string cusName = HttpContext.Request.Params["cusName"];
+            string cusPhone = HttpContext.Request.Params["cusPhone"];
+            Customer cus = Customer.TryFind(id.ToGuid());
+            if (cus != null)
+            {
+                cus.CusName = cusName;
+                cus.CusPhone = cusPhone;
+                cus.UpTime = DateTime.Now;
+                cus.UpdateAndFlush();
+                return Json(new { url = "/Customer/Detail/" + cus.ID }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(new { url = "/Center" }, JsonRequestBehavior.AllowGet); ;
+        }
+
         public async Task<ActionResult> CusListAsync()
         {
             var s = DateTime.Now;

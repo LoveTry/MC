@@ -59,6 +59,7 @@
             </script>
 
             <script type="text/html" id="course-bar">
+                <a class="layui-btn layui-btn-xs" lay-event="desc">简介</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 {{# if(d.IsUse){}}
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
@@ -121,7 +122,7 @@
                             , { field: 'CrUser', title: '创建人', sort: true }
                             , { field: 'UpTime', title: '更新日期', width: 110, sort: true, templet: '<div>{{layui.util.toDateString(parseInt(d.UpTime.replace("/Date(","").replace(")/",""), 10),"yyyy-MM-dd")}}</div>' }
                             , { field: 'UpUser', title: '更新人', sort: true }
-                            , { fixed: 'right', title: '操作', toolbar: '#course-bar', width: 120 }
+                            , { fixed: 'right', title: '操作', toolbar: '#course-bar', width: 155 }
                         ]]
                         , page: true
                     });
@@ -179,6 +180,8 @@
                                     });
                                 }
                             });
+                        } else if (obj.event === "desc") {
+
                         }
                     });
                 });
