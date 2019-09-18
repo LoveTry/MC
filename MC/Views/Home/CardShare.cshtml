@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名片分享</title>
+    <link href="~/Content/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
+    <style>
+        .page-header {
+            height: 175px;
+            background-color: #01A9DA;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+            z-index: -99;
+        }
+
+        .headImage {
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .big-circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #6CC8E2;
+            border-radius: 50px;
+        }
+
+        .small-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: url('../img/headimg.jpg') no-repeat center center;
+            background-size: 100% 100%;
+            border-radius: 45px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .wxname {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            padding-top: 50px;
+            padding-left: 10px;
+        }
+
+        .company {
+            color: white;
+        }
+
+
+        .weui-grid__icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .weui-footer {
+            margin-top: 80px;
+        }
+
+
+        .swiper-container {
+            height: 100px;
+        }
+
+        .swiper-container {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+        }
+
+        .swiper-slide img {
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 100% 100%;
+        }
+
+        .music {
+            width: 40px;
+            margin-right: 0;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="headImage">
+                    <div class="big-circle"></div>
+                    <div class="small-circle"></div>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="wxname">大连亿利昶国际贸易有限公司</div>
+                <div class="music"><img src="~/img/music.png" width="40" /></div>
+            </div>
+        </div>
+        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">电话：18241112320</div>
+    </div>
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+</body>
+</html>
