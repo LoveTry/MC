@@ -1,0 +1,204 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大连亿利昶国际贸易有限公司的名片</title>
+    <link href="~/Content/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
+    <style>
+        .page-header {
+            height: 175px;
+            background-color: #01A9DA;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+            z-index: -99;
+        }
+
+        .headImage {
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .big-circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #6CC8E2;
+            border-radius: 50px;
+        }
+
+        .small-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: url(/img/headimg.jpg) no-repeat center center;
+            background-size: 100% 100%;
+            border-radius: 45px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .wxname {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            padding-top: 50px;
+            padding-left: 10px;
+        }
+
+        .company {
+            color: white;
+        }
+
+
+        .weui-grid__icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .weui-footer {
+            margin-top: 80px;
+        }
+
+        .mail {
+            float: right;
+            margin-right: 10px;
+            margin-top: 10px;
+            width: 28px;
+            height: 28px;
+            background: url(/Images/mail.png) no-repeat center center;
+            background-size: 100% 100%;
+        }
+
+        .swiper-container {
+            height: 100px;
+        }
+
+        .swiper-container {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+        }
+
+        .swiper-slide img {
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 100% 100%;
+        }
+
+        .music {
+            width: 40px;
+            margin-right: 0;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor:pointer;
+        }
+
+        .weui-form-preview {
+            border-radius: 5px 5px;
+        }
+
+        .preview {
+            background-color: #fff;
+            display: block;
+            border-radius: 5px 5px;
+            box-shadow: 2px 2px 5px #dcd9d9;
+            margin-top: 5px;
+        }
+
+        .img {
+            text-align: center;
+            display: block;
+            padding: 5px;
+        }
+
+            .img img {
+                width: 95%;
+            }
+    </style>
+</head>
+<body style="background-color:#eee;">
+    <div class="page-header">
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="headImage">
+                    <div class="big-circle"></div>
+                    <div class="small-circle"></div>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="wxname">莫风财</div>
+                <div class="music" state="on" ><img src="~/img/music.png" width="40" /></div>
+            </div>
+        </div>
+        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">大连亿利昶国际贸易有限公司</div>
+    </div>
+    <div style="padding:10px;">
+        <div class="preview">
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">电话</label>
+                    <span class="weui-form-preview__value">18241112320</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">邮箱</label>
+                    <span class="weui-form-preview__value">416331902</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">地址</label>
+                    <span class="weui-form-preview__value">大连</span>
+                </div>
+            </div>
+        </div>
+        <div class="preview">
+            <span class="img"><img src="~/img/2.jpg" /></span>
+            <span class="img"><img src="~/img/2.jpg" /></span>
+            <span class="img"><img src="~/img/2.jpg" /></span>
+            <span class="img"><img src="~/img/2.jpg" /></span>
+        </div>
+        <audio id="player" autoplay="" loop=""><source src="~/img/1.mp3"></audio>
+    </div>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+    <script src="http://libs.codeboy.me/js/rotate/1.0/rotate.js"></script>
+    <script>
+        $(function () {
+            var interval = setInterval('singleRotate()', 20);
+            player.load();
+            $('.music').on('click', function () {
+                if ($(this).attr('state') == 'on') {
+                    $(this).attr('state', 'off');
+                    clearInterval(interval);
+                }
+                else {
+                    $(this).attr('state', 'on');
+                    interval = setInterval('singleRotate()', 20);
+                }
+                playMusic();
+            });
+        });
+        var degree = 0;
+        function singleRotate() {
+            //一次增加50度
+            degree = degree + 50 * Math.PI / 180;
+            $(".music img").css("transform", "rotate(" + degree + "deg)");
+        }
+    </script>
+    <script>
+        function playMusic() {
+            var player = $("#player")[0]; /*jquery对象转换成js对象*/
+            if (player.paused) { /*如果已经暂停*/
+                player.play(); /*播放*/
+            } else {
+                player.pause();/*暂停*/
+            }
+        }
+    </script>
+</body>
+</html>

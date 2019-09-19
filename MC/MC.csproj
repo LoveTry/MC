@@ -130,6 +130,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\Ext\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -254,8 +257,11 @@
     <Content Include="images\male1.png" />
     <Content Include="images\game.png" />
     <Content Include="images\male.png" />
+    <Content Include="img\2.jpg" />
+    <Content Include="img\headimg.jpg" />
     <Content Include="img\headimg.png" />
     <Content Include="img\music.png" />
+    <Content Include="img\1.mp3" />
     <Content Include="kindeditor\kindeditor-all-min.js" />
     <Content Include="kindeditor\kindeditor-all.js" />
     <Content Include="kindeditor\lang\ar.js" />
@@ -568,6 +574,7 @@
     <Content Include="layui\font\iconfont.eot" />
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="文档.txt" />
     <Content Include="ApiAshx\kindeditor\file_manager_json.ashx" />
     <Content Include="ApiAshx\kindeditor\upload_json.ashx" />
@@ -632,6 +639,7 @@
     <Content Include="Views\Admin\Setting.cshtml" />
     <Content Include="Views\Admin\ProIndro.cshtml" />
     <Content Include="Views\Home\CardShare.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
