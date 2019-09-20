@@ -41,13 +41,13 @@ namespace MC.Controllers
 
         public ActionResult Index()
         {
-            //Qrcode();
+            Qrcode();
             return View();
         }
 
         public void Qrcode()
         {
-            string url = "http://www.baidu.com";
+            string url = "http://mc.cargocargo.cn/cardshare";
             QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
             qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
             qrCodeEncoder.QRCodeScale = 4;

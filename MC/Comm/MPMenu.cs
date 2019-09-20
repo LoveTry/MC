@@ -24,10 +24,29 @@ namespace MC
         {
 
             ButtonGroup btnGroup = new ButtonGroup();
+            var subButton1 = new SubButton()
+            {
+                name = "精品小程序",
+                sub_button = new List<SingleButton>()
+             {
+                 new SingleViewButton()
+                 {
+                     name="全民营销",
+                     url=GetAuthUrl("Center/Index")
+                 },
+                 new SingleViewButton()
+                 {
+                     name="名片分享",
+                     url=GetAuthUrl("CardShare/Index")
+                 }
+             }
+            };
+            btnGroup.button.Add(subButton1);
+
             btnGroup.button.Add(new SingleViewButton()
             {
-                url = GetAuthUrl("Center/Index"),
-                name = MPBasicSetting.WeChatTitleName
+                url = "https://k.weidian.com/vOEOBUfU/",
+                name = "媛媛的微店"
             });
 
             btnGroup.button.Add(new SingleViewButton()
