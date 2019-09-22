@@ -228,6 +228,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\bar_contrl.png" />
     <Content Include="images\course.png" />
     <Content Include="images\qrcode.jpg" />
     <Content Include="images\avatar2.jpg" />
@@ -637,6 +638,7 @@
     <Content Include="Views\Admin\ProIndro.cshtml" />
     <Content Include="Views\Home\CardShare.cshtml" />
     <Content Include="Views\CardShare\Index.cshtml" />
+    <Content Include="Views\CardShare\create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

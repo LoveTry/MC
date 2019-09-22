@@ -1,0 +1,215 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微享创建</title>
+    <link href="~/Content/weui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
+    <style>
+        .iframe_cover {
+            opacity: 0.7;
+            background: #e2e2e2;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            z-index: 11;
+        }
+
+        html, body {
+            font-family: "微软雅黑";
+            font-size: 12px;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .main {
+            margin-top: 55px;
+            color: #000;
+        }
+
+        .header {
+            width: 100%;
+            position: fixed;
+            height: 50px;
+            background-color: #123;
+            z-index: 9;
+            top: 0;
+            left: 0;
+        }
+
+        .left {
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(225deg);
+            margin-left: 20px;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .right {
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(45deg);
+            margin-right: 20px;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .header .header-text {
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            line-height: 50px;
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        .qrcodeDiv {
+            z-index: 13;
+            background: #fff;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            top: 50%;
+            position: absolute;
+            margin: -100px 0 0 -130px;
+        }
+
+            .qrcodeDiv .titleDiv {
+                position: absolute;
+                top: 0;
+                line-height: 40px;
+                left: 0;
+                right: 0;
+                border-bottom: 1px solid #eee;
+                font-size: 14px;
+                padding-left: 15px;
+                color: #333;
+            }
+
+                .qrcodeDiv .titleDiv span {
+                    float: right;
+                    line-height: 24px;
+                    height: 26px;
+                    margin-top: 8px;
+                    margin-right: 10px;
+                    width: 26px;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                    .qrcodeDiv .titleDiv span i {
+                        background: url(/images/bar_contrl.png) -30px 6px no-repeat;
+                        width: 8px;
+                        height: 18px;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+
+            .qrcodeDiv .dialogDiv {
+                position: absolute;
+                top: 40px;
+                bottom: 60px;
+                left: 0;
+                right: 0;
+            }
+    </style>
+</head>
+<body style="background-color:#eee;">
+    <div class="header">
+        @*<div class="left"></div>*@
+        <span class="header-text">创建微享</span>
+        @*<div class="right"></div>*@
+    </div>
+    <div class="main">
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:50px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p></p>
+                </div>
+                <div class="weui-cell__ft">上传头像</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">名称</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" maxlength="30" placeholder="姓名，产品名，企业名称等">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">电话</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入电话">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">微信号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入电话">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">简介</label></div>
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入简介" rows="3"></textarea>
+                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <div class="weui-uploader">
+                        <div class="weui-uploader__hd">
+                            <p class="weui-uploader__title">分享图片上传</p>
+                            <div class="weui-uploader__info">0/5</div>
+                        </div>
+                        <div class="weui-uploader__bd">
+                            <ul class="weui-uploader__files" id="uploaderFiles">
+                                @*<li class="weui-uploader__file" style="background-image:url(/images/pic1.jpg)"></li>*@
+                                @*<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(./images/pic_160.png)">
+                                        <div class="weui-uploader__file-content">
+                                            <i class="weui-icon-warn"></i>
+                                        </div>
+                                    </li>
+                                    <li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(./images/pic_160.png)">
+                                        <div class="weui-uploader__file-content">50%</div>
+                                    </li>*@
+                            </ul>
+                            <div class="weui-uploader__input-box">
+                                <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary">生成二维码</a>
+    </div>
+    <div class="qrcodeDiv">
+        <div class="titleDiv">
+            <p><i style="font-style:normal;" id="About">点击保存二维码</i><span><i></i></span></p>
+        </div>
+        <div class="dialogDiv" style="text-align: center;">
+            <img src="~/images/qrcode.jpg" width="150" style="margin-top:3px" />
+        </div>
+    </div>
+    <!--遮罩层-->
+    <div class="iframe_cover"></div>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/jquery-weui.min.js"></script>
+</body>
+</html>

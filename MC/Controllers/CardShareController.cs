@@ -13,5 +13,10 @@ namespace MC.Controllers
         {
             return View();
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
     }
 }
