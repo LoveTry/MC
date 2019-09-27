@@ -56,6 +56,9 @@
     <Reference Include="DAL">
       <HintPath>..\Ext\DAL.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\Ext\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\Ext\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -77,6 +80,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
@@ -163,7 +170,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Code\BaseData.cs" />
+    <Compile Include="Code\WUserData.cs" />
+    <Compile Include="Comm\Config.cs" />
+    <Compile Include="Comm\DapperHelper .cs" />
+    <Compile Include="Comm\FileHelper.cs" />
+    <Compile Include="Comm\GZipUtil.cs" />
+    <Compile Include="Comm\HttpHelper.cs" />
+    <Compile Include="Comm\LogHelper.cs" />
     <Compile Include="Comm\QrCodeCreater.cs" />
+    <Compile Include="Comm\ServerInfo.cs" />
     <Compile Include="Controllers\ADController.cs" />
     <Compile Include="Controllers\admin\AdminController.cs" />
     <Compile Include="Controllers\admin\BaseController.cs" />
@@ -197,6 +213,7 @@
     <Compile Include="Models\query\FeeQuery.cs" />
     <Compile Include="Models\query\GeneralQuery.cs" />
     <Compile Include="Models\query\ReportTotal.cs" />
+    <Compile Include="Models\sqllite\WUserItem.cs" />
     <Compile Include="Models\table\ApproveDetail.cs" />
     <Compile Include="Models\table\Fee.cs" />
     <Compile Include="Models\LoginUser.cs" />
