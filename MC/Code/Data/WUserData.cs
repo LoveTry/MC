@@ -1,4 +1,5 @@
 ﻿using MC.Comm;
+using MC.Common;
 using MC.Models.sqllite;
 using MCComm;
 using System;
@@ -8,9 +9,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using WechatService.Code.Data;
 
-namespace MC.Code
+namespace MC.Code.Data
 {
     /// <summary>
     /// 微信账号数据

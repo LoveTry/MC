@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace WechatService.Code.Data
+namespace MC.Code.Data
 {
     public abstract class BaseData
     {

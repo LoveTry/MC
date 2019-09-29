@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MC.Comm;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using System.Text;
 
-namespace MC.Comm
+namespace MC.Common
 {
     public class LogHelper
     {

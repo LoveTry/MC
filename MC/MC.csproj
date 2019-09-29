@@ -170,8 +170,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Code\BaseData.cs" />
-    <Compile Include="Code\WUserData.cs" />
+    <Compile Include="Code\Data\BaseData.cs" />
+    <Compile Include="Code\Data\CardData.cs" />
+    <Compile Include="Code\Data\WUserData.cs" />
+    <Compile Include="Comm\CheckData.cs" />
     <Compile Include="Comm\Config.cs" />
     <Compile Include="Comm\DapperHelper .cs" />
     <Compile Include="Comm\FileHelper.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Models\query\FeeQuery.cs" />
     <Compile Include="Models\query\GeneralQuery.cs" />
     <Compile Include="Models\query\ReportTotal.cs" />
+    <Compile Include="Models\sqllite\CardItem.cs" />
     <Compile Include="Models\sqllite\WUserItem.cs" />
     <Compile Include="Models\table\ApproveDetail.cs" />
     <Compile Include="Models\table\Fee.cs" />
@@ -232,6 +235,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Code\Temp\cardshare.dll" />
+    <Content Include="Code\Temp\wuser.dll" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\jquery-weui.css" />
     <Content Include="Content\jquery-weui.min.css" />
