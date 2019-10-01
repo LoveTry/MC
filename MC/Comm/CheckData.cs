@@ -16,7 +16,7 @@ using System.Web;
 using System.Web.Security;
 using System.Xml;
 
-namespace MC.Common
+namespace MC.Comm
 {
     public class CheckData
     {

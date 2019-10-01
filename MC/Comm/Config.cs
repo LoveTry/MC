@@ -52,16 +52,17 @@ namespace MC.Comm
         /// </summary>
         public static string AuthServer = string.Empty;
 
+        public static string ServerHost = "http://localhost:2280/";
         static Config()
         {
             try
             {
                 SysDataDir = Path.Combine(ServerInfo.GetRootPath(), "data") + "\\";
-                SysDataTemplateDir = Path.Combine(ServerInfo.GetRootPath(), "data") + "\\Template\\";
+                SysDataTemplateDir = Path.Combine(ServerInfo.GetRootPath(), "code") + "\\temp\\";
                 DataDir = ConfigurationManager.AppSettings["DataDir"].ToString();
                 ToolsDir = SysDataDir + "Tools\\";
                 AccountDataDir = Path.Combine(DataDir, "account") + "\\";
-                RootURL =ConfigurationManager.AppSettings["RootURL"].ToString();
+                RootURL = ConfigurationManager.AppSettings["RootURL"].ToString();
                 //AppID =ConfigurationManager.AppSettings["AppID"].ToString();
                 AuthServer = ConfigurationManager.AppSettings["AuthServer"].ToString();
                 Assembly asm = Assembly.GetExecutingAssembly();

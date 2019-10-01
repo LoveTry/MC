@@ -148,12 +148,12 @@
     </div>
     <div class="main">
         <div class="weui-cells">
-            <div class="weui-cell">
+            <div class="weui-cell headimg">
                 <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:50px;margin-right:5px;display:block"></div>
                 <div class="weui-cell__bd">
                     <p></p>
                 </div>
-                <div class="weui-cell__ft">上传头像</div>
+                <div class="weui-cell__ft">选择头像</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">名称</label></div>
@@ -221,7 +221,39 @@
     <div class="iframe_cover" style="display:none;"></div>
     <script src="~/Scripts/jquery-2.2.3.min.js"></script>
     <script src="~/Scripts/jquery-weui.min.js"></script>
-    <script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript">
+         wx.config({
+            debug: false, // 开启调试模式。
+            appId: '@ViewBag.appId', // 必填，公众号的唯一标识
+            timestamp: '@ViewBag.timestamp', // 必填，生成签名的时间戳
+            nonceStr: '@ViewBag.nonceStr', // 必填，生成签名的随机串
+            signature: '@ViewBag.signature', // 必填，签名
+            jsApiList: ['chooseImage', 'uploadImage'] // 必填，需要使用的JS接口列表
+        });
+        var images = {
+            localId: [],
+            serverId: []
+        };
+
+        wx.ready(function () {
+            $('.headimg').click(function () {
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        alert(JSON.stringify(localIds));
+                        if (localIds.length > 0) {
+                            $('.headimg img').attr('src', localIds[0]);
+                            headimgLocalId = localIds[0];
+                        }
+                    }
+                });
+            });
+        });
+
         $(function () {
             $('.weui-btn').click(function () {
                 $.getJSON("/")
@@ -231,7 +263,15 @@
                     $('.qrcodeDiv, .iframe_cover').hide();
                 });
             });
+
+
+
+            $('.weui-btn').click(function () {
+
+            });
         });
+
+
     </script>
 </body>
 </html>

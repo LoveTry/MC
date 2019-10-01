@@ -7,6 +7,10 @@ namespace MC.Models.sqllite
 {
     public class CardItem
     {
+        public CardItem()
+        {
+            this.createtime = DateTime.Now;
+        }
         /// <summary>
         /// 主键
         /// </summary>

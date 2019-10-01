@@ -174,19 +174,25 @@
     <Compile Include="Code\Data\CardData.cs" />
     <Compile Include="Code\Data\WUserData.cs" />
     <Compile Include="Comm\CheckData.cs" />
+    <Compile Include="Comm\CImageLibrary.cs" />
     <Compile Include="Comm\Config.cs" />
+    <Compile Include="Comm\ConvertHelper.cs" />
     <Compile Include="Comm\DapperHelper .cs" />
+    <Compile Include="Comm\FileContentType.cs" />
     <Compile Include="Comm\FileHelper.cs" />
     <Compile Include="Comm\GZipUtil.cs" />
     <Compile Include="Comm\HttpHelper.cs" />
+    <Compile Include="Comm\LockUtils.cs" />
     <Compile Include="Comm\LogHelper.cs" />
     <Compile Include="Comm\QrCodeCreater.cs" />
     <Compile Include="Comm\ServerInfo.cs" />
+    <Compile Include="Comm\WebCache.cs" />
     <Compile Include="Controllers\ADController.cs" />
     <Compile Include="Controllers\admin\AdminController.cs" />
     <Compile Include="Controllers\admin\BaseController.cs" />
     <Compile Include="Controllers\admin\BasicCodeController.cs" />
     <Compile Include="Controllers\admin\LoginController.cs" />
+    <Compile Include="Controllers\BaseCommController.cs" />
     <Compile Include="Controllers\CardShareController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Comm\CommFunction.cs" />
@@ -664,6 +670,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

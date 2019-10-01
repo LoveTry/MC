@@ -1,7 +1,11 @@
-﻿using MC.Common;
+﻿using MC.Code.Data;
+using MC.Comm;
+using MC.Models.sqllite;
+using MCComm;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +16,7 @@ namespace MC.Controllers
     /// 客户资料管理
     /// </summary>
     [RoutePrefix("api/card")]
-    public class CardShareController : Controller
+    public class CardShareController : BaseCommController
     {
         // GET: CardShare
         public ActionResult Index()
@@ -22,35 +26,41 @@ namespace MC.Controllers
 
         public ActionResult Create()
         {
+            GetgetJsApiTicket();
             return View();
         }
 
         [HttpPost]
-        [Route("create")]
-        public string CreateCard(JObject obj)
+        [Route("save")]
+        public string CreateCard(string data)
         {
             try
             {
-                long maxticks = CheckData.Check_Long(obj["maxticks"]);
-                int maxcount = CheckData.Check_Int(obj["maxcount"]);
-                int offset = CheckData.Check_Int(obj["offset"]);
-                int isZip = CheckData.Check_Int(obj["zip"]);
-                var db = new CRMData(CurrentAccount.accountid);
-                var crm = db.GetCrmItemList(maxticks, maxcount, offset);
-                if (isZip == 1)
+                JObject job = JObject.Parse(data);
+                var item = new CardItem();
+                item.desc = CheckData.Check_String(job["desc"]);
+                item.headimg = CheckData.Check_String(job["headimg"]);
+                item.name = CheckData.Check_String(job["name"]);
+                item.openid = CheckData.Check_String(job["openid"]);
+                item.phone = CheckData.Check_String(job["phone"]);
+                item.wx = CheckData.Check_String(job["wx"]);
+                var db = new CardData();
+                bool isOk = db.CreateOrUpdate(item);
+                if (isOk)
                 {
-                    string str = GZipUtil.CompressString(JsonConvert.SerializeObject(crm));
-                    return Ok(ResponseResult.Success((object)str));
-                }
-                else
-                {
-                    return Ok(ResponseResult.Success(crm));
+                    string url = Path.Combine(Config.ServerHost, $"cardshare/{item.openid}");
+                    string base64 = QrCodeCreater.GetQrCodeImgBase64(url, item.headimg);
+                    if (base64.IsNotEmpty())
+                    {
+                        return OK(new { base64 });
+                    }
                 }
             }
             catch (Exception e)
             {
-                return Ok(ResponseResult.Error());
+                LogHelper.Log(e);
             }
+            return Error("抱歉，生成失败。");
         }
     }
 }

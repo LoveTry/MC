@@ -153,11 +153,5 @@ namespace MC.Controllers
             }
             #endregion
         }
-
-        public ActionResult CreateQrcode()
-        {
-            string url = Comm.QrCodeCreater.CreateQrCode("");
-            return Redirect(url);
-        }
     }
 }

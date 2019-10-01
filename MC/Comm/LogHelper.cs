@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace MC.Common
+namespace MC.Comm
 {
     public class LogHelper
     {

@@ -26,18 +26,18 @@ namespace MC
             ButtonGroup btnGroup = new ButtonGroup();
             var subButton1 = new SubButton()
             {
-                name = "精品小程序",
+                name = "精品小工具",
                 sub_button = new List<SingleButton>()
              {
+                 //new SingleViewButton()
+                 //{
+                 //    name="全民营销",
+                 //    url=GetAuthUrl("Center/Index")
+                 //},
                  new SingleViewButton()
                  {
-                     name="全民营销",
-                     url=GetAuthUrl("Center/Index")
-                 },
-                 new SingleViewButton()
-                 {
-                     name="名片分享",
-                     url=GetAuthUrl("CardShare/Index")
+                     name="制作分享名片",
+                     url=GetAuthUrl("cardshare/create")
                  }
              }
             };
