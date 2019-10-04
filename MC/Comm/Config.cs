@@ -51,8 +51,6 @@ namespace MC.Comm
         /// 协议授权服务
         /// </summary>
         public static string AuthServer = string.Empty;
-
-        public static string ServerHost = "http://localhost:2280/";
         static Config()
         {
             try
@@ -62,9 +60,9 @@ namespace MC.Comm
                 DataDir = ConfigurationManager.AppSettings["DataDir"].ToString();
                 ToolsDir = SysDataDir + "Tools\\";
                 AccountDataDir = Path.Combine(DataDir, "account") + "\\";
-                RootURL = ConfigurationManager.AppSettings["RootURL"].ToString();
+                RootURL = ConfigurationManager.AppSettings["wxUrl"].ToString();
                 //AppID =ConfigurationManager.AppSettings["AppID"].ToString();
-                AuthServer = ConfigurationManager.AppSettings["AuthServer"].ToString();
+                //AuthServer = ConfigurationManager.AppSettings["AuthServer"].ToString();
                 Assembly asm = Assembly.GetExecutingAssembly();
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
                 ServerVersion = fvi.ProductVersion;

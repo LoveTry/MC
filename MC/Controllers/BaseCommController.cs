@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -32,28 +33,29 @@ namespace MC.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-//            base.OnActionExecuting(filterContext);
-//            //获取参数
-//            if (Request.QueryString["code"] != null)
-//            {
-//                //从菜单进入
-//                string code = Request.QueryString["code"];
-//                var oauthTokenInfo = OAuthApi.GetAccessToken(MPBasicSetting.AppID, MPBasicSetting.AppSecret, code);
-//                OpenId = oauthTokenInfo.openid;
-//                LogHelper.Log(OpenId);
-//            }
-//            else if (Request.QueryString["openid"] != null)
-//            {
-//                OpenId = Request.QueryString["openid"];
-//            }
-//            else
-//            {
-//#if DEBUG
-//                OpenId = System.Web.Configuration.WebConfigurationManager.AppSettings["testOpenId"];
-//#else
-//                filterContext.Result = RedirectToAction("ErrorPage", "Error", new { msg = "请用微信访问！" });
-//#endif
-//            }
+            OpenId = "oNcSFwaaIlLenUtee-4GAN3V--Vg";
+            base.OnActionExecuting(filterContext);
+            //            //获取参数
+            //            if (Request.QueryString["code"] != null)
+            //            {
+            //                //从菜单进入
+            //                string code = Request.QueryString["code"];
+            //                var oauthTokenInfo = OAuthApi.GetAccessToken(MPBasicSetting.AppID, MPBasicSetting.AppSecret, code);
+            //                OpenId = oauthTokenInfo.openid;
+            //                LogHelper.Log(OpenId);
+            //            }
+            //            else if (Request.QueryString["openid"] != null)
+            //            {
+            //                OpenId = Request.QueryString["openid"];
+            //            }
+            //            else
+            //            {
+            //#if DEBUG
+            //                OpenId = System.Web.Configuration.WebConfigurationManager.AppSettings["testOpenId"];
+            //#else
+            //                            filterContext.Result = RedirectToAction("ErrorPage", "Error", new { msg = "请用微信访问！" });
+            //#endif
+            //            }
         }
 
         /// <summary>
@@ -71,6 +73,33 @@ namespace MC.Controllers
             string signature = Senparc.Weixin.MP.Helpers.JSSDKHelper.GetSignature(ticket, nonceStr, timestamp, url);
             ViewBag.signature = signature;
             ViewBag.BaseUrl = MPBasicSetting.wxUrl;
+        }
+
+        /// <summary>
+        /// Uploads the file.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="fileUpload">The file upload.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="suffixList">The suffix list.</param>
+        /// <returns></returns>
+        protected bool SaveFile(string path, string fileName, byte[] imgStream)
+        {
+            try
+            {
+                if (!Directory.Exists(path))                    //保存文件的目录是否存在
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                System.IO.File.WriteAllBytes(Path.Combine(path, fileName), imgStream);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log("SaveFile:" + ex.Message);
+                return false;
+            }
         }
     }
 }

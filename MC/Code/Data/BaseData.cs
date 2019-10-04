@@ -10,12 +10,12 @@ namespace MC.Code.Data
 {
     public abstract class BaseData
     {
-        public long _Accountid = 0;
+        public string _Openid = "oNcSFwaaIlLenUtee-4GAN3V--Vg";
         public string _ConnectionString = string.Empty;
         public BaseData() { }
-        public BaseData(long accountid)
+        public BaseData(string openid)
         {
-            this._Accountid = accountid;
+            this._Openid = openid;
         }
         /// <summary>
         /// 获取数据源文件
@@ -27,7 +27,7 @@ namespace MC.Code.Data
         {
             try
             {
-                string filepath = Path.Combine(Config.AccountDataDir, this._Accountid + "\\");
+                string filepath = Path.Combine(Config.AccountDataDir, this._Openid + "\\");
                 if (!System.IO.Directory.Exists(filepath))
                 {
                     Directory.CreateDirectory(filepath);

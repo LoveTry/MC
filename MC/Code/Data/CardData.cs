@@ -25,13 +25,12 @@ namespace MC.Code.Data
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool CreateOrUpdate(CardItem model)
+        public long CreateOrUpdate(CardItem model)
         {
-            bool isOK = false;
             if (string.IsNullOrEmpty(_ConnectionString))
             {
                 LogHelper.Log("CardItem-CreateOrUpdate:" + "File ERROR");
-                return false;
+                return 0;
             }
             try
             {
@@ -44,7 +43,8 @@ namespace MC.Code.Data
                     try
                     {
                         var param = ConvertHelper<CardItem>.ModelToDic(model);
-                        isOK = CheckData.Check_Int(db.Update<CardItem>(param, "id", model.id)) > 0;
+                        db.Update<CardItem>(param, "id", model.id);
+                        return model.id;
                     }
                     catch (Exception ex)
                     {
@@ -60,7 +60,7 @@ namespace MC.Code.Data
                     //新增
                     try
                     {
-                        isOK = CheckData.Check_Int(db.Execute(DapperHelper.CompileInsert<CardItem>(model), model)) > 0;
+                        return CheckData.Check_Long(db.ExecuteScalar(DapperHelper.CompileInsert<CardItem>(model, "id", "sl"), model));
                     }
                     catch (Exception ex)
                     {
@@ -81,7 +81,72 @@ namespace MC.Code.Data
 
                 LockUtils.LockExit(_ConnectionString);
             }
-            return isOK;
+            return 0;
+        }
+
+
+        /// <summary>
+        /// 创建或者更新客户资料
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public long CreateOrUpdate(CardSubItem model)
+        {
+            if (string.IsNullOrEmpty(_ConnectionString))
+            {
+                LogHelper.Log("CardItem-CreateOrUpdate:" + "File ERROR");
+                return 0;
+            }
+            try
+            {
+                bool isExist = model.id > 0;
+                LockUtils.LockEnter(_ConnectionString);
+                DapperHelper db = new DapperHelper(this._ConnectionString);
+                if (isExist)
+                {
+                    //仅仅更新
+                    try
+                    {
+                        var param = ConvertHelper<CardSubItem>.ModelToDic(model);
+                        db.Update<CardSubItem>(param, "id", model.id);
+                        return model.id;
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+                else
+                {
+                    //新增
+                    try
+                    {
+                        return CheckData.Check_Long(db.ExecuteScalar(DapperHelper.CompileInsert<CardSubItem>(model, "id", "sl"), model));
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+            }
+            finally
+            {
+
+                LockUtils.LockExit(_ConnectionString);
+            }
+            return 0;
         }
     }
 }

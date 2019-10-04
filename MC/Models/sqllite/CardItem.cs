@@ -44,4 +44,17 @@ namespace MC.Models.sqllite
         /// </summary>
         public DateTime createtime { get; set; }
     }
+
+    public class CardSubItem
+    {
+        public CardSubItem()
+        {
+            this.createtime = DateTime.Now;
+        }
+        public long id { get; set; }
+        public long cardid { get; set; }
+        public string path { get; set; }
+        public string remark { get; set; }
+        public DateTime createtime { get; set; }
+    }
 }
