@@ -12,7 +12,6 @@ namespace MC.Code.Data
     {
         public string _Openid = "oNcSFwaaIlLenUtee-4GAN3V--Vg";
         public string _ConnectionString = string.Empty;
-        public BaseData() { }
         public BaseData(string openid)
         {
             this._Openid = openid;

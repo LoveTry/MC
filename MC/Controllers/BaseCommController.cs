@@ -15,19 +15,19 @@ namespace MC.Controllers
         public string OpenId = string.Empty;
         public string OK(object data)
         {
-            var obj = new { ok = "1", data };
+            var obj = new { ok = 1, data };
             return JsonConvert.SerializeObject(obj);
         }
 
         public string OK()
         {
-            var obj = new { ok = "1" };
+            var obj = new { ok = 1 };
             return JsonConvert.SerializeObject(obj);
         }
 
         public string Error(string msg)
         {
-            var obj = new { ok = "0", msg };
+            var obj = new { ok = 0, msg };
             return JsonConvert.SerializeObject(obj);
         }
 

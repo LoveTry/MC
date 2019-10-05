@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.Helpers;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using System.Threading.Tasks;
+using Senparc.NeuChar.Entities;
+using Senparc.Weixin.MP.Entities;
 
 namespace MC
 {
@@ -21,7 +22,7 @@ namespace MC
                 //推送一条客服消息
                 try
                 {
-                    CustomApi.SendText(MPBasicSetting.AppID, WeixinOpenId, "您好！请将您想咨询的问题文字描述或拍照截图，客服人员收到后会与您取得联系。\r\n感谢您使用航运通+ V3.0！");
+                    CustomApi.SendText(MPBasicSetting.AppID, OpenId, "您好！请将您想咨询的问题文字描述或拍照截图，客服人员收到后会与您取得联系。\r\n感谢您使用航运通+ V3.0！");
 
                 }
                 catch
@@ -39,7 +40,7 @@ namespace MC
             else if (requestMessage.Content == "GetUrl")
             {
                 var response = base.CreateResponseMessage<ResponseMessageText>();
-                response.Content = MPBasicSetting.DownloadV3Url+ "\r\n\r\n\r\n" + "请复制下载地址在电脑端下载安装。";
+                response.Content = MPBasicSetting.DownloadV3Url + "\r\n\r\n\r\n" + "请复制下载地址在电脑端下载安装。";
                 return response;
             }
 

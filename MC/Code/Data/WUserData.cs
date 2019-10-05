@@ -17,7 +17,7 @@ namespace MC.Code.Data
     public class WUserData : BaseData
     {
         static ReaderWriterLockSlim _LockSlim = new ReaderWriterLockSlim();
-        public WUserData()
+        public WUserData(string openid) : base(openid)
         {
             string sqlitefile = base.GetSqliteFile("wuser.dll", "wuser001.config");
             if (!string.IsNullOrEmpty(sqlitefile))

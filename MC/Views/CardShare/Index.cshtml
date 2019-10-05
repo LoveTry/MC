@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大连亿利昶国际贸易有限公司的名片</title>
+    <title></title>
     <link href="~/Content/weui.min.css" rel="stylesheet" />
     <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
     <style>
@@ -37,7 +37,7 @@
             position: absolute;
             width: 90px;
             height: 90px;
-            background: url(/img/headimg.jpg) no-repeat center center;
+            background: url(/images/avatar.png) no-repeat center center;
             background-size: 100% 100%;
             border-radius: 45px;
             margin-left: 5px;
@@ -97,7 +97,7 @@
             position: absolute;
             right: 10px;
             top: 5px;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .weui-form-preview {
@@ -115,11 +115,12 @@
         .img {
             text-align: center;
             display: block;
-            padding: 5px;
+            padding: 10px;
         }
 
             .img img {
-                width: 95%;
+                width: 100%;
+                border-radius: 5px 5px;
             }
     </style>
 </head>
@@ -133,41 +134,73 @@
                 </div>
             </div>
             <div class="weui-flex__item">
-                <div class="wxname">莫风财</div>
-                <div class="music" state="on" ><img src="~/img/music.png" width="40" /></div>
+                <div class="wxname"></div>
+                <div class="music" state="on"><img src="~/img/music.png" width="40" /></div>
             </div>
         </div>
-        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">大连亿利昶国际贸易有限公司</div>
+        <div class="weui-cells__title" style="color:white;text-align:right;font-size:16px">砥砺前行</div>
     </div>
     <div style="padding:10px;">
         <div class="preview">
             <div class="weui-form-preview__bd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">电话</label>
-                    <span class="weui-form-preview__value">18241112320</span>
+                    <span class="weui-form-preview__value"></span>
                 </div>
                 <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">邮箱</label>
-                    <span class="weui-form-preview__value">416331902</span>
+                    <label class="weui-form-preview__label">微信号</label>
+                    <span class="weui-form-preview__value"></span>
                 </div>
                 <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">地址</label>
-                    <span class="weui-form-preview__value">大连</span>
+                    <label class="weui-form-preview__label">简介</label>
+                    <span class="weui-form-preview__value"></span>
                 </div>
+                @*<div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">地址</label>
+                        <span class="weui-form-preview__value">大连</span>
+                    </div>*@
             </div>
         </div>
-        <div class="preview">
-            <span class="img"><img src="~/img/2.jpg" /></span>
-            <span class="img"><img src="~/img/2.jpg" /></span>
-            <span class="img"><img src="~/img/2.jpg" /></span>
-            <span class="img"><img src="~/img/2.jpg" /></span>
+        <div class="preview shareimg">
+            @*<span class="img"><img src="~/img/2.jpg" /></span>
+                <span class="img"><img src="~/img/2.jpg" /></span>
+                <span class="img"><img src="~/img/2.jpg" /></span>
+                <span class="img"><img src="~/img/2.jpg" /></span>*@
         </div>
         <audio id="player" autoplay="" loop=""><source src="~/img/1.mp3"></audio>
+    </div>
+    <div style="display:none;" class="requst-data" openid="@ViewBag.openid" id="@ViewBag.id">
     </div>
     <script src="~/Scripts/jquery-2.2.3.min.js"></script>
     <script src="~/Scripts/jquery-weui.min.js"></script>
     <script>
         $(function () {
+            var openid = $('.requst-data').attr('openid');
+            var id = $('.requst-data').attr('id');
+            $.getJSON('/cardshare/onready?openid=' + openid + '&id=' + id, function (res) {
+                var json = res;
+                if (json.ok == 1) {
+                    var item = json.data.item;
+                    var list = json.data.list;
+                    $(document).attr('title', item.name + "的名片分享");
+                    $('.wxname').text(item.name);
+                    var host = $('.requst-data').attr('host');
+                    var headimg = '/data/account/' + openid + '/files/avatars/' + item.headimg;
+                    $('.small-circle').css('background', 'url(' + headimg + ') no-repeat');
+                    $('.small-circle').css('background-size', '90px 90px');
+                    $('.weui-form-preview__value').eq(0).text(item.phone);
+                    $('.weui-form-preview__value').eq(1).text(item.wx);
+                    $('.weui-form-preview__value').eq(2).text(item.decs);
+
+                    var html = '';
+                    var resurl = '/data/account/' + openid + '/files/img/';
+                    $.each(list, function (i, v) {
+                        html += '<span class="img"><img src="' + resurl + v.path + '" /></span>';
+                    })
+                    $('.shareimg').append(html);
+                }
+            });
+
             var interval = setInterval('singleRotate()', 20);
             player.load();
             playMusic();
@@ -180,6 +213,7 @@
                     $(this).attr('state', 'on');
                     interval = setInterval('singleRotate()', 20);
                 }
+                playMusic();
             });
         });
         var degree = 0;

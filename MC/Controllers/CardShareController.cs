@@ -19,9 +19,27 @@ namespace MC.Controllers
     public class CardShareController : BaseCommController
     {
         // GET: CardShare
-        public ActionResult Index()
+        public ActionResult get(string openid, long id)
         {
-            return View();
+            if (openid.IsEmpty() || id == 0)
+            {
+                return Content("参数不正确");
+            }
+            ViewBag.openid = openid;
+            ViewBag.id = id;
+            return View("index");
+        }
+
+        public string OnReady(string openid, long id)
+        {
+            if (openid.IsEmpty() || id == 0)
+            {
+                return Error("参数不正确");
+            }
+            var cardData = new CardData(openid);
+            var item = cardData.GetCardItem(id);
+            var list = cardData.GetCardSubItemList(id);
+            return OK(new { item, list });
         }
 
         public ActionResult Create()
@@ -39,14 +57,14 @@ namespace MC.Controllers
                 var item = new CardItem();
                 item.desc = CheckData.Check_String(job["desc"]);
                 item.name = CheckData.Check_String(job["name"]);
-                item.openid = CheckData.Check_String(job["openid"]);
+                item.openid = OpenId;
                 item.phone = CheckData.Check_String(job["phone"]);
                 item.wx = CheckData.Check_String(job["wx"]);
                 var imgurl = CheckData.Check_String(job["headimg"]);
                 var path = Path.Combine(Config.AccountDataDir, this.OpenId + "\\files\\avatars\\");
                 string filename = GetFile(imgurl, path);
                 item.headimg = filename;
-                var db = new CardData();
+                var db = new CardData(OpenId);
                 long id = db.CreateOrUpdate(item);
                 if (id > 0)
                 {
@@ -54,17 +72,17 @@ namespace MC.Controllers
                     {
                         var sub = new CardSubItem();
                         sub.cardid = id;
-                        var imgPath = Path.Combine(Config.AccountDataDir, this.OpenId + "\\files\\img");
+                        var imgPath = Path.Combine(Config.AccountDataDir, this.OpenId + "\\files\\img\\");
                         string filename2 = GetFile(CheckData.Check_String(img), imgPath);
                         sub.path = filename2;
                         db.CreateOrUpdate(sub);
                     }
-                    string url = Path.Combine(Config.RootURL, $"cardshare/get/{item.openid}");
+                    string url = "http://" + Config.RootURL + $"/cardshare/get?openid={item.openid}&id={id}";
                     string avatarsPath = Path.Combine(Config.AccountDataDir, this.OpenId + "\\files\\avatars\\" + filename);
                     string base64 = QrCodeCreater.GetQrCodeImgBase64(url, avatarsPath);
                     if (base64.IsNotEmpty())
                     {
-                        return OK(new { base64 });
+                        return OK(base64);
                     }
                 }
             }
@@ -74,6 +92,7 @@ namespace MC.Controllers
             }
             return Error("抱歉，生成失败。");
         }
+
 
         private string GetFile(string serverid, string path)
         {

@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Senparc.CO2NET;
+using Senparc.CO2NET.RegisterServices;
+using Senparc.CO2NET.Threads;
+using Senparc.Weixin;
+using Senparc.Weixin.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,9 +28,17 @@ namespace MC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Senparc.Weixin.Threads.ThreadUtility.Register();
-            Senparc.Weixin.MP.Containers.AccessTokenContainer.Register(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号注册");
-            Senparc.Weixin.MP.Containers.JsApiTicketContainer.Register(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号JSSDK注册");
+            var isGLobalDebug = true;//设置全局 Debug 状态
+            var senparcSetting = SenparcSetting.BuildFromWebConfig(isGLobalDebug);
+            var register = RegisterService.Start(senparcSetting).UseSenparcGlobal();//CO2NET全局注册，必须！
+
+            var isWeixinDebug = true;//设置微信 Debug 状态
+            var senparcWeixinSetting = SenparcWeixinSetting.BuildFromWebConfig(isWeixinDebug);
+            register.UseSenparcWeixin(senparcWeixinSetting, senparcSetting);////微信全局注册，必须！
+
+            ThreadUtility.Register();
+            Senparc.Weixin.MP.Containers.AccessTokenContainer.RegisterAsync(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号注册");
+            Senparc.Weixin.MP.Containers.JsApiTicketContainer.RegisterAsync(MPBasicSetting.AppID, MPBasicSetting.AppSecret, "公众号JSSDK注册");
         }
     }
 }

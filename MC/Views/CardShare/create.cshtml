@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微享创建</title>
+    <title>微享制作</title>
     <link href="~/Content/weui.min.css" rel="stylesheet" />
     <link href="~/Content/jquery-weui.min.css" rel="stylesheet" />
     <style>
@@ -143,13 +143,13 @@
 <body style="background-color:#eee;">
     <div class="header">
         @*<div class="left"></div>*@
-        <span class="header-text">创建微享</span>
+        <span class="header-text">微享制作</span>
         @*<div class="right"></div>*@
     </div>
     <div class="main">
         <div class="weui-cells">
             <div class="weui-cell headimg">
-                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:50px;height:50px; margin-right:5px;display:block"></div>
+                <div class="weui-cell__hd"><img src="~/images/avatar.png" alt="" style="width:50px;height:50px; margin-right:5px;display:block"></div>
                 <div class="weui-cell__bd">
                     <p></p>
                 </div>
@@ -170,7 +170,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">微信号</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" id="wx" type="number" pattern="[0-9]*" placeholder="请输入电话">
+                    <input class="weui-input" id="wx" type="number" pattern="[0-9]*" placeholder="请输入微信号">
                 </div>
             </div>
             <div class="weui-cell">
@@ -225,6 +225,7 @@
     <script src="~/Scripts/jquery-2.2.3.min.js"></script>
     <script src="~/Scripts/jquery-weui.min.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="~/Scripts/common.js"></script>
     <script type="text/javascript">
          wx.config({
             debug: false, // 开启调试模式。
@@ -234,8 +235,8 @@
             signature: '@ViewBag.signature', // 必填，签名
             jsApiList: ['chooseImage', 'uploadImage'] // 必填，需要使用的JS接口列表
         });
-        var images = {};
-
+        window.headimg = '';
+        window.resimg = [];
         wx.ready(function () {
             $('.headimg').click(function () {
                 wx.chooseImage({
@@ -256,11 +257,11 @@
 
             $('#uploaderInput').click(function () {
                 var length = $('#uploaderFiles .weui-uploader__file').length;
-                if (length.length >= 4) {
+                if (length.length >= 5) {
                     $.toptip('最多可以选择4张图片', 'warning');
                 }
                 wx.chooseImage({
-                    count: 4 - length, // 默认9
+                    count: 5 - length, // 默认9
                     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                     success: function (res) {
@@ -269,12 +270,14 @@
                         if (localIds.length > 0) {
                             var html = '';
                             $.each(localIds, function (i, img) {
-                                html += '<li class="weui-uploader__file" >';
+                                html += '<li class="weui-uploader__file">';
                                 html += '<img src="' + img + '" width="80" height="80" />';
                                 html += '</li >';
                             });
-                            $('#uploaderFiles .weui-uploader__file').append(html);
-                            upload(localIds);
+                            $('#uploaderFiles').append(html);
+                            var max = $('#uploaderFiles .weui-uploader__file').length;
+                            $('.weui-uploader__info').text(max+'/5');
+                            upload(localIds,1);
                             //上传头像
                         }
                     }
@@ -292,19 +295,68 @@
             //    });
             //});
 
+            $('.qrcodeDiv .titleDiv span').click(function () {
+                $('.qrcodeDiv, .iframe_cover').hide();
+            });
+
+            $('body').on('click', '.weui-uploader__file', function () {
+                if ($(this).hasClass("weui-uploader__file_status")) {
+                    $(this).removeClass("weui-uploader__file_status").find("div").remove();
+                    return;
+                }
+                $(this).addClass("weui-uploader__file_status").append("<div class='weui-uploader__file-content'><i class='weui-icon-cancel'></i></div>");
+            });
+
+            $('body').on('click', '.weui-uploader__file-content', function () {
+                var localid = $(this).parent().find('img').attr('src');
+                if (window.resimg.length > 0)
+                    window.resimg.splice($.inArray(localid, window.resimg), 1);
+                $(this).parent().remove();
+            });
+
             //保存
             $('.weui-btn').click(function () {
+                if (isNull(window.headimg)) {
+                    $.toptip('请选择头像', 'error');
+                    return;
+                }
+
+                if ($.trim($('#name').val()).length==0) {
+                    $.toptip('请输入名称', 'error');
+                    return;
+                }
+
+                if ($.trim($('#phone').val()).length == 0) {
+                    $.toptip('请输入电话', 'error');
+                    return;
+                }
+
+                if ($.trim($('#phone').val()).length == 0) {
+                    $.toptip('请输入电话', 'error');
+                    return;
+                }
+
+                if (window.resimg.length==0) {
+                    $.toptip('请上传最少一张分享图片', 'error');
+                    return;
+                }
+
                 $.showLoading();
                 var data = {};
-                data.headimg = images.headimg;
+                data.headimg = window.headimg;
                 data.name = $('#name').val();
                 data.phone = $('#phone').val();
                 data.wx = $('#wx').val();
                 data.desc = $('#desc').val();
-                data.resimg = images.resimg;
+                data.resimg = window.resimg;
                 $.post('/cardshare/createcard', { data: JSON.stringify(data) }, function (res) {
-                    console.log(res);
                     $.hideLoading();
+                    var json = JSON.parse(res);
+                    if (json.ok == 1) {
+                        var base64 = json.data;
+                        $('.dialogDiv img').attr('src', base64);
+                        $('.qrcodeDiv, .iframe_cover').show();
+                    }
                 });
             });
         });
@@ -317,15 +369,15 @@
                 isShowProgressTips: 1, // 默认为1，显示进度提示
                 success: function (res) {
                     if (type == 0) {
-                        alert(res.serverId)
-                        images.headimg.push(res.serverId);
+                        //alert(res.serverId)
+                        window.headimg = res.serverId;
                     }
                     else {
-                        images.resimg.push(res.serverId);
+                        window.resimg.push(res.serverId);
                     }
 
-                    if (images.localId.length > 0) {
-                        upload();
+                    if (localIds.length > 0) {
+                        upload(localIds,1);
                     }
                 },
                 fail: function (res) {

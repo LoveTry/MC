@@ -11,7 +11,7 @@ namespace MC.Code.Data
     public class CardData : BaseData
     {
         static ReaderWriterLockSlim _LockSlim = new ReaderWriterLockSlim();
-        public CardData()
+        public CardData(string openid) : base(openid)
         {
             string sqlitefile = base.GetSqliteFile("cardshare.dll", "cardshare001.config");
             if (!string.IsNullOrEmpty(sqlitefile))
@@ -29,7 +29,7 @@ namespace MC.Code.Data
         {
             if (string.IsNullOrEmpty(_ConnectionString))
             {
-                LogHelper.Log("CardItem-CreateOrUpdate:" + "File ERROR");
+                LogHelper.Log("CardData-CreateOrUpdate:" + "File ERROR");
                 return 0;
             }
             try
@@ -48,7 +48,7 @@ namespace MC.Code.Data
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                        LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
                     }
                     finally
                     {
@@ -64,7 +64,7 @@ namespace MC.Code.Data
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                        LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
                     }
                     finally
                     {
@@ -74,7 +74,7 @@ namespace MC.Code.Data
             }
             catch (Exception ex)
             {
-                LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
             }
             finally
             {
@@ -94,7 +94,7 @@ namespace MC.Code.Data
         {
             if (string.IsNullOrEmpty(_ConnectionString))
             {
-                LogHelper.Log("CardItem-CreateOrUpdate:" + "File ERROR");
+                LogHelper.Log("CardData-CreateOrUpdate:" + "File ERROR");
                 return 0;
             }
             try
@@ -113,7 +113,7 @@ namespace MC.Code.Data
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                        LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
                     }
                     finally
                     {
@@ -129,7 +129,7 @@ namespace MC.Code.Data
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                        LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
                     }
                     finally
                     {
@@ -139,7 +139,7 @@ namespace MC.Code.Data
             }
             catch (Exception ex)
             {
-                LogHelper.Log("CardItem-CreateOrUpdate:" + ex.ToString());
+                LogHelper.Log("CardData-CreateOrUpdate:" + ex.ToString());
             }
             finally
             {
@@ -147,6 +147,63 @@ namespace MC.Code.Data
                 LockUtils.LockExit(_ConnectionString);
             }
             return 0;
+        }
+
+        /// <summary>
+        /// 获取卡片主表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public CardItem GetCardItem(long id)
+        {
+            CardItem item = null;
+            if (string.IsNullOrEmpty(_ConnectionString))
+            {
+                LogHelper.Log("CardData-GetCardItem:" + "File ERROR");
+                return item;
+            }
+            try
+            {
+                LockUtils.LockEnter(_ConnectionString);
+                DapperHelper db = new DapperHelper(this._ConnectionString);
+                string sql = $"select * from carditem where id=@id";
+                item = db.QueryFirst<CardItem>(sql, new { id });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log("CardData-GetCardItem:" + ex.ToString());
+            }
+            finally
+            {
+                LockUtils.LockExit(_ConnectionString);
+            }
+            return item;
+        }
+
+        public List<CardSubItem> GetCardSubItemList(long cardid)
+        {
+            List<CardSubItem> list = null;
+            if (string.IsNullOrEmpty(_ConnectionString))
+            {
+                LogHelper.Log("CardData-GetCardSubItemList:" + "File ERROR");
+                return list;
+            }
+            try
+            {
+                LockUtils.LockEnter(_ConnectionString);
+                DapperHelper db = new DapperHelper(this._ConnectionString);
+                string sql = $"select * from cardsubitem where cardid=@cardid";
+                list = db.QueryList<CardSubItem>(sql, new { cardid });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log("CardData-GetCardSubItemList:" + ex.ToString());
+            }
+            finally
+            {
+                LockUtils.LockExit(_ConnectionString);
+            }
+            return list;
         }
     }
 }

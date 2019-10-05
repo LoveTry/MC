@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using MCComm;
 using MC.Comm;
+using Senparc.NeuChar.Entities;
 
 namespace MC
 {
@@ -20,8 +21,7 @@ namespace MC
             : base(inputStream, postModel, maxRecordCount)
         {
             //这里设置仅用于测试，实际开发可以在外部更全局的地方设置，
-            MessageHandler<MPCustomMessageContext>.GlobalWeixinContext.ExpireMinutes = 30;
-            //WeixinContext.ExpireMinutes = 4;
+            this.GlobalMessageContext.ExpireMinutes = 30;
         }
 
         public override void OnExecuting()
@@ -62,7 +62,7 @@ namespace MC
 
                     try
                     {
-                        CustomApi.SendText(MPBasicSetting.AppID, WeixinOpenId, "您好！请将您想咨询的问题文字描述或拍照截图，客服人员收到后会与您取得联系。\r\n感谢您使用航运通+ V3.0！");
+                        CustomApi.SendText(MPBasicSetting.AppID, OpenId, "您好！请将您想咨询的问题文字描述或拍照截图，客服人员收到后会与您取得联系。\r\n感谢您使用航运通+ V3.0！");
 
                     }
                     catch

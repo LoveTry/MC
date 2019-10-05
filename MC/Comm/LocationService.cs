@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Senparc.Weixin.MP.Entities;
-using Senparc.Weixin.MP.Entities.GoogleMap;
 using Senparc.Weixin.MP.Helpers;
-using Senparc.Weixin.MP.Entities.BaiduMap;
 using System.Data;
 using MCComm;
+using Senparc.NeuChar.Entities;
+using Senparc.CO2NET.Helpers.BaiduMap;
+using Senparc.CO2NET.Helpers;
 
 namespace MC
 {
