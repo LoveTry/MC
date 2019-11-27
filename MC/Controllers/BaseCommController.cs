@@ -33,29 +33,35 @@ namespace MC.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            OpenId = "oNcSFwaaIlLenUtee-4GAN3V--Vg";
-            base.OnActionExecuting(filterContext);
-            //            //获取参数
-            //            if (Request.QueryString["code"] != null)
-            //            {
-            //                //从菜单进入
-            //                string code = Request.QueryString["code"];
-            //                var oauthTokenInfo = OAuthApi.GetAccessToken(MPBasicSetting.AppID, MPBasicSetting.AppSecret, code);
-            //                OpenId = oauthTokenInfo.openid;
-            //                LogHelper.Log(OpenId);
-            //            }
-            //            else if (Request.QueryString["openid"] != null)
-            //            {
-            //                OpenId = Request.QueryString["openid"];
-            //            }
-            //            else
-            //            {
-            //#if DEBUG
-            //                OpenId = System.Web.Configuration.WebConfigurationManager.AppSettings["testOpenId"];
-            //#else
-            //                            filterContext.Result = RedirectToAction("ErrorPage", "Error", new { msg = "请用微信访问！" });
-            //#endif
-            //            }
+            try
+            {
+                //OpenId = "oNcSFwaaIlLenUtee-4GAN3V--Vg";
+                base.OnActionExecuting(filterContext);
+                //获取参数
+                if (Request.QueryString["code"] != null)
+                {
+                    //从菜单进入
+                    string code = Request.QueryString["code"];
+                    var oauthTokenInfo = OAuthApi.GetAccessToken(MPBasicSetting.AppID, MPBasicSetting.AppSecret, code);
+                    OpenId = oauthTokenInfo.openid;
+                }
+                else if (Request.QueryString["openid"] != null)
+                {
+                    OpenId = Request.QueryString["openid"];
+                }
+                else
+                {
+#if DEBUG
+                    OpenId = System.Web.Configuration.WebConfigurationManager.AppSettings["testOpenId"];
+#else
+                    filterContext.Result = RedirectToAction("ErrorPage", "Error", new { msg = "请用微信访问！" });
+#endif
+                }
+            }
+            catch
+            {
+                filterContext.Result = RedirectToAction("ErrorPage", "Error", new { msg = "授权过期！" });
+            }
         }
 
         /// <summary>

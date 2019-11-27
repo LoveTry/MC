@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 MC/Web.config
 /MC/FileLog
+/MC/data/logs

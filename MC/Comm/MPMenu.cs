@@ -45,8 +45,8 @@ namespace MC
 
             btnGroup.button.Add(new SingleViewButton()
             {
-                url = "https://k.weidian.com/vOEOBUfU/",
-                name = "媛媛的微店"
+                url = "https://mp.weixin.qq.com/s/DSD2rPLi0_hc2SyhtOBsCg",
+                name = "关于联云"
             });
 
             btnGroup.button.Add(new SingleViewButton()

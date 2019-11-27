@@ -13,7 +13,7 @@ namespace MC.Controllers
     {
         public ActionResult Index()
         {
-            MPMenu.CreateMenuDefault();
+            //MPMenu.CreateMenuDefault();
             string signature = Request["signature"];
             string timestamp = Request["timestamp"];
             string nonce = Request["nonce"];

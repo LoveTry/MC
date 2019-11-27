@@ -276,6 +276,7 @@
     <Content Include="images\avatar.png" />
     <Content Include="images\bar_contrl.png" />
     <Content Include="images\course.png" />
+    <Content Include="images\eye.png" />
     <Content Include="images\qrcode.jpg" />
     <Content Include="images\avatar2.jpg" />
     <Content Include="images\bak.jpg" />
